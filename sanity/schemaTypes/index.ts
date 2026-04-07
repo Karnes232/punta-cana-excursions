@@ -1,0 +1,34 @@
+import { type SchemaTypeDefinition } from "sanity";
+// Localized Types
+import {
+  localizedBlockContent,
+  localizedString,
+  localizedStringArray,
+  localizedText,
+} from "./Localized/localizedTypes";
+// General Layout Types
+import { generalLayout } from "./GeneralLayout/generalLayout";
+// Home Page Types
+import { homePage } from "./HomePage/HomePage";
+// Excursions Page Types
+import { excursionsPage } from "./ExcursionsPage/ExcursionsPage";
+import { excursionCategory } from "./ExcursionCategory/ExcursionCategory";
+
+export const schema: { types: SchemaTypeDefinition[] } = {
+  types: [
+    // Localized Types
+    localizedString,
+    localizedText,
+    localizedBlockContent,
+    localizedStringArray,
+    // General Layout Types
+    generalLayout,
+    // Home Page Types
+    homePage,
+    // Excursions Page Types
+    excursionsPage,
+    // Excursion Category Types
+    excursionCategory,
+
+  ],
+};

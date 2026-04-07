@@ -1,0 +1,20 @@
+{
+  "Navigation": {
+    "home": "Inicio",
+    "excursions": "Excursions",
+    "divingSnorkeling": "Diving & Snorkeling",
+    "about": "Sobre Nosotros",
+    "blog": "Blog",
+    "faq": "Preguntas Frecuentes",
+    "contact": "Contacto",
+    "bookNow": "Reservar Ahora"
+  },
+  "Footer": {
+    "excursions": "Excursions",
+    "company": "Company",
+    "contact": "Contact",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "cancellationPolicy": "Cancellation Policy"
+  }
+}

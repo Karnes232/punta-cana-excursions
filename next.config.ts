@@ -1,7 +1,22 @@
-import type { NextConfig } from "next";
+import { NextConfig } from "next";
+import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Add any other Next.js config here
+  images: {
+    qualities: [65, 70, 75, 80, 85, 90, 95, 100],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "cdn.sanity.io",
+      },
+      {
+        protocol: "https",
+        hostname: "picsum.photos",
+      },
+    ],
+  },
 };
 
-export default nextConfig;
+const withNextIntl = createNextIntlPlugin();
+export default withNextIntl(nextConfig);
