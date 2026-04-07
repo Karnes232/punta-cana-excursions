@@ -1,5 +1,4 @@
 import { SITE_URL } from "@/lib/seo/constants";
-
 /**
  * Utility function to generate hreflang URLs for a given path
  * Ensures reciprocal hreflang tags (both en and es versions)
