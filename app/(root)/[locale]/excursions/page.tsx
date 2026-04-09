@@ -21,11 +21,22 @@ export default async function Excursions({
       <ExcursionsHero
         backgroundImage={{
           url: excursionsPage?.heroImage?.asset?.url ?? "",
-          alt: excursionsPage?.heroHeadline?.[localeKey] ?? excursionsPage?.heroHeadline?.en ?? "",
+          alt:
+            excursionsPage?.heroHeadline?.[localeKey] ??
+            excursionsPage?.heroHeadline?.en ??
+            "",
           lqip: excursionsPage?.heroImage?.asset?.metadata?.lqip ?? "",
         }}
-        headline={excursionsPage?.heroHeadline?.[localeKey] ?? excursionsPage?.heroHeadline?.en ?? ""}
-        subheadline={excursionsPage?.heroSubheadline?.[localeKey] ?? excursionsPage?.heroSubheadline?.en ?? ""}
+        headline={
+          excursionsPage?.heroHeadline?.[localeKey] ??
+          excursionsPage?.heroHeadline?.en ??
+          ""
+        }
+        subheadline={
+          excursionsPage?.heroSubheadline?.[localeKey] ??
+          excursionsPage?.heroSubheadline?.en ??
+          ""
+        }
         totalExcursions={10}
       />
       <ExcursionsBrowseSection
@@ -135,13 +146,29 @@ export default async function Excursions({
         }}
       />
       <WhatsAppCTAStrip
-        headline={excursionsPage?.ctaHeadline?.[localeKey] ?? excursionsPage?.ctaHeadline?.en ?? ""}
-        description={excursionsPage?.ctaDescription?.[localeKey] ?? excursionsPage?.ctaDescription?.en ?? ""}
+        headline={
+          excursionsPage?.ctaHeadline?.[localeKey] ??
+          excursionsPage?.ctaHeadline?.en ??
+          ""
+        }
+        description={
+          excursionsPage?.ctaDescription?.[localeKey] ??
+          excursionsPage?.ctaDescription?.en ??
+          ""
+        }
         whatsappNumber="1234567890"
         whatsappDefaultMessage="Hello, I have a question about the best way to get to Punta Cana."
-        whatsappButtonText={excursionsPage?.ctaWhatsappButtonText?.[localeKey] ?? excursionsPage?.ctaWhatsappButtonText?.en ?? ""}
+        whatsappButtonText={
+          excursionsPage?.ctaWhatsappButtonText?.[localeKey] ??
+          excursionsPage?.ctaWhatsappButtonText?.en ??
+          ""
+        }
         contactHref="/contact"
-        contactButtonText={excursionsPage?.ctaContactButtonText?.[localeKey] ?? excursionsPage?.ctaContactButtonText?.en ?? ""}
+        contactButtonText={
+          excursionsPage?.ctaContactButtonText?.[localeKey] ??
+          excursionsPage?.ctaContactButtonText?.en ??
+          ""
+        }
       />
     </>
   );

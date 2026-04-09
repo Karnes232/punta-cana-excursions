@@ -59,4 +59,11 @@ export const structure: StructureResolver = (S) =>
             .title("Excursion categories")
             .filter("_type == 'excursionCategory'"),
         ),
+      S.divider(),
+      S.listItem()
+        .title("Excursion")
+        .icon("🧭")
+        .child(
+          S.documentList().title("Excursions").filter("_type == 'excursion'"),
+        ),
     ]);

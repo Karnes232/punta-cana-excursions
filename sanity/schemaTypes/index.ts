@@ -14,6 +14,8 @@ import { homePage } from "./HomePage/HomePage";
 import { excursionsPage } from "./ExcursionsPage/ExcursionsPage";
 import { excursionCategory } from "./ExcursionCategory/ExcursionCategory";
 
+import { excursion } from "./IndividualExcursionPage/Excursion";
+
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
     // Localized Types
@@ -29,6 +31,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     excursionsPage,
     // Excursion Category Types
     excursionCategory,
-
+    // Excursion Types
+    excursion,
   ],
 };

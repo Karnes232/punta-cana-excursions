@@ -1,3 +1,4 @@
+import type { PortableTextBlock } from "@portabletext/types";
 import { client } from "@/sanity/lib/client";
 
 // =============================================================================
@@ -7,6 +8,18 @@ import { client } from "@/sanity/lib/client";
 export interface LocalizedField {
   en?: string;
   es?: string;
+}
+
+/** Matches Sanity `localizedStringArray` — per-locale lists of strings */
+export interface LocalizedStringArray {
+  en?: string[];
+  es?: string[];
+}
+
+/** Matches Sanity `localizedBlockContent` — per-locale Portable Text */
+export interface LocalizedBlockContent {
+  en?: PortableTextBlock[];
+  es?: PortableTextBlock[];
 }
 
 export interface SocialLink {
@@ -180,4 +193,32 @@ export function getLocalized(
 ): string {
   if (!field) return "";
   return (locale === "es" ? field.es : field.en) || field.en || "";
+}
+
+/**
+ * Resolves a localized string array (e.g. highlights) for the active locale.
+ * Falls back to English when the requested list is missing or empty.
+ */
+export function getLocalizedStringArray(
+  field: LocalizedStringArray | null | undefined,
+  locale: string,
+): string[] {
+  if (!field) return [];
+  const primary = locale === "es" ? field.es : field.en;
+  if (primary && primary.length > 0) return primary;
+  return field.en ?? [];
+}
+
+/**
+ * Resolves localized Portable Text (e.g. full description) for the active locale.
+ * Falls back to English when the requested blocks are missing or empty.
+ */
+export function getLocalizedPortableText(
+  field: LocalizedBlockContent | null | undefined,
+  locale: string,
+): PortableTextBlock[] {
+  if (!field) return [];
+  const primary = locale === "es" ? field.es : field.en;
+  if (primary && primary.length > 0) return primary;
+  return field.en ?? [];
 }

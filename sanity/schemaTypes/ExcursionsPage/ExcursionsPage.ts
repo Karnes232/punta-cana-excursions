@@ -11,7 +11,6 @@ export const excursionsPage = defineType({
   groups: [
     { name: "hero", title: "Hero", default: true },
     { name: "cta", title: "WhatsApp CTA" },
-
   ],
 
   fields: [
@@ -88,8 +87,6 @@ export const excursionsPage = defineType({
         'Text on the secondary contact button. e.g. "Contact Us" / "Contáctanos".',
       group: "cta",
     }),
-
-
   ],
 
   preview: {

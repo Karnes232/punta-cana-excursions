@@ -16,7 +16,11 @@ export default async function Home({
 }: {
   params: Promise<{ locale: string }>;
 }) {
-  const [{ locale }, homePage, excursionCategories] = await Promise.all([params, getHomePage(), getExcursionCategoryHomePage()]);
+  const [{ locale }, homePage, excursionCategories] = await Promise.all([
+    params,
+    getHomePage(),
+    getExcursionCategoryHomePage(),
+  ]);
   const localeKey = locale as keyof LocalizedField;
   console.log(excursionCategories);
   return (
@@ -102,8 +106,16 @@ export default async function Home({
         ]}
       />
       <ExcursionCategories
-        heading={homePage?.categoriesHeading?.[localeKey] ?? homePage?.categoriesHeading?.en ?? ""}
-        subheading={homePage?.categoriesSubheading?.[localeKey] ?? homePage?.categoriesSubheading?.en ?? ""}
+        heading={
+          homePage?.categoriesHeading?.[localeKey] ??
+          homePage?.categoriesHeading?.en ??
+          ""
+        }
+        subheading={
+          homePage?.categoriesSubheading?.[localeKey] ??
+          homePage?.categoriesSubheading?.en ??
+          ""
+        }
         categories={excursionCategories.map((category) => ({
           slug: category.slug,
           title: category.title?.[localeKey] ?? category.title?.en ?? "",
@@ -113,58 +125,121 @@ export default async function Home({
             lqip: category.image?.asset?.metadata?.lqip ?? "",
           },
         }))}
-        
       />
       <WhyChooseUs
-        heading={homePage?.whyChooseUsHeading?.[localeKey] ?? homePage?.whyChooseUsHeading?.en ?? ""}
-        subheading={homePage?.whyChooseUsSubheading?.[localeKey] ?? homePage?.whyChooseUsSubheading?.en ?? ""}
-        pillars={homePage?.trustPillars?.map((pillar) => ({
-          icon: pillar.icon,
-          title: pillar.title?.[localeKey] ?? pillar.title?.en ?? "",
-          description: pillar.description?.[localeKey] ?? pillar.description?.en ?? "",
-        })) ?? []}
+        heading={
+          homePage?.whyChooseUsHeading?.[localeKey] ??
+          homePage?.whyChooseUsHeading?.en ??
+          ""
+        }
+        subheading={
+          homePage?.whyChooseUsSubheading?.[localeKey] ??
+          homePage?.whyChooseUsSubheading?.en ??
+          ""
+        }
+        pillars={
+          homePage?.trustPillars?.map((pillar) => ({
+            icon: pillar.icon,
+            title: pillar.title?.[localeKey] ?? pillar.title?.en ?? "",
+            description:
+              pillar.description?.[localeKey] ?? pillar.description?.en ?? "",
+          })) ?? []
+        }
       />
       <HowBookingWorks
-        heading={homePage?.howBookingWorksHeading?.[localeKey] ?? homePage?.howBookingWorksHeading?.en ?? ""}
-        subheading={homePage?.howBookingWorksSubheading?.[localeKey] ?? homePage?.howBookingWorksSubheading?.en ?? ""}
-        steps={homePage?.bookingSteps?.map((step) => ({
-          stepNumber: step.stepNumber,
-          icon: step.icon,
-          title: step.title?.[localeKey] ?? step.title?.en ?? "",
-          description: step.description?.[localeKey] ?? step.description?.en ?? "",
-        })) ?? []}
+        heading={
+          homePage?.howBookingWorksHeading?.[localeKey] ??
+          homePage?.howBookingWorksHeading?.en ??
+          ""
+        }
+        subheading={
+          homePage?.howBookingWorksSubheading?.[localeKey] ??
+          homePage?.howBookingWorksSubheading?.en ??
+          ""
+        }
+        steps={
+          homePage?.bookingSteps?.map((step) => ({
+            stepNumber: step.stepNumber,
+            icon: step.icon,
+            title: step.title?.[localeKey] ?? step.title?.en ?? "",
+            description:
+              step.description?.[localeKey] ?? step.description?.en ?? "",
+          })) ?? []
+        }
       />
       <Reviews
-        heading={homePage?.reviewsHeading?.[localeKey] ?? homePage?.reviewsHeading?.en ?? ""}
-        subheading={homePage?.reviewsSubheading?.[localeKey] ?? homePage?.reviewsSubheading?.en ?? ""}
-        reviews={homePage?.reviews?.map((review) => ({
-          name: review.name,
-          country: review.country,
-          text: review.text?.[localeKey] ?? review.text?.en ?? "",
-          rating: review.rating,
-          excursionTitle: review.excursionTitle,
-        })) ?? []}
+        heading={
+          homePage?.reviewsHeading?.[localeKey] ??
+          homePage?.reviewsHeading?.en ??
+          ""
+        }
+        subheading={
+          homePage?.reviewsSubheading?.[localeKey] ??
+          homePage?.reviewsSubheading?.en ??
+          ""
+        }
+        reviews={
+          homePage?.reviews?.map((review) => ({
+            name: review.name,
+            country: review.country,
+            text: review.text?.[localeKey] ?? review.text?.en ?? "",
+            rating: review.rating,
+            excursionTitle: review.excursionTitle,
+          })) ?? []
+        }
       />
       <FaqPreview
-        heading={homePage?.faqPreviewHeading?.[localeKey] ?? homePage?.faqPreviewHeading?.en ?? ""}
-        subheading={homePage?.faqPreviewSubheading?.[localeKey] ?? homePage?.faqPreviewSubheading?.en ?? ""}
+        heading={
+          homePage?.faqPreviewHeading?.[localeKey] ??
+          homePage?.faqPreviewHeading?.en ??
+          ""
+        }
+        subheading={
+          homePage?.faqPreviewSubheading?.[localeKey] ??
+          homePage?.faqPreviewSubheading?.en ??
+          ""
+        }
         faqs={
-  
-        homePage?.faqPreviewItems?.map((item) => ({
-          question: item.question?.[localeKey] ?? item.question?.en ?? "",
-          answer: item.answer?.[localeKey] ?? item.answer?.en ?? "",
-        })) ?? []}
-        ctaText={homePage?.faqPreviewCtaText?.[localeKey] ?? homePage?.faqPreviewCtaText?.en ?? ""}
+          homePage?.faqPreviewItems?.map((item) => ({
+            question: item.question?.[localeKey] ?? item.question?.en ?? "",
+            answer: item.answer?.[localeKey] ?? item.answer?.en ?? "",
+          })) ?? []
+        }
+        ctaText={
+          homePage?.faqPreviewCtaText?.[localeKey] ??
+          homePage?.faqPreviewCtaText?.en ??
+          ""
+        }
         ctaHref="/faq"
       />
       <CtaBanner
-        headline={homePage?.ctaBannerHeadline?.[localeKey] ?? homePage?.ctaBannerHeadline?.en ?? ""}
-        subheadline={homePage?.ctaBannerSubheadline?.[localeKey] ?? homePage?.ctaBannerSubheadline?.en ?? ""}
-        primaryCtaText={homePage?.ctaBannerButtonText?.[localeKey] ?? homePage?.ctaBannerButtonText?.en ?? ""}
+        headline={
+          homePage?.ctaBannerHeadline?.[localeKey] ??
+          homePage?.ctaBannerHeadline?.en ??
+          ""
+        }
+        subheadline={
+          homePage?.ctaBannerSubheadline?.[localeKey] ??
+          homePage?.ctaBannerSubheadline?.en ??
+          ""
+        }
+        primaryCtaText={
+          homePage?.ctaBannerButtonText?.[localeKey] ??
+          homePage?.ctaBannerButtonText?.en ??
+          ""
+        }
         primaryCtaHref={homePage?.ctaBannerButtonHref ?? ""}
         whatsappNumber="1234567890"
-        whatsappText={homePage?.ctaBannerWhatsappLabel?.[localeKey] ?? homePage?.ctaBannerWhatsappLabel?.en ?? ""}
-        whatsappLabel={homePage?.ctaBannerWhatsappLabel?.[localeKey] ?? homePage?.ctaBannerWhatsappLabel?.en ?? ""}
+        whatsappText={
+          homePage?.ctaBannerWhatsappLabel?.[localeKey] ??
+          homePage?.ctaBannerWhatsappLabel?.en ??
+          ""
+        }
+        whatsappLabel={
+          homePage?.ctaBannerWhatsappLabel?.[localeKey] ??
+          homePage?.ctaBannerWhatsappLabel?.en ??
+          ""
+        }
       />
     </>
   );

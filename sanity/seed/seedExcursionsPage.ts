@@ -237,7 +237,7 @@ async function seed() {
   const result = await transaction.commit();
   console.log(`\n✅ Done! ${result.results.length} documents created.`);
   console.log(
-    "   Open Sanity Studio to upload images for the hero and categories.\n"
+    "   Open Sanity Studio to upload images for the hero and categories.\n",
   );
 }
 
