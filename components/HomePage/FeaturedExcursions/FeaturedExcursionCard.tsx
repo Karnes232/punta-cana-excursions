@@ -68,7 +68,7 @@ export function FeaturedExcursionCard({
             src={excursion.image.url}
             alt={excursion.image.alt}
             fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            sizes="(max-width: 639px) calc(100vw - 2.5rem), (max-width: 1023px) min(50vw, 30rem), min(24rem, 100vw)"
             placeholder={excursion.image.lqip ? "blur" : "empty"}
             blurDataURL={excursion.image.lqip}
             className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"

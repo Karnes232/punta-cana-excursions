@@ -58,7 +58,7 @@ export function CategoryCard({ category, index }: CategoryCardProps) {
           src={category.image.url}
           alt={category.image.alt}
           fill
-          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 33vw"
+          sizes="(max-width: 767px) min(50vw, 22rem), min(24rem, 36vw)"
           placeholder={category.image.lqip ? "blur" : "empty"}
           blurDataURL={category.image.lqip}
           className="object-cover transition-transform duration-500 ease-out group-hover:scale-110"

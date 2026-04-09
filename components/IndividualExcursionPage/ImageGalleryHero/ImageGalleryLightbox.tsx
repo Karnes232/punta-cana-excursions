@@ -227,7 +227,7 @@ export function ImageGalleryLightbox({
             alt={currentImage.alt}
             fill
             quality={90}
-            sizes="(min-width: 1024px) 80vw, 95vw"
+            sizes="(max-width: 639px) calc(100vw - 2rem), min(calc(100vw - 8rem), 64rem)"
             placeholder={currentImage.lqip ? "blur" : "empty"}
             blurDataURL={currentImage.lqip}
             className="object-contain rounded-lg"
@@ -295,7 +295,7 @@ export function ImageGalleryLightbox({
                 alt=""
                 fill
                 quality={30}
-                sizes="64px"
+                sizes="(min-width: 640px) 64px, 56px"
                 className="object-cover"
               />
             </button>

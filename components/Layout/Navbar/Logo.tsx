@@ -19,6 +19,7 @@ export default function Logo({
         alt={"Punta Cana Excursions"}
         width={width}
         height={height}
+        loading="eager"
       />
       {/* <div className="w-10 h-10 rounded-lg bg-[#005F86] flex items-center justify-center shrink-0 transition-transform duration-200 group-hover:scale-105">
         <svg width="24" height="24" viewBox="0 0 26 26" fill="none">

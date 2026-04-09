@@ -41,12 +41,10 @@ const portableTextComponents: Partial<PortableTextReactComponents> = {
         {children}
       </h5>
     ),
-    // Block quote
+    // Block quote — children are inline nodes from PT; avoid an inner <p> (can duplicate or nest badly vs browser parsing)
     blockquote: ({ children }) => (
-      <blockquote className="relative pl-5 border-l-[3px] border-teal/40 my-6 py-1">
-        <p className="font-body text-slate/75 italic leading-[1.7]">
-          {children}
-        </p>
+      <blockquote className="relative pl-5 border-l-[3px] border-teal/40 my-6 py-1 font-body text-slate/75 italic leading-[1.7]">
+        {children}
       </blockquote>
     ),
   },
@@ -82,7 +80,8 @@ const portableTextComponents: Partial<PortableTextReactComponents> = {
             d="M4.5 12.75l6 6 9-13.5"
           />
         </svg>
-        <span>{children}</span>
+        {/* Use a div: PT can render block-level nodes here when list item style ≠ normal; <span> + <p> breaks hydration */}
+        <div className="min-w-0 flex-1">{children}</div>
       </li>
     ),
     number: ({ children }) => (

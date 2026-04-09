@@ -68,8 +68,8 @@ export function ImageGalleryHeroMain({
             isMobileHero
               ? "100vw"
               : isSecondary
-                ? "(min-width: 1024px) 25vw, 50vw"
-                : "(min-width: 1024px) 50vw, 100vw"
+                ? "(min-width: 1280px) min(25vw, 22rem), (min-width: 768px) 25vw, 50vw"
+                : "(min-width: 1280px) min(50vw, 45rem), (min-width: 768px) 50vw, 100vw"
           }
           priority={index === 0}
           placeholder={image.lqip ? "blur" : "empty"}

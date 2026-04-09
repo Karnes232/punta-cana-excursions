@@ -18,7 +18,6 @@ export default async function ExcursionPage({
 }) {
   const { locale, slug } = await params;
   const excursion = await getIndividualExcursion(slug);
-  console.log(excursion?.highlights);
   return (
     <>
       <ImageGalleryHero

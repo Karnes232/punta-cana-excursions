@@ -22,7 +22,7 @@ export default async function Home({
     getExcursionCategoryHomePage(),
   ]);
   const localeKey = locale as keyof LocalizedField;
-  console.log(excursionCategories);
+
   return (
     <>
       <Hero

@@ -49,7 +49,7 @@ export function BrandIntroImage({ src, alt, lqip }: BrandIntroImageProps) {
           src={src}
           alt={alt}
           fill
-          sizes="(max-width: 1024px) 100vw, 50vw"
+          sizes="(max-width: 1023px) calc(100vw - 3rem), min(42rem, calc(50vw - 2rem))"
           placeholder={lqip ? "blur" : "empty"}
           blurDataURL={lqip}
           className="object-cover"
