@@ -136,7 +136,7 @@ export function FullDescriptionBody({ body }: FullDescriptionBodyProps) {
   return (
     <div
       ref={ref}
-      className="max-w-3xl transition-all duration-700 ease-out"
+      className="transition-all duration-700 ease-out"
       style={{
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? "translateY(0)" : "translateY(14px)",

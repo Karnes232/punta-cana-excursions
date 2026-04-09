@@ -1,9 +1,14 @@
+import { ExcursionContentLayout } from "@/components/IndividualExcursionPage/ExcursionContentLayout";
+import { ExcursionFaq } from "@/components/IndividualExcursionPage/ExcursionFaq/ExcursionFaq";
 import { FullDescription } from "@/components/IndividualExcursionPage/FullDescription/FullDescription";
 import { Highlights } from "@/components/IndividualExcursionPage/Highlights/Highlights";
 import { ImageGalleryHero } from "@/components/IndividualExcursionPage/ImageGalleryHero/ImageGalleryHero";
 import { PriceDeposit } from "@/components/IndividualExcursionPage/PriceDeposit/PriceDeposit";
+import { RelatedExcursions } from "@/components/IndividualExcursionPage/RelatedExcursions/RelatedExcursions";
+import { Restrictions } from "@/components/IndividualExcursionPage/Restrictions/Restrictions";
 import { TitleSummary } from "@/components/IndividualExcursionPage/TitleSummary/TitleSummary";
 import { WhatsIncluded } from "@/components/IndividualExcursionPage/WhatsIncluded/WhatsIncluded";
+import { WhatToBring } from "@/components/IndividualExcursionPage/WhatToBring/WhatToBring";
 import {
   getLocalized,
   getLocalizedPortableText,
@@ -18,6 +23,12 @@ export default async function ExcursionPage({
 }) {
   const { locale, slug } = await params;
   const excursion = await getIndividualExcursion(slug);
+  const faq = excursion?.faq?.map((item) => ({
+    _key: item._key,
+    question: getLocalized(item.question, locale),
+    answer: getLocalized(item.answer, locale),
+  }));
+  console.log(excursion?.relatedExcursions);
   return (
     <>
       <ImageGalleryHero
@@ -65,47 +76,102 @@ export default async function ExcursionPage({
           pickupZones: locale === "es" ? "Zonas de recogida" : "Pickup Zones",
         }}
       />
-      <PriceDeposit
-        price={excursion?.price ?? 0}
-        depositAmount={excursion?.depositAmount ?? 0}
-        priceNote={getLocalized(excursion?.priceNote, locale)}
-        excursionTitle={getLocalized(excursion?.title, locale)}
-        whatsappNumber={"18091234567"}
-        labels={{
-          from: "From",
-          perPerson: "per person",
-          depositRequired: "Deposit to reserve",
-          payRestOnsite: "Pay the rest on the day of the excursion",
-          reserveNow: "Reserve Your Spot",
-          whatsappCta: "Ask on WhatsApp",
-          whatsappMessage:
-            "Hi, I'm interested in the {title} excursion. Can you provide more information?",
-          freeCancellation: "Free cancellation 24h before",
-          instantConfirmation: "Instant confirmation",
-          securePayment: "Secure payment",
-        }}
-      />
-      <Highlights
-        highlights={getLocalizedStringArray(excursion?.highlights, locale)}
-        locale={locale}
-        labels={{
-          heading: "Highlights",
-          subheading: "What makes this excursion special",
-        }}
-      />
-      <FullDescription
-        body={getLocalizedPortableText(excursion?.fullDescription, locale)}
-        labels={{
-          heading: "Full Description",
-        }}
-      />
-      <WhatsIncluded
-        items={getLocalizedStringArray(excursion?.whatsIncluded, locale)}
-        labels={{
-          heading: "Whats Included",
-          subheading: "Everything covered in your excursion price",
-        }}
-      />
+      <ExcursionContentLayout
+        sidebar={
+          <PriceDeposit
+            price={excursion?.price ?? 0}
+            depositAmount={excursion?.depositAmount ?? 0}
+            priceNote={getLocalized(excursion?.priceNote, locale)}
+            excursionTitle={getLocalized(excursion?.title, locale)}
+            whatsappNumber={"18091234567"}
+            labels={{
+              from: "From",
+              perPerson: "per person",
+              depositRequired: "Deposit to reserve",
+              payRestOnsite: "Pay the rest on the day of the excursion",
+              reserveNow: "Reserve Your Spot",
+              whatsappCta: "Ask on WhatsApp",
+              whatsappMessage:
+                "Hi, I'm interested in the {title} excursion. Can you provide more information?",
+              freeCancellation: "Free cancellation 24h before",
+              instantConfirmation: "Instant confirmation",
+              securePayment: "Secure payment",
+            }}
+          />
+        }
+      >
+        <Highlights
+          highlights={getLocalizedStringArray(excursion?.highlights, locale)}
+          locale={locale}
+          labels={{
+            heading: "Highlights",
+            subheading: "What makes this excursion special",
+          }}
+        />
+        <FullDescription
+          body={getLocalizedPortableText(excursion?.fullDescription, locale)}
+          labels={{
+            heading: "Full Description",
+          }}
+        />
+        <WhatsIncluded
+          items={getLocalizedStringArray(excursion?.whatsIncluded, locale)}
+          labels={{
+            heading: "Whats Included",
+            subheading: "Everything covered in your excursion price",
+          }}
+        />
+        <WhatToBring
+          items={getLocalizedStringArray(excursion?.whatToBring, locale)}
+          labels={{
+            heading: "What to Bring",
+            subheading: "Pack these for the best experience",
+          }}
+        />
+        <Restrictions
+          items={getLocalizedStringArray(excursion?.restrictions, locale)}
+          labels={{
+            heading: "Restrictions",
+            subheading: "Please review before booking",
+          }}
+        />
+        <ExcursionFaq
+          items={faq ?? []}
+          labels={{
+            heading: "FAQ",
+            subheading: "Common questions about this excursion",
+          }}
+        />
+      </ExcursionContentLayout>
+      {excursion?.relatedExcursions && (
+        <RelatedExcursions
+          excursions={
+            excursion?.relatedExcursions?.map((excursion) => ({
+              slug: excursion.slug.current,
+              title: getLocalized(excursion.title, locale),
+              summary: getLocalized(excursion.shortSummary, locale),
+              image: {
+                asset: {
+                  url: excursion.heroImage.asset.url,
+                  metadata: {
+                    lqip: excursion.heroImage.asset.metadata.lqip,
+                  },
+                },
+                alt: getLocalized(excursion.heroImage.alt, locale),
+              },
+              price: excursion.price,
+              duration: getLocalized(excursion.duration, locale),
+              category: getLocalized(excursion.category.title, locale),
+            })) ?? []
+          }
+          labels={{
+            heading: "Related Excursions",
+            subheading: "More excursions to explore",
+            viewDetails: "View details",
+            from: "From",
+          }}
+        />
+      )}
     </>
   );
 }
