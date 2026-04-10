@@ -1,5 +1,6 @@
 import type { StructureResolver } from "sanity/structure";
 import { CogIcon, HomeIcon } from "@sanity/icons";
+const apiVersion = 'v2025-02-19'
 // https://www.sanity.io/docs/structure-builder-cheat-sheet
 export const structure: StructureResolver = (S) =>
   S.list()
@@ -57,6 +58,7 @@ export const structure: StructureResolver = (S) =>
         .child(
           S.documentList()
             .title("Excursion categories")
+            .apiVersion(apiVersion)
             .filter("_type == 'excursionCategory'"),
         ),
       S.divider(),
@@ -64,6 +66,9 @@ export const structure: StructureResolver = (S) =>
         .title("Excursion")
         .icon("🧭")
         .child(
-          S.documentList().title("Excursions").filter("_type == 'excursion'"),
+          S.documentList()
+            .title("Excursions")
+            .apiVersion(apiVersion)
+            .filter("_type == 'excursion'"),
         ),
     ]);
