@@ -6,7 +6,6 @@ export const aboutPage = defineType({
   title: "About Page",
   type: "document",
   icon: InfoOutlineIcon,
-  __experimental_actions: ["update", "publish"],
 
   groups: [
     { name: "hero", title: "Hero", default: true },
