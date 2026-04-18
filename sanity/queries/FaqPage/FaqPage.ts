@@ -1,0 +1,52 @@
+import { client } from "@/sanity/lib/client";
+import type { LocalizedField } from "../GeneralLayout/generalLayoutQuery";
+
+// =============================================================================
+// Types
+// =============================================================================
+
+export interface FaqItem {
+  _key: string;
+  question: LocalizedField;
+  answer: LocalizedField;
+}
+
+export interface FaqCategory {
+  _key: string;
+  categoryName: LocalizedField;
+  icon: string | null;
+  items: FaqItem[];
+}
+
+export interface FaqPageData {
+  heroHeadline: LocalizedField;
+  heroSubheadline: LocalizedField;
+  categories: FaqCategory[];
+}
+
+// =============================================================================
+// Query
+// =============================================================================
+
+const faqPageQuery = /* groq */ `*[_type == "faqPage"][0] {
+  heroHeadline,
+  heroSubheadline,
+  categories[] {
+    _key,
+    categoryName,
+    icon,
+    items[] {
+      _key,
+      question,
+      answer
+    }
+  }
+}`;
+
+// =============================================================================
+// Fetch function
+// =============================================================================
+
+export async function getFaqPage(): Promise<FaqPageData | null> {
+  return client.fetch<FaqPageData>(faqPageQuery);
+}

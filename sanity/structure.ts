@@ -96,6 +96,26 @@ export const structure: StructureResolver = (S) =>
         ),
       S.divider(),
       S.listItem()
+        .title("FAQ page")
+        .icon(() => "❓")
+        .child(
+          S.document()
+            .schemaType("faqPage")
+            .documentId("faqPage")
+            .title("FAQ page"),
+        ),
+      S.divider(),
+      S.listItem()
+        .title("Contact page")
+        .icon(() => "✉️")
+        .child(
+          S.document()
+            .schemaType("contactPage")
+            .documentId("contactPage")
+            .title("Contact page"),
+        ),
+      S.divider(),
+      S.listItem()
         .title("About page")
         .icon(() => "👋")
         .child(
@@ -103,5 +123,39 @@ export const structure: StructureResolver = (S) =>
             .schemaType("aboutPage")
             .documentId("aboutPage")
             .title("About page"),
+        ),
+      S.divider(),
+      S.listItem()
+        .title("Legal documents")
+        .icon(() => "📄")
+        .child(
+          S.list()
+            .title("Legal documents")
+            .items([
+              S.listItem()
+                .title("Privacy Policy")
+                .child(
+                  S.document()
+                    .schemaType("legalDocument")
+                    .documentId("privacy-policy")
+                    .title("Privacy Policy"),
+                ),
+              S.listItem()
+                .title("Terms of Service")
+                .child(
+                  S.document()
+                    .schemaType("legalDocument")
+                    .documentId("terms-of-service")
+                    .title("Terms of Service"),
+                ),
+              S.listItem()
+                .title("Cancellation Policy")
+                .child(
+                  S.document()
+                    .schemaType("legalDocument")
+                    .documentId("cancellation-policy")
+                    .title("Cancellation Policy"),
+                ),
+            ]),
         ),
     ]);

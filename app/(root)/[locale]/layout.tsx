@@ -33,7 +33,7 @@ export default async function RootLayout({
   const [generalLayout] = await Promise.all([getGeneralLayout()]);
 
   return (
-    <html lang={locale} className={`${montserrat.variable} ${inter.variable}`}>
+    <html lang={locale} className={`${montserrat.variable} ${inter.variable}`} data-scroll-behavior="smooth">
       <body className={`antialiased`}>
         <NextIntlClientProvider>
           <Navbar
