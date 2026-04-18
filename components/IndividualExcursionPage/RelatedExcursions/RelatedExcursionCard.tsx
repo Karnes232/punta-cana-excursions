@@ -47,7 +47,7 @@ export function RelatedExcursionCard({
       }}
     >
       <Link
-        href={`/excursions/${excursion.slug}`}
+        href={excursion.href ?? `/excursions/${excursion.slug}`}
         className="group flex flex-col bg-white rounded-2xl overflow-hidden border border-sand-dark/25 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
       >
         {/* Image */}

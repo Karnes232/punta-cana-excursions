@@ -28,7 +28,7 @@ export default async function ExcursionPage({
     question: getLocalized(item.question, locale),
     answer: getLocalized(item.answer, locale),
   }));
-  console.log(excursion?.relatedExcursions);
+
   return (
     <>
       <ImageGalleryHero

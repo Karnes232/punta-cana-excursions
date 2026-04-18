@@ -83,4 +83,25 @@ export const structure: StructureResolver = (S) =>
             .documentId("divingSnorkelingPage")
             .title("Diving & Snorkeling page"),
         ),
+      S.divider(),
+      S.listItem()
+        .title("Diving & Snorkeling Excursions")
+        .icon(() => "🤿")
+        .child(
+          S.documentList()
+            .title("Diving & Snorkeling Excursions")
+            .apiVersion(apiVersion)
+            .filter("_type == 'divingExcursion'")
+            .defaultOrdering([{ field: "sortOrder", direction: "asc" }]),
+        ),
+      S.divider(),
+      S.listItem()
+        .title("About page")
+        .icon(() => "👋")
+        .child(
+          S.document()
+            .schemaType("aboutPage")
+            .documentId("aboutPage")
+            .title("About page"),
+        ),
     ]);

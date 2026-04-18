@@ -16,6 +16,7 @@ import { WaterExcursionsEmptyState } from "./WaterExcursionsEmptyState";
 
 export interface WaterExcursion {
   slug: string;
+  href: string;
   title: string;
   summary: string;
   image: {

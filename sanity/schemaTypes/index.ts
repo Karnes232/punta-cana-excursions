@@ -18,6 +18,9 @@ import { excursion } from "./IndividualExcursionPage/Excursion";
 
 // Diving & Snorkeling Page Types
 import { divingSnorkelingPage } from "./DivingSnorkelingPage/DivingSnorkelingPage";
+import { divingExcursion } from "./DivingSnorkelingPage/DivingExcursion";
+// About Page Types
+import { aboutPage } from "./AboutPage/AboutPage";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -38,5 +41,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     excursion,
     // Diving & Snorkeling Page Types
     divingSnorkelingPage,
+    divingExcursion,
+    // About Page Types
+    aboutPage,
   ],
 };

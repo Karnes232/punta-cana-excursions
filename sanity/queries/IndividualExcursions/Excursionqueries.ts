@@ -337,6 +337,35 @@ export const excursionSlugsQuery = `*[_type == "excursion" && defined(slug.curre
     "slug": slug.current
 }`;
 
+export const featuredExcursionsQuery = `*[_type == "excursion" && isFeatured == true] | order(sortOrder asc) [0...3] {
+    _id,
+    title,
+    slug,
+    shortSummary,
+    price,
+    duration,
+    isFeatured,
+    badge,
+    sortOrder,
+    heroImage {
+        asset-> {
+            _id,
+            url,
+            metadata {
+                lqip
+            }
+        },
+        alt,
+        hotspot,
+        crop
+    },
+    category-> {
+        _id,
+        title,
+        slug
+    }
+}`;
+
 // =============================================================================
 // Fetch functions
 // =============================================================================
@@ -349,6 +378,10 @@ export async function getIndividualExcursion(
 
 export async function getExcursionList(): Promise<ExcursionListItem[]> {
   return await client.fetch(excursionListQuery);
+}
+
+export async function getFeaturedExcursions(): Promise<ExcursionListItem[]> {
+  return await client.fetch(featuredExcursionsQuery);
 }
 
 export async function getExcursionSlugs(): Promise<ExcursionSlug[]> {

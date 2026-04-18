@@ -3,6 +3,8 @@ import { RelatedExcursionCard } from "./RelatedExcursionCard";
 
 export interface RelatedExcursionData {
   slug: string;
+  /** Full href for the card link. Defaults to /excursions/${slug}. */
+  href?: string;
   title: string;
   summary: string;
   image: {

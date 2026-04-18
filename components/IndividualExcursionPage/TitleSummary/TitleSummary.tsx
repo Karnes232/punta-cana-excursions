@@ -13,6 +13,10 @@ interface TitleSummaryProps {
     title: string;
     slug: string;
   };
+  /** Override breadcrumb section href (e.g. "/diving-snorkeling"). Default: "/excursions". */
+  sectionHref?: string;
+  /** Override breadcrumb category href. Default: `${sectionHref}?category=${slug}`. */
+  categoryHref?: string;
   /** Optional badge label (e.g. "Most Popular", "Best Seller") */
   badge?: string | null;
   /** Key stats displayed in the stats bar */
@@ -39,6 +43,8 @@ export function TitleSummary({
   badge,
   stats,
   labels,
+  sectionHref,
+  categoryHref,
 }: TitleSummaryProps) {
   return (
     <section className="relative bg-white">
@@ -48,6 +54,8 @@ export function TitleSummary({
           categoryTitle={category.title}
           categorySlug={category.slug}
           excursionsLabel={labels.excursions}
+          sectionHref={sectionHref}
+          categoryHref={categoryHref}
         />
 
         {/* Title + Badge row */}

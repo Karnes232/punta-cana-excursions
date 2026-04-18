@@ -4,13 +4,21 @@ interface TitleBreadcrumbProps {
   categoryTitle: string;
   categorySlug: string;
   excursionsLabel: string;
+  /** Override the section link href. Defaults to "/excursions". */
+  sectionHref?: string;
+  /** Override the category link href. Defaults to `${sectionHref}?category=${categorySlug}`. */
+  categoryHref?: string;
 }
 
 export function TitleBreadcrumb({
   categoryTitle,
   categorySlug,
   excursionsLabel,
+  sectionHref = "/excursions",
+  categoryHref,
 }: TitleBreadcrumbProps) {
+  const resolvedCategoryHref = categoryHref ?? `${sectionHref}?category=${categorySlug}`;
+
   return (
     <nav
       aria-label="Breadcrumb"
@@ -26,7 +34,7 @@ export function TitleBreadcrumb({
       <ChevronSeparator />
 
       <Link
-        href="/excursions"
+        href={sectionHref}
         className="text-gray-400 hover:text-ocean transition-colors duration-200"
       >
         {excursionsLabel}
@@ -35,7 +43,7 @@ export function TitleBreadcrumb({
       <ChevronSeparator />
 
       <Link
-        href={`/excursions?category=${categorySlug}`}
+        href={resolvedCategoryHref}
         className="text-gray-400 hover:text-ocean transition-colors duration-200"
       >
         {categoryTitle}

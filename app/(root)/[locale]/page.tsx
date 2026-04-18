@@ -8,19 +8,25 @@ import { Reviews } from "@/components/HomePage/Reviews/Reviews";
 import { FaqPreview } from "@/components/HomePage/FaqPreview/FaqPreview";
 import { CtaBanner } from "@/components/HomePage/CtaBanner/CtaBanner";
 import { getHomePage } from "@/sanity/queries/HomePage/HomePage";
-import { LocalizedField } from "@/sanity/queries/GeneralLayout/generalLayoutQuery";
+import {
+  getLocalized,
+  LocalizedField,
+} from "@/sanity/queries/GeneralLayout/generalLayoutQuery";
 import { getExcursionCategoryHomePage } from "@/sanity/queries/ExcursionCategory/ExcursionCategory";
+import { getFeaturedExcursions } from "@/sanity/queries/IndividualExcursions/Excursionqueries";
 
 export default async function Home({
   params,
 }: {
   params: Promise<{ locale: string }>;
 }) {
-  const [{ locale }, homePage, excursionCategories] = await Promise.all([
-    params,
-    getHomePage(),
-    getExcursionCategoryHomePage(),
-  ]);
+  const [{ locale }, homePage, excursionCategories, featuredExcursions] =
+    await Promise.all([
+      params,
+      getHomePage(),
+      getExcursionCategoryHomePage(),
+      getFeaturedExcursions(),
+    ]);
   const localeKey = locale as keyof LocalizedField;
 
   return (
@@ -57,53 +63,20 @@ export default async function Home({
         subheading={homePage?.featuredSubheading?.[localeKey] ?? ""}
         viewAllText={homePage?.featuredViewAllText?.[localeKey] ?? ""}
         viewAllHref="/excursions"
-        excursions={[
-          {
-            slug: "punta-cana-excursion-1",
-            title: "Punta Cana Excursion 1",
-            summary:
-              "Experience the best of Punta Cana with our tours and activities. From snorkeling to diving, we have something for everyone.",
-            image: {
-              url: `https://picsum.photos/1000/1000?random=${Math.random()}`,
-              alt: "Punta Cana Excursions",
-              lqip: `https://picsum.photos/1000/1000?random=${Math.random()}`,
-            },
-            price: 100,
-            duration: "1 hour",
-            category: "Adventure",
-            badge: "Popular",
+        excursions={featuredExcursions.map((exc) => ({
+          slug: exc.slug.current,
+          title: getLocalized(exc.title, locale),
+          summary: getLocalized(exc.shortSummary, locale),
+          image: {
+            url: exc.heroImage?.asset?.url ?? "",
+            alt: getLocalized(exc.heroImage?.alt, locale),
+            lqip: exc.heroImage?.asset?.metadata?.lqip ?? "",
           },
-          {
-            slug: "punta-cana-excursion-2",
-            title: "Punta Cana Excursion 2",
-            summary:
-              "Experience the best of Punta Cana with our tours and activities. From snorkeling to diving, we have something for everyone.",
-            image: {
-              url: `https://picsum.photos/1000/1000?random=${Math.random()}`,
-              alt: "Punta Cana Excursions",
-              lqip: `https://picsum.photos/1000/1000?random=${Math.random()}`,
-            },
-            price: 200,
-            duration: "2 hours",
-            category: "Adventure",
-            badge: "Popular",
-          },
-          {
-            slug: "punta-cana-excursion-3",
-            title: "Punta Cana Excursion 3",
-            summary:
-              "Experience the best of Punta Cana with our tours and activities. From snorkeling to diving, we have something for everyone.",
-            image: {
-              url: `https://picsum.photos/1000/1000?random=${Math.random()}`,
-              alt: "Punta Cana Excursions",
-              lqip: `https://picsum.photos/1000/1000?random=${Math.random()}`,
-            },
-            price: 300,
-            duration: "3 hours",
-            category: "Adventure",
-            badge: "Popular",
-          },
-        ]}
+          price: exc.price,
+          duration: getLocalized(exc.duration, locale),
+          category: getLocalized(exc.category?.title, locale),
+          badge: exc.badge ? getLocalized(exc.badge, locale) : undefined,
+        }))}
       />
       <ExcursionCategories
         heading={
