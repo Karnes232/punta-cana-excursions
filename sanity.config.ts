@@ -17,6 +17,8 @@ export default defineConfig({
   basePath: "/studio",
   projectId,
   dataset,
+  /** Keeps Studio client + realtime socket on the same API version as your Next.js client. */
+  apiVersion,
   // Add and edit the content schema in the './sanity/schemaTypes' folder
   schema,
   plugins: [

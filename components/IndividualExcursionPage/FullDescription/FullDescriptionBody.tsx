@@ -17,7 +17,7 @@ interface FullDescriptionBodyProps {
  * If you already have a shared BlockContent renderer at src/components/BlockContent,
  * you can import that instead and delete these custom components.
  */
-const portableTextComponents: Partial<PortableTextReactComponents> = {
+export const portableTextComponents: Partial<PortableTextReactComponents> = {
   block: {
     // Standard paragraph
     normal: ({ children }) => (

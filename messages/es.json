@@ -16,5 +16,16 @@
     "privacyPolicy": "Política de Privacidad",
     "termsOfService": "Términos de Servicio",
     "cancellationPolicy": "Política de Cancelación"
+  },
+  "divingSnorkeling": {
+    "divingSectionHeading": "Excursiones de Buceo",
+    "divingSectionSubheading": "Explora nuestras excursiones de buceo",
+    "snorkelingSectionHeading": "Excursiones de Snorkel",
+    "snorkelingSectionSubheading": "Explora nuestras excursiones de snorkel",
+    "from": "Desde",
+    "perPerson": "Por Persona",
+    "viewDetails": "Ver Detalles",
+    "noExcursions": "No hay excursiones disponibles",
+    "noExcursionsMessage": "No hay excursiones disponibles en este momento. Por favor, revisa más tarde."
   }
 }

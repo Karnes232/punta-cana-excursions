@@ -357,20 +357,27 @@ export const excursion = defineType({
   // ===========================================================================
 
   preview: {
+    // Avoid traversing references (e.g. category.title) in select — each join
+    // slows the document list because Studio resolves them per row.
     select: {
       title: "title.en",
-      subtitle: "shortSummary.en",
+      shortSummary: "shortSummary.en",
       media: "heroImage",
-      category: "category.title.en",
       isFeatured: "isFeatured",
       price: "price",
     },
-    prepare({ title, subtitle, media, category, isFeatured, price }) {
+    prepare({ title, shortSummary, media, isFeatured, price }) {
       const badge = isFeatured ? "⭐ " : "";
-      const priceStr = price ? ` — $${price}` : "";
+      const priceStr = typeof price === "number" ? ` · $${price}` : "";
+      const summary =
+        typeof shortSummary === "string" && shortSummary.length > 0
+          ? shortSummary.length > 72
+            ? `${shortSummary.slice(0, 72)}…`
+            : shortSummary
+          : null;
       return {
         title: `${badge}${title || "Untitled Excursion"}`,
-        subtitle: `${category || "No category"}${priceStr}`,
+        subtitle: summary ? `${summary}${priceStr}` : priceStr.trim() || "Excursion",
         media,
       };
     },

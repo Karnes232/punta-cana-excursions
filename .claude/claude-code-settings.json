@@ -1,0 +1,29 @@
+{
+    "$schema": "https://claude.ai/schema/settings.json",
+    "permissions": {
+      "allow": [
+        "Read",
+        "Edit",
+        "Bash(npx tsx *)",
+        "Bash(npm run *)",
+        "Bash(npm install *)",
+        "Bash(npx sanity *)",
+        "Bash(cat *)",
+        "Bash(ls *)",
+        "Bash(find *)",
+        "Bash(mkdir *)",
+        "Bash(cp *)",
+        "Bash(mv *)",
+        "Bash(head *)",
+        "Bash(tail *)",
+        "Bash(grep *)",
+        "Bash(wc *)"
+      ],
+      "deny": [
+        "Bash(rm -rf /)",
+        "Bash(rm -rf ~)",
+        "Bash(git push *)",
+        "Bash(git reset --hard *)"
+      ]
+    }
+  }

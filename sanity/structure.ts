@@ -1,6 +1,6 @@
 import type { StructureResolver } from "sanity/structure";
 import { CogIcon, HomeIcon } from "@sanity/icons";
-const apiVersion = 'v2025-02-19'
+const apiVersion = "v2025-02-19";
 // https://www.sanity.io/docs/structure-builder-cheat-sheet
 export const structure: StructureResolver = (S) =>
   S.list()
@@ -44,7 +44,7 @@ export const structure: StructureResolver = (S) =>
       S.divider(),
       S.listItem()
         .title("Excursions page")
-        .icon("📝")
+        .icon(() => "📝")
         .child(
           S.document()
             .schemaType("excursionsPage")
@@ -54,21 +54,33 @@ export const structure: StructureResolver = (S) =>
       S.divider(),
       S.listItem()
         .title("Excursion category")
-        .icon("📝")
+        .icon(() => "📝")
         .child(
           S.documentList()
             .title("Excursion categories")
             .apiVersion(apiVersion)
-            .filter("_type == 'excursionCategory'"),
+            .filter("_type == 'excursionCategory'")
+            .defaultOrdering([{ field: "sortOrder", direction: "asc" }]),
         ),
       S.divider(),
       S.listItem()
         .title("Excursion")
-        .icon("🧭")
+        .icon(() => "🧭")
         .child(
           S.documentList()
             .title("Excursions")
             .apiVersion(apiVersion)
-            .filter("_type == 'excursion'"),
+            .filter("_type == 'excursion'")
+            .defaultOrdering([{ field: "sortOrder", direction: "asc" }]),
+        ),
+      S.divider(),
+      S.listItem()
+        .title("Diving & Snorkeling page")
+        .icon(() => "🧭")
+        .child(
+          S.document()
+            .schemaType("divingSnorkelingPage")
+            .documentId("divingSnorkelingPage")
+            .title("Diving & Snorkeling page"),
         ),
     ]);

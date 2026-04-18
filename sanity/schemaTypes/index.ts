@@ -16,6 +16,9 @@ import { excursionCategory } from "./ExcursionCategory/ExcursionCategory";
 
 import { excursion } from "./IndividualExcursionPage/Excursion";
 
+// Diving & Snorkeling Page Types
+import { divingSnorkelingPage } from "./DivingSnorkelingPage/DivingSnorkelingPage";
+
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
     // Localized Types
@@ -33,5 +36,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     excursionCategory,
     // Excursion Types
     excursion,
+    // Diving & Snorkeling Page Types
+    divingSnorkelingPage,
   ],
 };
