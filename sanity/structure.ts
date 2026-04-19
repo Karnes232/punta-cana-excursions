@@ -96,6 +96,42 @@ export const structure: StructureResolver = (S) =>
         ),
       S.divider(),
       S.listItem()
+        .title("Blog")
+        .icon(() => "📰")
+        .child(
+          S.list()
+            .title("Blog")
+            .items([
+              S.listItem()
+                .title("Blog page")
+                .child(
+                  S.document()
+                    .schemaType("blogPage")
+                    .documentId("blogPage")
+                    .title("Blog page"),
+                ),
+              S.listItem()
+                .title("Blog categories")
+                .child(
+                  S.documentList()
+                    .title("Blog categories")
+                    .apiVersion(apiVersion)
+                    .filter("_type == 'blogCategory'")
+                    .defaultOrdering([{ field: "sortOrder", direction: "asc" }]),
+                ),
+              S.listItem()
+                .title("Blog articles")
+                .child(
+                  S.documentList()
+                    .title("Blog articles")
+                    .apiVersion(apiVersion)
+                    .filter("_type == 'blogArticle'")
+                    .defaultOrdering([{ field: "publishedAt", direction: "desc" }]),
+                ),
+            ]),
+        ),
+      S.divider(),
+      S.listItem()
         .title("FAQ page")
         .icon(() => "❓")
         .child(

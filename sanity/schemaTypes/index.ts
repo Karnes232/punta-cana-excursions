@@ -25,6 +25,10 @@ import { aboutPage } from "./AboutPage/AboutPage";
 import { faqPage } from "./FaqPage/FaqPage";
 // Contact Page Types
 import { contactPage } from "./ContactPage/ContactPage";
+// Blog Types
+import { blogPage } from "./BlogPage/BlogPage";
+import { blogCategory } from "./Blog/BlogCategory";
+import { blogArticle } from "./Blog/BlogArticle";
 // Legal Page Types
 import { legalDocument } from "./LegalPages/LegalDocument";
 
@@ -54,6 +58,10 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     faqPage,
     // Contact Page Types
     contactPage,
+    // Blog Types
+    blogPage,
+    blogCategory,
+    blogArticle,
     // Legal Page Types
     legalDocument,
   ],
