@@ -43,6 +43,7 @@ export default async function ContactPage({
         name: "Nombre completo",
         email: "Correo electrónico",
         phone: "Teléfono (opcional)",
+        hotel: "Hotel (opcional)",
         excursion: "Excursión de interés (opcional)",
         message: "Mensaje",
         submit: "Enviar por WhatsApp",
@@ -56,6 +57,7 @@ export default async function ContactPage({
         namePlaceholder: "Juan García",
         emailPlaceholder: "juan@ejemplo.com",
         phonePlaceholder: "+1 (809) 000-0000",
+        hotelPlaceholder: "Ej: Barceló Bávaro Palace...",
         excursionPlaceholder: "Ej: Excursión en catamarán, snorkel...",
         messagePlaceholder: "Cuéntenos sobre su grupo, fechas y cualquier pregunta...",
       }
@@ -63,6 +65,7 @@ export default async function ContactPage({
         name: "Full name",
         email: "Email address",
         phone: "Phone (optional)",
+        hotel: "Hotel (optional)",
         excursion: "Excursion of interest (optional)",
         message: "Message",
         submit: "Send via WhatsApp",
@@ -76,6 +79,7 @@ export default async function ContactPage({
         namePlaceholder: "John Smith",
         emailPlaceholder: "john@example.com",
         phonePlaceholder: "+1 (809) 000-0000",
+        hotelPlaceholder: "e.g. Barceló Bávaro Palace...",
         excursionPlaceholder: "e.g. Catamaran trip, snorkeling...",
         messagePlaceholder: "Tell us about your group, dates, and any questions...",
       };

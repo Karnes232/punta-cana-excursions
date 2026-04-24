@@ -83,19 +83,20 @@ export default async function ExcursionPage({
             depositAmount={excursion?.depositAmount ?? 0}
             priceNote={getLocalized(excursion?.priceNote, locale)}
             excursionTitle={getLocalized(excursion?.title, locale)}
-            whatsappNumber={"18091234567"}
+            whatsappNumber="18091234567"
+            locale={locale}
             labels={{
-              from: "From",
-              perPerson: "per person",
-              depositRequired: "Deposit to reserve",
-              payRestOnsite: "Pay the rest on the day of the excursion",
-              reserveNow: "Reserve Your Spot",
-              whatsappCta: "Ask on WhatsApp",
-              whatsappMessage:
-                "Hi, I'm interested in the {title} excursion. Can you provide more information?",
-              freeCancellation: "Free cancellation 24h before",
-              instantConfirmation: "Instant confirmation",
-              securePayment: "Secure payment",
+              from: locale === "es" ? "Desde" : "From",
+              perPerson: locale === "es" ? "por persona" : "per person",
+              depositRequired: locale === "es" ? "Depósito para reservar" : "Deposit to reserve",
+              payRestOnsite: locale === "es"
+                ? "Paga el resto el día de la excursión"
+                : "Pay the rest on the day of the excursion",
+              reserveNow: locale === "es" ? "Reserva Tu Lugar" : "Reserve Your Spot",
+              contactCta: locale === "es" ? "Hacer una pregunta" : "Ask a Question",
+              freeCancellation: locale === "es" ? "Cancelación gratuita 24h antes" : "Free cancellation 24h before",
+              instantConfirmation: locale === "es" ? "Confirmación instantánea" : "Instant confirmation",
+              securePayment: locale === "es" ? "Pago seguro" : "Secure payment",
             }}
           />
         }

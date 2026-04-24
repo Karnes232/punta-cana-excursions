@@ -9,6 +9,7 @@ interface ContactFormProps {
     name: string;
     email: string;
     phone: string;
+    hotel: string;
     excursion: string;
     message: string;
     submit: string;
@@ -20,6 +21,7 @@ interface ContactFormProps {
     namePlaceholder: string;
     emailPlaceholder: string;
     phonePlaceholder: string;
+    hotelPlaceholder: string;
     excursionPlaceholder: string;
     messagePlaceholder: string;
   };
@@ -29,6 +31,7 @@ interface FormState {
   name: string;
   email: string;
   phone: string;
+  hotel: string;
   excursion: string;
   message: string;
 }
@@ -38,6 +41,7 @@ export function ContactForm({ headline, phone, labels }: ContactFormProps) {
     name: "",
     email: "",
     phone: "",
+    hotel: "",
     excursion: "",
     message: "",
   });
@@ -73,6 +77,7 @@ export function ContactForm({ headline, phone, labels }: ContactFormProps) {
 
     const parts = [
       `Hi, my name is ${form.name}.`,
+      form.hotel ? `I'm staying at: ${form.hotel}.` : "",
       form.excursion ? `I'm interested in: ${form.excursion}.` : "",
       form.message,
       form.phone ? `My phone: ${form.phone}` : "",
@@ -177,19 +182,34 @@ export function ContactForm({ headline, phone, labels }: ContactFormProps) {
           </div>
         </div>
 
-        {/* Excursion of interest */}
-        <div>
-          <label className="block font-body text-sm font-medium text-navy mb-1.5">
-            {labels.excursion}
-          </label>
-          <input
-            type="text"
-            name="excursion"
-            value={form.excursion}
-            onChange={handleChange}
-            placeholder={labels.excursionPlaceholder}
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 font-body text-navy text-sm bg-white placeholder:text-slate/40 outline-none transition-colors duration-150 focus:border-teal focus:ring-2 focus:ring-teal/20"
-          />
+        {/* Hotel + Excursion row */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div>
+            <label className="block font-body text-sm font-medium text-navy mb-1.5">
+              {labels.hotel}
+            </label>
+            <input
+              type="text"
+              name="hotel"
+              value={form.hotel}
+              onChange={handleChange}
+              placeholder={labels.hotelPlaceholder}
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 font-body text-navy text-sm bg-white placeholder:text-slate/40 outline-none transition-colors duration-150 focus:border-teal focus:ring-2 focus:ring-teal/20"
+            />
+          </div>
+          <div>
+            <label className="block font-body text-sm font-medium text-navy mb-1.5">
+              {labels.excursion}
+            </label>
+            <input
+              type="text"
+              name="excursion"
+              value={form.excursion}
+              onChange={handleChange}
+              placeholder={labels.excursionPlaceholder}
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 font-body text-navy text-sm bg-white placeholder:text-slate/40 outline-none transition-colors duration-150 focus:border-teal focus:ring-2 focus:ring-teal/20"
+            />
+          </div>
         </div>
 
         {/* Message */}

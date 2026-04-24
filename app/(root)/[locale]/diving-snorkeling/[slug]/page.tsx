@@ -168,6 +168,7 @@ export default async function DivingExcursionDetailPage({
             priceNote={getLocalized(excursion.priceNote, locale)}
             excursionTitle={getLocalized(excursion.title, locale)}
             whatsappNumber="18091234567"
+            locale={locale}
             labels={{
               from: isEs ? "Desde" : "From",
               perPerson: isEs ? "por persona" : "per person",
@@ -176,10 +177,7 @@ export default async function DivingExcursionDetailPage({
                 ? "Paga el resto el día de la excursión"
                 : "Pay the rest on the day of the excursion",
               reserveNow: isEs ? "Reserva Tu Lugar" : "Reserve Your Spot",
-              whatsappCta: isEs ? "Preguntar por WhatsApp" : "Ask on WhatsApp",
-              whatsappMessage: isEs
-                ? "Hola, estoy interesado/a en la excursión {title}. ¿Pueden brindarme más información?"
-                : "Hi, I'm interested in the {title} excursion. Can you provide more information?",
+              contactCta: isEs ? "Hacer una pregunta" : "Ask a Question",
               freeCancellation: isEs
                 ? "Cancelación gratuita 24h antes"
                 : "Free cancellation 24h before",
