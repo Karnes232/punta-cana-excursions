@@ -4,6 +4,8 @@ import { TitleSummaryText } from "./TitleSummaryText";
 import { TitleStatsBar } from "./TitleStatsBar";
 
 interface TitleSummaryProps {
+  /** Route locale for localized stats (e.g. weekday abbreviations) */
+  locale?: string;
   /** Excursion name */
   title: string;
   /** 1–2 sentence tagline */
@@ -25,6 +27,10 @@ interface TitleSummaryProps {
     pickupTime?: string;
     groupSize?: string;
     pickupZones?: string[];
+    activityLevel?: string;
+    daysAvailable?: string[];
+    timeSlots?: string[];
+    bookingNoticeHours?: number;
   };
   /** i18n labels */
   labels: {
@@ -33,10 +39,18 @@ interface TitleSummaryProps {
     pickup: string; // "Pickup" / "Recogida"
     groupSize: string; // "Group Size" / "Tamaño del grupo"
     pickupZones: string; // "Pickup Zones" / "Zonas de recogida"
+    activityLevel?: string; // "Activity Level" / "Nivel de actividad"
+    activityEasy?: string;
+    activityModerate?: string;
+    activityChallenging?: string;
+    schedule?: string; // "Schedule" / "Horario"
+    bookingNotice?: string; // "Book at least X hours in advance"
+    departures?: string; // "Departures" / "Salidas"
   };
 }
 
 export function TitleSummary({
+  locale = "en",
   title,
   summary,
   category,
@@ -70,7 +84,7 @@ export function TitleSummary({
 
         {/* Stats bar — duration, pickup, group size */}
         <div className="mt-6 md:mt-8">
-          <TitleStatsBar stats={stats} labels={labels} />
+          <TitleStatsBar stats={stats} labels={labels} locale={locale} />
         </div>
       </div>
 

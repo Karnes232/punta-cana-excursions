@@ -23,6 +23,12 @@ export default async function ExcursionPage({
 }) {
   const { locale, slug } = await params;
   const excursion = await getIndividualExcursion(slug);
+
+  const childAgeRange = getLocalized(excursion?.childAgeRange, locale);
+  const infantPolicy = excursion?.infantPolicy
+    ? getLocalized(excursion.infantPolicy, locale)
+    : undefined;
+
   const faq = excursion?.faq?.map((item) => ({
     _key: item._key,
     question: getLocalized(item.question, locale),
@@ -55,6 +61,7 @@ export default async function ExcursionPage({
         }}
       />
       <TitleSummary
+        locale={locale}
         title={getLocalized(excursion?.title, locale)}
         badge={excursion?.badge ? getLocalized(excursion.badge, locale) : null}
         summary={getLocalized(excursion?.shortSummary, locale)}
@@ -67,6 +74,10 @@ export default async function ExcursionPage({
           pickupTime: getLocalized(excursion?.pickupTime, locale),
           groupSize: getLocalized(excursion?.groupSize, locale),
           pickupZones: excursion?.pickupZones ?? [],
+          activityLevel: excursion?.activityLevel,
+          daysAvailable: excursion?.daysAvailable ?? [],
+          timeSlots: excursion?.timeSlots ?? [],
+          bookingNoticeHours: excursion?.bookingNoticeHours,
         }}
         labels={{
           excursions: locale === "es" ? "Excursiones" : "Excursions",
@@ -74,6 +85,13 @@ export default async function ExcursionPage({
           pickup: locale === "es" ? "Recogida" : "Pickup",
           groupSize: locale === "es" ? "Tamaño del grupo" : "Group Size",
           pickupZones: locale === "es" ? "Zonas de recogida" : "Pickup Zones",
+          activityLevel: locale === "es" ? "Nivel de actividad" : "Activity Level",
+          activityEasy: locale === "es" ? "Fácil" : "Easy",
+          activityModerate: locale === "es" ? "Moderado" : "Moderate",
+          activityChallenging: locale === "es" ? "Exigente" : "Challenging",
+          schedule: locale === "es" ? "Horario" : "Schedule",
+          bookingNotice: locale === "es" ? "Reserva con al menos X horas de antelación" : "Book at least X hours in advance",
+          departures: locale === "es" ? "Salidas" : "Departures",
         }}
       />
       <ExcursionContentLayout
@@ -82,6 +100,9 @@ export default async function ExcursionPage({
             price={excursion?.price ?? 0}
             depositAmount={excursion?.depositAmount ?? 0}
             priceNote={getLocalized(excursion?.priceNote, locale)}
+            childPrice={excursion?.childPrice}
+            childAgeRange={childAgeRange || undefined}
+            infantPolicy={infantPolicy}
             excursionTitle={getLocalized(excursion?.title, locale)}
             whatsappNumber="18091234567"
             locale={locale}
@@ -97,6 +118,8 @@ export default async function ExcursionPage({
               freeCancellation: locale === "es" ? "Cancelación gratuita 24h antes" : "Free cancellation 24h before",
               instantConfirmation: locale === "es" ? "Confirmación instantánea" : "Instant confirmation",
               securePayment: locale === "es" ? "Pago seguro" : "Secure payment",
+              child: locale === "es" ? "Niños" : "Children",
+              infant: locale === "es" ? "Bebés" : "Infants",
             }}
           />
         }

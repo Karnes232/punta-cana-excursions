@@ -6,12 +6,13 @@ export const excursion = defineType({
   type: "document",
 
   groups: [
-    { name: "content", title: "Content", default: true },
-    { name: "media", title: "Media" },
-    { name: "pricing", title: "Pricing & Logistics" },
-    { name: "details", title: "Details & Lists" },
-    { name: "faq", title: "FAQ" },
-    { name: "seo", title: "SEO" },
+    { name: "content", title: "Content" },
+  { name: "media", title: "Media" },
+  { name: "schedule", title: "Schedule" }, 
+  { name: "pricing", title: "Pricing & Logistics" },
+  { name: "details", title: "Details & Lists" },
+  { name: "faq", title: "FAQ" },
+  { name: "seo", title: "SEO" },
   ],
 
   fields: [
@@ -122,6 +123,56 @@ export const excursion = defineType({
     }),
 
     // =========================================================================
+    // SCHEDULE — Days available, time slots, booking notice
+    // =========================================================================
+
+    defineField({
+      name: "daysAvailable",
+      title: "Days Available",
+      type: "array",
+      description:
+        "Days of the week this excursion runs. Check all that apply.",
+      group: "schedule",
+      of: [defineArrayMember({ type: "string" })],
+      options: {
+        list: [
+          { title: "Monday", value: "monday" },
+          { title: "Tuesday", value: "tuesday" },
+          { title: "Wednesday", value: "wednesday" },
+          { title: "Thursday", value: "thursday" },
+          { title: "Friday", value: "friday" },
+          { title: "Saturday", value: "saturday" },
+          { title: "Sunday", value: "sunday" },
+        ],
+      },
+      validation: (rule) => rule.required().min(1),
+    }),
+
+    defineField({
+      name: "timeSlots",
+      title: "Time Slots",
+      type: "array",
+      description:
+        'Available departure times (e.g. "8:00 AM", "2:00 PM", "Sunset — 5:30 PM"). Add one entry per slot. Leave empty if there is only one departure (use the Pickup Time field instead).',
+      group: "schedule",
+      of: [defineArrayMember({ type: "string" })],
+      options: {
+        layout: "tags",
+      },
+    }),
+
+    defineField({
+      name: "bookingNoticeHours",
+      title: "Booking Notice (Hours)",
+      type: "number",
+      description:
+        "Minimum hours in advance required to book (e.g. 24, 48, 72). Used to display 'Book at least X hours in advance' on the detail page.",
+      group: "schedule",
+      validation: (rule) => rule.required().min(0).integer(),
+      initialValue: 24,
+    }),
+
+    // =========================================================================
     // PRICING & LOGISTICS
     // =========================================================================
 
@@ -162,6 +213,35 @@ export const excursion = defineType({
       type: "localizedString",
       description:
         'Optional note below the price (e.g. "per person", "per group up to 6", "kids under 4 free").',
+      group: "pricing",
+    }),
+
+    defineField({
+      name: "childPrice",
+      title: "Child Price (USD)",
+      type: "number",
+      description:
+        "Price per child in USD. Shown alongside adult pricing on the detail page.",
+      group: "pricing",
+      validation: (rule) => rule.required().min(0),
+    }),
+    
+    defineField({
+      name: "childAgeRange",
+      title: "Child Age Range",
+      type: "localizedString",
+      description:
+        'Age range that qualifies for the child price (e.g. "Ages 4–11", "Ages 5–12").',
+      group: "pricing",
+      validation: (rule) => rule.required(),
+    }),
+    
+    defineField({
+      name: "infantPolicy",
+      title: "Infant Policy",
+      type: "localizedString",
+      description:
+        'Policy for infants/toddlers (e.g. "Children under 4 free", "Not recommended for children under 2").',
       group: "pricing",
     }),
 
@@ -217,6 +297,24 @@ export const excursion = defineType({
       description:
         "Key selling points shown as a bullet list (e.g. 'Swim with nurse sharks', 'Open bar included', 'Professional photos'). Aim for 4–6 items.",
       group: "details",
+    }),
+
+    defineField({
+      name: "activityLevel",
+      title: "Activity Level",
+      type: "string",
+      description:
+        "How physically demanding the excursion is. Helps families and older travelers self-filter.",
+      group: "details",
+      options: {
+        list: [
+          { title: "Easy", value: "easy" },
+          { title: "Moderate", value: "moderate" },
+          { title: "Challenging", value: "challenging" },
+        ],
+        layout: "radio",
+      },
+      validation: (rule) => rule.required(),
     }),
 
     defineField({

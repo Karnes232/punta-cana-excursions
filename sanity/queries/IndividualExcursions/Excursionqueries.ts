@@ -135,12 +135,23 @@ export interface IndividualExcursion {
   price: number;
   depositAmount: number;
   priceNote: LocalizedField;
+  childPrice: number;
+  childAgeRange: LocalizedField;
+  infantPolicy: LocalizedField | null;
 
   // Section 2 continued: Key stats
   duration: LocalizedField;
   pickupTime: LocalizedField;
   pickupZones: string[];
   groupSize: LocalizedField;
+
+  // Schedule
+  daysAvailable: string[];
+  timeSlots: string[];
+  bookingNoticeHours: number;
+
+  // Activity level
+  activityLevel: "easy" | "moderate" | "challenging";
 
   // Section 4: Highlights
   highlights: LocalizedStringArray;
@@ -260,10 +271,17 @@ export const individualExcursionQuery = `*[_type == "excursion" && slug.current 
     price,
     depositAmount,
     priceNote,
+    childPrice,
+    childAgeRange,
+    infantPolicy,
     duration,
     pickupTime,
     pickupZones,
     groupSize,
+    daysAvailable,
+    timeSlots,
+    bookingNoticeHours,
+    activityLevel,
     highlights,
     fullDescription,
     whatsIncluded,

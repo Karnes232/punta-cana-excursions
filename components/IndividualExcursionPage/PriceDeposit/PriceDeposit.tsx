@@ -7,6 +7,9 @@ interface PriceDepositProps {
   price: number;
   depositAmount: number;
   priceNote?: string;
+  childPrice?: number;
+  childAgeRange?: string;
+  infantPolicy?: string;
   excursionTitle: string;
   whatsappNumber: string;
   locale: string;
@@ -20,6 +23,8 @@ interface PriceDepositProps {
     freeCancellation: string;
     instantConfirmation: string;
     securePayment: string;
+    child?: string;
+    infant?: string;
   };
 }
 
@@ -27,6 +32,9 @@ export function PriceDeposit({
   price,
   depositAmount,
   priceNote,
+  childPrice,
+  childAgeRange,
+  infantPolicy,
   excursionTitle,
   whatsappNumber,
   locale,

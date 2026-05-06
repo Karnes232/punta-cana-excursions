@@ -122,6 +122,7 @@ export default async function DivingExcursionDetailPage({
       />
 
       <TitleSummary
+        locale={locale}
         title={getLocalized(excursion.title, locale)}
         badge={excursion.badge ? getLocalized(excursion.badge, locale) : null}
         summary={getLocalized(excursion.shortSummary, locale)}
