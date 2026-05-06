@@ -15,6 +15,7 @@ import {
   getLocalizedStringArray,
 } from "@/sanity/queries/GeneralLayout/generalLayoutQuery";
 import { getIndividualExcursion } from "@/sanity/queries/IndividualExcursions/Excursionqueries";
+import type { BookingLabels } from "@/components/IndividualExcursionPage/PriceDeposit/bookingTypes";
 
 export default async function ExcursionPage({
   params,
@@ -28,6 +29,69 @@ export default async function ExcursionPage({
   const infantPolicy = excursion?.infantPolicy
     ? getLocalized(excursion.infantPolicy, locale)
     : undefined;
+  const isEs = locale === "es";
+
+  const bookingLabels: BookingLabels = {
+    modalTitle: isEs ? "Reserva tu excursión" : "Book your excursion",
+    modalSubtitle: getLocalized(excursion?.title, locale),
+    close: isEs ? "Cerrar" : "Close",
+    stepFormTitle: isEs ? "Detalles de tu reserva" : "Booking details",
+    stepReviewTitle: isEs ? "Revisa y paga" : "Review & pay",
+    dateLabel: isEs ? "Fecha de la excursión" : "Excursion date",
+    dateHelper: isEs
+      ? "Reserva con al menos {hours} horas de antelación."
+      : "Book at least {hours} hours in advance.",
+    dateInvalidWeekday: isEs
+      ? "Esta excursión no opera ese día"
+      : "This excursion does not run on that day",
+    dateInvalidNotice: isEs
+      ? "La fecha está dentro del plazo mínimo de reserva"
+      : "Date is within the booking notice window",
+    timeLabel: isEs ? "Hora de salida" : "Departure time",
+    timeRequired: isEs ? "Selecciona una hora" : "Select a time",
+    guestsLabel: isEs ? "Huéspedes" : "Guests",
+    adultsLabel: isEs ? "Adultos" : "Adults",
+    childrenLabel: isEs ? "Niños" : "Children",
+    childAgeRangeNote: childAgeRange || undefined,
+    contactSection: isEs ? "Tus datos" : "Your details",
+    nameLabel: isEs ? "Nombre completo" : "Full name",
+    namePlaceholder: isEs ? "Juan García" : "John Smith",
+    emailLabel: isEs ? "Correo electrónico" : "Email address",
+    emailPlaceholder: isEs ? "juan@ejemplo.com" : "john@example.com",
+    phoneLabel: isEs ? "Teléfono" : "Phone",
+    phonePlaceholder: "+1 (809) 000-0000",
+    hotelLabel: isEs ? "Hotel de recogida" : "Pickup hotel",
+    hotelPlaceholder: "Barceló Bávaro Palace…",
+    required: isEs ? "Campo requerido" : "Required",
+    invalidEmail: isEs ? "Correo no válido" : "Invalid email",
+    invalidPhone: isEs ? "Teléfono no válido" : "Invalid phone",
+    continueToPayment: isEs ? "Continuar al pago" : "Continue to payment",
+    editDetails: isEs ? "Editar detalles" : "Edit details",
+    reviewExcursion: isEs ? "Excursión" : "Excursion",
+    reviewDate: isEs ? "Fecha" : "Date",
+    reviewTime: isEs ? "Hora" : "Time",
+    reviewGuests: isEs ? "Huéspedes" : "Guests",
+    reviewHotel: isEs ? "Hotel" : "Hotel",
+    reviewTotal: isEs ? "Precio total" : "Total price",
+    reviewDeposit: isEs ? "Depósito a pagar" : "Deposit to pay",
+    reviewDepositNote: isEs
+      ? "Saldo restante a pagar el día de la excursión."
+      : "Balance due on the day of the excursion.",
+    reviewBalanceLabel: isEs ? "Saldo del día" : "Day-of balance",
+    successTitle: isEs ? "¡Reserva confirmada!" : "Booking confirmed!",
+    successMessage: isEs
+      ? "Tu depósito fue procesado y tu lugar está reservado. Te enviamos un correo con los detalles."
+      : "Your deposit was processed and your spot is reserved. We've sent a confirmation email with the details.",
+    successCheckEmail: isEs ? "Revisa tu bandeja:" : "Check your inbox:",
+    errorTitle: isEs ? "Algo salió mal" : "Something went wrong",
+    errorRetry: isEs ? "Reintentar" : "Retry",
+    errorContact: isEs
+      ? "Por favor contáctanos para confirmar tu reserva."
+      : "Please contact us to confirm your booking.",
+    paymentError: isEs
+      ? "El pago no se pudo procesar. Inténtalo de nuevo."
+      : "Payment could not be processed. Please try again.",
+  };
 
   const faq = excursion?.faq?.map((item) => ({
     _key: item._key,
@@ -103,9 +167,14 @@ export default async function ExcursionPage({
             childPrice={excursion?.childPrice}
             childAgeRange={childAgeRange || undefined}
             infantPolicy={infantPolicy}
+            excursionId={excursion?._id ?? ""}
             excursionTitle={getLocalized(excursion?.title, locale)}
             whatsappNumber="18091234567"
             locale={locale}
+            daysAvailable={excursion?.daysAvailable ?? []}
+            timeSlots={excursion?.timeSlots ?? []}
+            bookingNoticeHours={excursion?.bookingNoticeHours ?? 24}
+            bookingLabels={bookingLabels}
             labels={{
               from: locale === "es" ? "Desde" : "From",
               perPerson: locale === "es" ? "por persona" : "per person",

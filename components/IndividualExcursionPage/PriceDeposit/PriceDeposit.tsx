@@ -2,6 +2,7 @@ import { PriceDisplay } from "./PriceDisplay";
 import { DepositInfo } from "./DepositInfo";
 import { PriceCtaGroup } from "./PriceCtaGroup";
 import { PriceTrustSignals } from "./PriceTrustSignals";
+import type { BookingLabels } from "./bookingTypes";
 
 interface PriceDepositProps {
   price: number;
@@ -10,9 +11,13 @@ interface PriceDepositProps {
   childPrice?: number;
   childAgeRange?: string;
   infantPolicy?: string;
+  excursionId?: string;
   excursionTitle: string;
   whatsappNumber: string;
   locale: string;
+  daysAvailable?: string[];
+  timeSlots?: string[];
+  bookingNoticeHours?: number;
   labels: {
     from: string;
     perPerson: string;
@@ -26,19 +31,23 @@ interface PriceDepositProps {
     child?: string;
     infant?: string;
   };
+  bookingLabels?: BookingLabels;
 }
 
 export function PriceDeposit({
   price,
   depositAmount,
   priceNote,
-  childPrice,
   childAgeRange,
-  infantPolicy,
+  excursionId,
   excursionTitle,
   whatsappNumber,
   locale,
+  daysAvailable,
+  timeSlots,
+  bookingNoticeHours,
   labels,
+  bookingLabels,
 }: PriceDepositProps) {
   return (
     <div className="bg-sand rounded-2xl border border-sand-dark/30 p-6 md:p-7 shadow-sm">
@@ -60,9 +69,17 @@ export function PriceDeposit({
         <PriceCtaGroup
           reserveLabel={labels.reserveNow}
           contactLabel={labels.contactCta}
+          excursionId={excursionId}
           excursionTitle={excursionTitle}
           whatsappNumber={whatsappNumber}
           locale={locale}
+          daysAvailable={daysAvailable}
+          timeSlots={timeSlots}
+          bookingNoticeHours={bookingNoticeHours}
+          depositAmount={depositAmount}
+          pricePerPerson={price}
+          childAgeRange={childAgeRange}
+          bookingLabels={bookingLabels}
         />
       </div>
 
