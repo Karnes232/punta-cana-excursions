@@ -11,18 +11,37 @@ import {
 
 export default async function Excursions({
   params,
+  searchParams,
 }: {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<{ category?: string | string[] }>;
 }) {
-  const [{ locale }, excursionCategories, excursionsPage, excursionList] =
-    await Promise.all([
-      params,
-      getExcursionCategoryPage(),
-      getExcursionsPage(),
-      getExcursionList(),
-    ]);
+  const [
+    { locale },
+    { category: categoryParam },
+    excursionCategories,
+    excursionsPage,
+    excursionList,
+  ] = await Promise.all([
+    params,
+    searchParams,
+    getExcursionCategoryPage(),
+    getExcursionsPage(),
+    getExcursionList(),
+  ]);
 
   const localeKey = locale as keyof LocalizedField;
+
+  // Pre-select category from URL (?category=catamarans). Validate against the
+  // category list so an unknown/garbage slug falls back to "all".
+  const requestedCategory = Array.isArray(categoryParam)
+    ? categoryParam[0]
+    : categoryParam;
+  const initialCategory =
+    requestedCategory &&
+    excursionCategories.some((c) => c.slug === requestedCategory)
+      ? requestedCategory
+      : "all";
 
   const excursions = excursionList.map((exc) => ({
     slug: exc.slug.current,
@@ -70,6 +89,7 @@ export default async function Excursions({
         }))}
         excursions={excursions}
         currencySymbol="$"
+        initialCategory={initialCategory}
         labels={{
           filter: {
             all: "All",

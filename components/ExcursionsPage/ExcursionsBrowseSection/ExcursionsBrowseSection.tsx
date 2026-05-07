@@ -12,6 +12,8 @@ interface ExcursionsBrowseSectionProps {
   categories: CategoryFilter[];
   excursions: BrowseExcursion[];
   currencySymbol?: string;
+  /** Pre-selected category slug (from URL ?category=...). Defaults to "all". */
+  initialCategory?: string;
   /** All i18n labels for the section */
   labels: {
     filter: {
@@ -41,9 +43,10 @@ export function ExcursionsBrowseSection({
   categories,
   excursions,
   currencySymbol = "$",
+  initialCategory = "all",
   labels,
 }: ExcursionsBrowseSectionProps) {
-  const [activeCategory, setActiveCategory] = useState("all");
+  const [activeCategory, setActiveCategory] = useState(initialCategory);
   const [sortBy, setSortBy] = useState<SortOption>("featured");
 
   const filtered = useMemo(() => {
