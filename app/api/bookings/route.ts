@@ -20,6 +20,16 @@ const EMAIL_QUERY = `*[_type == "excursion" && _id == $id][0]{
   depositAmount
 }`;
 
+interface BrandingForEmail {
+  logoUrl: string | null;
+  companyName: { en?: string; es?: string } | null;
+}
+
+const BRANDING_QUERY = `*[_type == "generalLayout"][0]{
+  "logoUrl": logo.asset->url,
+  companyName
+}`;
+
 interface BookingPayload {
   orderID: string;
   excursionId: string;
@@ -105,10 +115,11 @@ export async function POST(request: Request) {
     );
   }
 
-  // Step 2: verify amount matches expected deposit
-  const excursion = await client.fetch<ExcursionForEmail | null>(EMAIL_QUERY, {
-    id: excursionId,
-  });
+  // Step 2: verify amount matches expected deposit (and grab branding in parallel)
+  const [excursion, branding] = await Promise.all([
+    client.fetch<ExcursionForEmail | null>(EMAIL_QUERY, { id: excursionId }),
+    client.fetch<BrandingForEmail | null>(BRANDING_QUERY),
+  ]);
   if (!excursion) {
     return NextResponse.json({ error: "Excursion not found" }, { status: 404 });
   }
@@ -148,6 +159,15 @@ export async function POST(request: Request) {
   const totalPrice = excursion.price * totalGuests;
   const remainingBalance = (totalPrice - Number(captureAmount)).toFixed(2);
 
+  // Sanity CDN supports query params for sizing; cap at ~200px wide for retina
+  const logoUrl = branding?.logoUrl
+    ? `${branding.logoUrl}?h=240&fit=max&auto=format`
+    : undefined;
+  const companyName =
+    locale === "es"
+      ? branding?.companyName?.es ?? branding?.companyName?.en ?? undefined
+      : branding?.companyName?.en ?? undefined;
+
   const emailData: BookingEmailData = {
     excursionTitle,
     date: formData.date,
@@ -165,6 +185,8 @@ export async function POST(request: Request) {
     },
     paypalOrderId: orderID,
     locale,
+    logoUrl,
+    companyName,
   };
 
   const customerSubject =

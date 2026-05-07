@@ -134,7 +134,6 @@ export function PriceCtaGroup({
         isOpen={inquiryOpen}
         onClose={() => setInquiryOpen(false)}
         excursionTitle={excursionTitle}
-        whatsappNumber={whatsappNumber}
         locale={locale}
       />
 

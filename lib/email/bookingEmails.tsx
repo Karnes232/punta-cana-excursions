@@ -5,6 +5,7 @@ import {
   Heading,
   Hr,
   Html,
+  Img,
   Preview,
   Section,
   Text,
@@ -93,7 +94,22 @@ export interface BookingEmailData {
   };
   paypalOrderId: string;
   locale: "en" | "es";
+  logoUrl?: string;
+  companyName?: string;
 }
+
+const logoWrapper = {
+  textAlign: "center" as const,
+  padding: "0 0 20px",
+};
+
+const logoImg = {
+  display: "inline-block" as const,
+  maxHeight: "96px",
+  maxWidth: "280px",
+  height: "auto",
+  width: "auto",
+};
 
 // =============================================================================
 // Customer-facing confirmation
@@ -155,6 +171,15 @@ export function CustomerBookingEmail(data: BookingEmailData) {
       <Body style={main}>
         <Container style={container}>
           <Section style={card}>
+            {data.logoUrl ? (
+              <Section style={logoWrapper}>
+                <Img
+                  src={data.logoUrl}
+                  alt={data.companyName ?? "Logo"}
+                  style={logoImg}
+                />
+              </Section>
+            ) : null}
             <Heading style={h1}>{t.title}</Heading>
             <Text style={subtle}>{t.intro}</Text>
 
