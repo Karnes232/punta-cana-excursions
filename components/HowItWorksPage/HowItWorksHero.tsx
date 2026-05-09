@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-interface FaqHeroProps {
+interface HowItWorksHeroProps {
   headline: string;
   subheadline: string;
   backgroundImage?: {
@@ -9,7 +9,11 @@ interface FaqHeroProps {
   } | null;
 }
 
-export function FaqHero({ headline, subheadline, backgroundImage }: FaqHeroProps) {
+export function HowItWorksHero({
+  headline,
+  subheadline,
+  backgroundImage,
+}: HowItWorksHeroProps) {
   const hasImage = !!backgroundImage?.url;
 
   return (

@@ -24,8 +24,29 @@ export function AboutHero({ backgroundImage, badge, headline, subheadline }: Abo
             blurDataURL={backgroundImage.lqip}
             className="object-cover object-center"
           />
-          {/* Dark overlay */}
-          <div className="absolute inset-0 bg-navy/60" />
+          {/* Gradient overlay — dark enough for white text */}
+          <div
+            className="absolute inset-0 z-[1]"
+            style={{
+              background: `linear-gradient(
+                to bottom,
+                rgba(0, 40, 60, 0.65) 0%,
+                rgba(0, 40, 60, 0.55) 50%,
+                rgba(0, 40, 60, 0.65) 100%
+              )`,
+            }}
+          />
+          {/* Subtle warm gradient accent — adds depth and tropical warmth */}
+          <div
+            className="absolute inset-0 z-[2] mix-blend-soft-light opacity-40"
+            style={{
+              background: `radial-gradient(
+                ellipse 80% 60% at 50% 30%,
+                rgba(244, 161, 26, 0.35) 0%,
+                transparent 70%
+              )`,
+            }}
+          />
         </>
       ) : (
         /* Gradient fallback when no image uploaded */
@@ -69,12 +90,12 @@ export function AboutHero({ backgroundImage, badge, headline, subheadline }: Abo
       </div>
 
       {/* Wave-shaped bottom edge */}
-      <div className="absolute bottom-0 left-0 right-0 pointer-events-none">
+      <div className="absolute -bottom-px left-0 right-0 z-20 pointer-events-none">
         <svg
           viewBox="0 0 1440 60"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="w-full h-auto"
+          className="block w-full h-auto"
           preserveAspectRatio="none"
         >
           <path

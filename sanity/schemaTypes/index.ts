@@ -24,6 +24,8 @@ import { divingSnorkelingPage } from "./DivingSnorkelingPage/DivingSnorkelingPag
 import { divingExcursion } from "./DivingSnorkelingPage/DivingExcursion";
 // About Page Types
 import { aboutPage } from "./AboutPage/AboutPage";
+// How It Works Page Types
+import { howItWorksPage } from "./HowItWorksPage/HowItWorksPage";
 // FAQ Page Types
 import { faqPage } from "./FaqPage/FaqPage";
 // Contact Page Types
@@ -60,6 +62,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     divingExcursion,
     // About Page Types
     aboutPage,
+    // How It Works Page Types
+    howItWorksPage,
     // FAQ Page Types
     faqPage,
     // Contact Page Types

@@ -40,7 +40,7 @@ export function ExcursionsHero({
       </div>
 
       {/* Bottom wave transition — smooth into the filter bar below */}
-      <div className="absolute bottom-0 left-0 right-0 z-10 pointer-events-none">
+      <div className="absolute -bottom-px left-0 right-0 z-10 pointer-events-none">
         <svg
           viewBox="0 0 1440 80"
           fill="none"

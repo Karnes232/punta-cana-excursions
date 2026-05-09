@@ -55,12 +55,12 @@ export function ContactHero({ headline, subheadline, backgroundImage }: ContactH
       />
 
       {/* Wave bottom edge */}
-      <div className="absolute bottom-0 left-0 right-0 pointer-events-none">
+      <div className="absolute -bottom-px left-0 right-0 pointer-events-none">
         <svg
           viewBox="0 0 1440 48"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="w-full h-auto"
+          className="block w-full h-auto"
           preserveAspectRatio="none"
         >
           <path

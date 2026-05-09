@@ -72,7 +72,7 @@ export function DivingHero({
       </div>
 
       {/* Bottom wave transition — organic underwater-to-white flow */}
-      <div className="absolute bottom-0 left-0 right-0 z-10 pointer-events-none">
+      <div className="absolute -bottom-px left-0 right-0 z-10 pointer-events-none">
         <svg
           viewBox="0 0 1440 100"
           fill="none"

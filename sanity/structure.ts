@@ -162,6 +162,16 @@ export const structure: StructureResolver = (S) =>
         ),
       S.divider(),
       S.listItem()
+        .title("How It Works page")
+        .icon(() => "🎯")
+        .child(
+          S.document()
+            .schemaType("howItWorksPage")
+            .documentId("howItWorksPage")
+            .title("How It Works page"),
+        ),
+      S.divider(),
+      S.listItem()
         .title("Legal documents")
         .icon(() => "📄")
         .child(
