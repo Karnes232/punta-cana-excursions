@@ -3,7 +3,7 @@ import { DropIcon } from "@sanity/icons";
 
 export const divingExcursion = defineType({
   name: "divingExcursion",
-  title: "Diving & Snorkeling Excursion",
+  title: "Scuba Diving Excursion",
   type: "document",
   icon: DropIcon,
 
@@ -48,6 +48,20 @@ export const divingExcursion = defineType({
             .slice(0, 96),
       },
       validation: (rule) => rule.required(),
+    }),
+
+    defineField({
+      name: "externalBookingUrl",
+      title: "External Booking URL",
+      type: "url",
+      description:
+        "Full URL on the sister site where this excursion is booked. The Reserve button opens this link in a new tab.",
+      group: "content",
+      validation: (Rule) =>
+        Rule.required().uri({
+          scheme: ["https"],
+          allowRelative: false,
+        }),
     }),
 
     defineField({
@@ -126,26 +140,6 @@ export const divingExcursion = defineType({
     // =========================================================================
     // DIVING DETAILS — Activity type, experience level, dive-specific info
     // =========================================================================
-
-    defineField({
-      name: "activityType",
-      title: "Activity Type",
-      type: "string",
-      description:
-        "The primary water activity. Used for filtering and badge display on the Diving & Snorkeling page.",
-      group: "diving",
-      options: {
-        list: [
-          { title: "Scuba Diving", value: "scuba-diving" },
-          { title: "Snorkeling", value: "snorkeling" },
-          { title: "Freediving", value: "freediving" },
-          { title: "Snuba", value: "snuba" },
-          { title: "Scuba + Snorkeling", value: "scuba-snorkeling" },
-        ],
-        layout: "radio",
-      },
-      validation: (rule) => rule.required(),
-    }),
 
     defineField({
       name: "experienceLevel",
@@ -446,14 +440,10 @@ export const divingExcursion = defineType({
       media: "heroImage",
       isFeatured: "isFeatured",
       price: "price",
-      activityType: "activityType",
     },
-    prepare({ title, shortSummary, media, isFeatured, price, activityType }) {
+    prepare({ title, shortSummary, media, isFeatured, price }) {
       const star = isFeatured ? "⭐ " : "";
       const priceStr = typeof price === "number" ? ` · $${price}` : "";
-      const typeLabel = activityType
-        ? ` [${activityType.replace("-", " ")}]`
-        : "";
       const summary =
         typeof shortSummary === "string" && shortSummary.length > 0
           ? shortSummary.length > 72
@@ -461,10 +451,10 @@ export const divingExcursion = defineType({
             : shortSummary
           : null;
       return {
-        title: `${star}${title || "Untitled Excursion"}${typeLabel}`,
+        title: `${star}${title || "Untitled Excursion"}`,
         subtitle: summary
           ? `${summary}${priceStr}`
-          : priceStr.trim() || "Diving & Snorkeling Excursion",
+          : priceStr.trim() || "Scuba Diving Excursion",
         media,
       };
     },
@@ -475,11 +465,6 @@ export const divingExcursion = defineType({
       title: "Sort Order",
       name: "sortOrder",
       by: [{ field: "sortOrder", direction: "asc" }],
-    },
-    {
-      title: "Activity Type",
-      name: "activityType",
-      by: [{ field: "activityType", direction: "asc" }],
     },
     {
       title: "Title (A–Z)",

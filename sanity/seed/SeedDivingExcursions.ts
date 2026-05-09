@@ -13,14 +13,14 @@ const client = createClient({
 });
 
 // =============================================================================
-// Diving excursion seed data
+// Scuba diving excursion seed data
 // =============================================================================
 
 interface DivingExcursionSeed {
   slug: string;
   title: { en: string; es: string };
   shortSummary: { en: string; es: string };
-  activityType: "scuba-diving" | "snorkeling" | "freediving" | "snuba" | "scuba-snorkeling";
+  externalBookingUrl: string;
   experienceLevel: "all-levels" | "beginner" | "intermediate" | "advanced";
   certificationRequired: boolean;
   certificationDetails?: { en: string; es: string };
@@ -49,156 +49,7 @@ interface DivingExcursionSeed {
 }
 
 const divingExcursions: DivingExcursionSeed[] = [
-  // ─── 1. Caribbean Reef Snorkeling ─────────────────────────────────────────
-  {
-    slug: "caribbean-reef-snorkeling",
-    title: {
-      en: "Caribbean Reef Snorkeling",
-      es: "Snorkel en el Arrecife Caribeño",
-    },
-    shortSummary: {
-      en: "Glide over vibrant coral gardens and swim alongside tropical fish, sea turtles, and spotted eagle rays on this guided snorkeling adventure.",
-      es: "Deslízate sobre vibrantes jardines de coral y nada junto a peces tropicales, tortugas marinas y rayas águila en esta aventura de snorkel guiada.",
-    },
-    activityType: "snorkeling",
-    experienceLevel: "all-levels",
-    certificationRequired: false,
-    marineLife: {
-      en: [
-        "Tropical reef fish (parrotfish, angelfish, wrasse)",
-        "Sea turtles",
-        "Spotted eagle rays",
-        "Coral gardens and brain coral formations",
-        "Parrotfish",
-        "Sergeant major fish",
-      ],
-      es: [
-        "Peces tropicales de arrecife (loro, ángel, doncella)",
-        "Tortugas marinas",
-        "Rayas águila manchadas",
-        "Jardines de coral y formaciones de coral cerebro",
-        "Peces loro",
-        "Peces sargento",
-      ],
-    },
-    equipmentProvided: {
-      en: ["Mask & snorkel", "Fins", "Life vest", "Flotation noodle", "Underwater camera (on request)"],
-      es: ["Máscara y snorkel", "Aletas", "Chaleco salvavidas", "Flotador", "Cámara submarina (bajo solicitud)"],
-    },
-    price: 55,
-    depositAmount: 15,
-    priceNote: { en: "per person", es: "por persona" },
-    duration: { en: "3 hours", es: "3 horas" },
-    pickupTime: {
-      en: "8:00 AM or 1:30 PM",
-      es: "8:00 AM o 1:30 PM",
-    },
-    pickupZones: ["Punta Cana", "Bávaro", "Cap Cana"],
-    groupSize: { en: "2–15 people", es: "2–15 personas" },
-    highlights: {
-      en: [
-        "Visit 2 thriving coral reef sites",
-        "Guided by certified Grand Bay dive instructors",
-        "Spot sea turtles and spotted eagle rays",
-        "All equipment included — no experience needed",
-        "Small group for a personalized experience",
-        "Refreshments included on board",
-      ],
-      es: [
-        "Visita 2 prósperos sitios de arrecife de coral",
-        "Guiado por instructores certificados de Grand Bay",
-        "Avista tortugas marinas y rayas águila manchadas",
-        "Todo el equipo incluido — sin experiencia necesaria",
-        "Grupo pequeño para una experiencia personalizada",
-        "Refrescos incluidos a bordo",
-      ],
-    },
-    whatsIncluded: {
-      en: [
-        "Round-trip hotel transportation",
-        "Boat ride to reef sites",
-        "Professional snorkeling equipment",
-        "Certified instructor guide",
-        "Life vests and safety gear",
-        "Bottled water and light snacks",
-      ],
-      es: [
-        "Transporte ida y vuelta desde el hotel",
-        "Paseo en bote a los arrecifes",
-        "Equipo de snorkel profesional",
-        "Guía instructor certificado",
-        "Chalecos salvavidas y equipo de seguridad",
-        "Agua embotellada y snacks ligeros",
-      ],
-    },
-    whatToBring: {
-      en: [
-        "Swimsuit (wear it under your clothes)",
-        "Towel",
-        "Reef-safe sunscreen",
-        "Cash for tips",
-        "Waterproof phone case",
-      ],
-      es: [
-        "Traje de baño (ponlo debajo de la ropa)",
-        "Toalla",
-        "Protector solar biodegradable",
-        "Efectivo para propinas",
-        "Funda impermeable para el teléfono",
-      ],
-    },
-    restrictions: {
-      en: [
-        "Must be comfortable in open water",
-        "Minimum age: 6 years",
-        "Not recommended for people with severe asthma or breathing conditions",
-        "Not recommended for pregnant women",
-      ],
-      es: [
-        "Debe sentirse cómodo en aguas abiertas",
-        "Edad mínima: 6 años",
-        "No recomendado para personas con asma severa o condiciones respiratorias",
-        "No recomendado para mujeres embarazadas",
-      ],
-    },
-    faq: [
-      {
-        question: {
-          en: "Do I need swimming experience?",
-          es: "¿Necesito experiencia nadando?",
-        },
-        answer: {
-          en: "You don't need to be a strong swimmer — life vests and flotation noodles are provided, and our instructors will guide you the entire time. Basic comfort in water is enough.",
-          es: "No necesitas ser un gran nadador — se proporcionan chalecos salvavidas y flotadores, y nuestros instructores te guiarán todo el tiempo. Estar cómodo en el agua es suficiente.",
-        },
-      },
-      {
-        question: {
-          en: "Will I really see turtles and rays?",
-          es: "¿Realmente veré tortugas y rayas?",
-        },
-        answer: {
-          en: "Our reef sites are well-known for consistent sightings of sea turtles and eagle rays. While wildlife can never be 100% guaranteed, our guides know exactly where to look.",
-          es: "Nuestros sitios de arrecife son conocidos por los avistamientos frecuentes de tortugas marinas y rayas águila. Si bien la vida silvestre no se puede garantizar al 100%, nuestros guías saben exactamente dónde buscar.",
-        },
-      },
-      {
-        question: {
-          en: "What if I've never snorkeled before?",
-          es: "¿Qué pasa si nunca he hecho snorkel?",
-        },
-        answer: {
-          en: "No problem! Our instructors give a full briefing and in-water demonstration before we head to the reef. Most first-timers are comfortable within minutes.",
-          es: "¡Sin problema! Nuestros instructores dan una explicación completa y demostración en el agua antes de ir al arrecife. La mayoría de los principiantes se sienten cómodos en minutos.",
-        },
-      },
-    ],
-    isFeatured: true,
-    badge: { en: "Most Popular", es: "Más Popular" },
-    sortOrder: 10,
-  },
-
-  // ─── 2. Discover Scuba Diving ──────────────────────────────────────────────
+  // ─── 1. Discover Scuba Diving ──────────────────────────────────────────────
   {
     slug: "discover-scuba-diving",
     title: {
@@ -209,7 +60,7 @@ const divingExcursions: DivingExcursionSeed[] = [
       en: "No certification needed — take your first breath underwater with a PADI-certified instructor guiding you every fin kick of the way.",
       es: "Sin certificación necesaria — respira bajo el agua por primera vez con un instructor certificado PADI guiándote en cada palada.",
     },
-    activityType: "scuba-diving",
+    externalBookingUrl: "https://www.puntacana-excursions.com/scuba-diving/discover-scuba-diving",
     experienceLevel: "beginner",
     certificationRequired: false,
     maxDepth: { en: "12 meters (40 ft)", es: "12 metros (40 pies)" },
@@ -365,7 +216,7 @@ const divingExcursions: DivingExcursionSeed[] = [
     sortOrder: 20,
   },
 
-  // ─── 3. Two-Tank Certified Reef Dive ──────────────────────────────────────
+  // ─── 2. Two-Tank Certified Reef Dive ──────────────────────────────────────
   {
     slug: "two-tank-reef-dive",
     title: {
@@ -376,7 +227,7 @@ const divingExcursions: DivingExcursionSeed[] = [
       en: "Two dives at Punta Cana's top reef sites — barracuda, manta rays, moray eels, and pristine coral at depths up to 18 meters. Certification required.",
       es: "Dos inmersiones en los mejores arrecifes de Punta Cana — barracudas, mantas rayas, morenas y coral prístino a profundidades de hasta 18 metros. Certificación requerida.",
     },
-    activityType: "scuba-diving",
+    externalBookingUrl: "https://www.puntacana-excursions.com/scuba-diving/two-tank-reef-dive",
     experienceLevel: "advanced",
     certificationRequired: true,
     certificationDetails: {
@@ -539,167 +390,6 @@ const divingExcursions: DivingExcursionSeed[] = [
     badge: null,
     sortOrder: 30,
   },
-
-  // ─── 4. Snuba Adventure ────────────────────────────────────────────────────
-  {
-    slug: "snuba-adventure",
-    title: {
-      en: "Snuba Adventure",
-      es: "Aventura de Snuba",
-    },
-    shortSummary: {
-      en: "The perfect middle ground between snorkeling and scuba — breathe underwater at 6 meters without a heavy tank or certification.",
-      es: "El punto medio perfecto entre el snorkel y el buceo — respira bajo el agua a 6 metros sin tanque pesado ni certificación.",
-    },
-    activityType: "snuba",
-    experienceLevel: "all-levels",
-    certificationRequired: false,
-    maxDepth: { en: "6 meters (20 ft)", es: "6 metros (20 pies)" },
-    numberOfDives: 1,
-    marineLife: {
-      en: [
-        "Tropical reef fish",
-        "Coral formations",
-        "Sea turtles",
-        "Starfish",
-        "Sea urchins",
-      ],
-      es: [
-        "Peces tropicales de arrecife",
-        "Formaciones de coral",
-        "Tortugas marinas",
-        "Estrellas de mar",
-        "Erizos de mar",
-      ],
-    },
-    equipmentProvided: {
-      en: [
-        "Snuba breathing apparatus (air hose connected to surface raft)",
-        "Mask",
-        "Fins",
-        "Flotation harness",
-        "Weight belt",
-      ],
-      es: [
-        "Aparato de respiración snuba (manguera de aire conectada a balsa de superficie)",
-        "Máscara",
-        "Aletas",
-        "Arnés de flotación",
-        "Cinturón de lastre",
-      ],
-    },
-    price: 75,
-    depositAmount: 20,
-    priceNote: { en: "per person — all equipment included", es: "por persona — todo el equipo incluido" },
-    duration: { en: "2.5 hours", es: "2.5 horas" },
-    pickupTime: {
-      en: "9:00 AM or 2:00 PM",
-      es: "9:00 AM o 2:00 PM",
-    },
-    pickupZones: ["Punta Cana", "Bávaro", "Cap Cana"],
-    groupSize: { en: "2–12 people", es: "2–12 personas" },
-    highlights: {
-      en: [
-        "Breathe underwater without a heavy tank on your back",
-        "No certification or prior dive experience needed",
-        "Explore the reef at 6 meters depth",
-        "Perfect for families — kids from 8 years old can join",
-        "10-minute easy briefing before you enter the water",
-        "Guided by trained snuba instructors",
-      ],
-      es: [
-        "Respira bajo el agua sin un pesado tanque en la espalda",
-        "Sin certificación ni experiencia de buceo previa",
-        "Explora el arrecife a 6 metros de profundidad",
-        "Perfecto para familias — niños desde 8 años pueden participar",
-        "Briefing fácil de 10 minutos antes de entrar al agua",
-        "Guiado por instructores de snuba capacitados",
-      ],
-    },
-    whatsIncluded: {
-      en: [
-        "Round-trip hotel transportation",
-        "Full snuba equipment",
-        "Trained snuba guide",
-        "Boat ride to reef site",
-        "Briefing and instruction",
-        "Bottled water",
-      ],
-      es: [
-        "Transporte ida y vuelta desde el hotel",
-        "Equipo de snuba completo",
-        "Guía de snuba capacitado",
-        "Paseo en bote al sitio del arrecife",
-        "Briefing e instrucción",
-        "Agua embotellada",
-      ],
-    },
-    whatToBring: {
-      en: [
-        "Swimsuit",
-        "Towel",
-        "Reef-safe sunscreen",
-        "Cash for tips",
-      ],
-      es: [
-        "Traje de baño",
-        "Toalla",
-        "Protector solar biodegradable",
-        "Efectivo para propinas",
-      ],
-    },
-    restrictions: {
-      en: [
-        "Minimum age: 8 years",
-        "Must be comfortable in the water",
-        "Not suitable for people with serious heart or ear conditions",
-        "Not recommended for pregnant women",
-        "Maximum depth: 6 meters",
-      ],
-      es: [
-        "Edad mínima: 8 años",
-        "Debe sentirse cómodo en el agua",
-        "No apto para personas con condiciones cardíacas o de oído graves",
-        "No recomendado para mujeres embarazadas",
-        "Profundidad máxima: 6 metros",
-      ],
-    },
-    faq: [
-      {
-        question: {
-          en: "What exactly is Snuba?",
-          es: "¿Qué es exactamente el Snuba?",
-        },
-        answer: {
-          en: "Snuba is a hybrid between snorkeling and scuba diving. You breathe through a regulator connected by a long hose to an air tank floating on a raft at the surface — so you can go underwater without carrying a tank or needing a certification.",
-          es: "El Snuba es un híbrido entre el snorkel y el buceo. Respiras a través de un regulador conectado por una manguera larga a un tanque de aire que flota en una balsa en la superficie, por lo que puedes ir bajo el agua sin cargar un tanque ni necesitar certificación.",
-        },
-      },
-      {
-        question: {
-          en: "Is this good for kids?",
-          es: "¿Es bueno para niños?",
-        },
-        answer: {
-          en: "Snuba is one of our most family-friendly underwater experiences. Children from 8 years old can participate alongside adults. It's a fantastic introduction to the underwater world for young explorers.",
-          es: "El Snuba es una de nuestras experiencias subacuáticas más familiares. Los niños desde 8 años pueden participar junto a los adultos. Es una introducción fantástica al mundo submarino para los jóvenes exploradores.",
-        },
-      },
-      {
-        question: {
-          en: "How is Snuba different from Discover Scuba?",
-          es: "¿En qué se diferencia el Snuba del Discover Scuba?",
-        },
-        answer: {
-          en: "With Snuba, the air tank stays on the surface raft — you're tethered to it by a hose. With Discover Scuba, the tank is on your back and you go deeper (up to 12 meters). Snuba is a great first step if you're curious about breathing underwater but not ready for a full scuba setup.",
-          es: "Con el Snuba, el tanque de aire permanece en la balsa de superficie y estás conectado a él por una manguera. Con Discover Scuba, el tanque va en tu espalda y puedes ir más profundo (hasta 12 metros). El Snuba es un excelente primer paso si tienes curiosidad por respirar bajo el agua pero no estás listo para una configuración de buceo completa.",
-        },
-      },
-    ],
-    isFeatured: false,
-    badge: null,
-    sortOrder: 40,
-  },
 ];
 
 // =============================================================================
@@ -707,7 +397,7 @@ const divingExcursions: DivingExcursionSeed[] = [
 // =============================================================================
 
 async function seedDivingExcursions() {
-  console.log("🤿  Seeding diving & snorkeling excursions...\n");
+  console.log("🤿  Seeding scuba diving excursions...\n");
 
   for (const exc of divingExcursions) {
     const doc = {
@@ -716,7 +406,7 @@ async function seedDivingExcursions() {
       title: exc.title,
       slug: { _type: "slug", current: exc.slug },
       shortSummary: exc.shortSummary,
-      activityType: exc.activityType,
+      externalBookingUrl: exc.externalBookingUrl,
       experienceLevel: exc.experienceLevel,
       certificationRequired: exc.certificationRequired,
       ...(exc.certificationDetails && { certificationDetails: exc.certificationDetails }),
@@ -750,27 +440,17 @@ async function seedDivingExcursions() {
     };
 
     await client.createOrReplace(doc);
-    console.log(`  ✅ ${exc.title.en} [${exc.activityType}] — $${exc.price}`);
+    console.log(`  ✅ ${exc.title.en} — $${exc.price}`);
   }
 
   // ── Wire up related excursions ──────────────────────────────────────────
   console.log("\n🔗 Wiring related excursions...\n");
 
   const relatedMap: Record<string, string[]> = {
-    "diving-excursion-caribbean-reef-snorkeling": [
-      "diving-excursion-discover-scuba-diving",
-      "diving-excursion-snuba-adventure",
-    ],
     "diving-excursion-discover-scuba-diving": [
-      "diving-excursion-caribbean-reef-snorkeling",
-      "diving-excursion-snuba-adventure",
+      "diving-excursion-two-tank-reef-dive",
     ],
     "diving-excursion-two-tank-reef-dive": [
-      "diving-excursion-discover-scuba-diving",
-      "diving-excursion-caribbean-reef-snorkeling",
-    ],
-    "diving-excursion-snuba-adventure": [
-      "diving-excursion-caribbean-reef-snorkeling",
       "diving-excursion-discover-scuba-diving",
     ],
   };
@@ -789,7 +469,7 @@ async function seedDivingExcursions() {
     console.log(`  🔗 ${excId} → ${relatedIds.length} related`);
   }
 
-  console.log("\n🎉 Diving & snorkeling excursion seeding complete!");
+  console.log("\n🎉 Scuba diving excursion seeding complete!");
 }
 
 seedDivingExcursions().catch((err) => {

@@ -1,13 +1,12 @@
-import { DivingCTA } from "@/components/DivingSnorkelingPage/DivingCTA/DivingCTA";
-import { DivingIntro } from "@/components/DivingSnorkelingPage/DivingIntro/DivingIntro";
-import { DivingHero } from "@/components/DivingSnorkelingPage/Hero/DivingHero";
-import { WaterExcursionsSection } from "@/components/DivingSnorkelingPage/WaterExcursions/WaterExcursionsSection";
-import { WhyBookWithUs } from "@/components/DivingSnorkelingPage/WhyBookWithUs/WhyBookWithUs";
+import { DivingCTA } from "@/components/ScubaDivingPage/DivingCTA/DivingCTA";
+import { DivingIntro } from "@/components/ScubaDivingPage/DivingIntro/DivingIntro";
+import { DivingHero } from "@/components/ScubaDivingPage/Hero/DivingHero";
+import { WaterExcursionsSection } from "@/components/ScubaDivingPage/WaterExcursions/WaterExcursionsSection";
+import { WhyBookWithUs } from "@/components/ScubaDivingPage/WhyBookWithUs/WhyBookWithUs";
 import {
   getDivingSnorkelingPage,
   getDivingSnorkelingPageSeo,
-  getDivingExcursions,
-  getSnorkelingExcursions,
+  getScubaDivingExcursions,
   type DivingExcursionCard,
 } from "@/sanity/queries/DivingSnorkelingPage/DivingSnorkelingPage";
 import {
@@ -36,7 +35,7 @@ export async function generateMetadata({
     seo: pageSeo?.seo,
     defaults: defaultSeo?.defaultSeo,
     locale: locale as "en" | "es",
-    path: "/diving-snorkeling",
+    path: "/scuba-diving",
     fallbackTitle: page?.heroHeadline?.[lk],
     fallbackDescription: page?.heroSubheadline?.[lk],
   });
@@ -45,7 +44,7 @@ export async function generateMetadata({
 function mapExcursionCard(e: DivingExcursionCard, locale: string) {
   return {
     slug: e.slug.current,
-    href: `/diving-snorkeling/${e.slug.current}`,
+    href: `/scuba-diving/${e.slug.current}`,
     title: getLocalized(e.title, locale),
     summary: getLocalized(e.shortSummary, locale),
     image: {
@@ -60,18 +59,17 @@ function mapExcursionCard(e: DivingExcursionCard, locale: string) {
   };
 }
 
-export default async function DivingSnorkelingPage({
+export default async function ScubaDivingPage({
   params,
 }: {
   params: { locale: string };
 }) {
-  const [{ locale }, page, divingExcursions, snorkelingExcursions, t, pageSeo] =
+  const [{ locale }, page, excursions, t, pageSeo] =
     await Promise.all([
       params,
       getDivingSnorkelingPage(),
-      getDivingExcursions(),
-      getSnorkelingExcursions(),
-      getTranslations("divingSnorkeling"),
+      getScubaDivingExcursions(),
+      getTranslations("scubaDiving"),
       getDivingSnorkelingPageSeo(),
     ]);
 
@@ -111,29 +109,12 @@ export default async function DivingSnorkelingPage({
       />
 
       <WaterExcursionsSection
-        id="diving-excursions"
-        heading={t("divingSectionHeading")}
-        subheading={t("divingSectionSubheading")}
+        id="excursions"
+        heading={t("sectionHeading")}
+        subheading={t("sectionSubheading")}
         iconType="diving"
         variant="white"
-        excursions={divingExcursions.map((e) => mapExcursionCard(e, locale))}
-        labels={{
-          from: t("from"),
-          perPerson: t("perPerson"),
-          viewDetails: t("viewDetails"),
-          noExcursions: t("divingNoExcursions"),
-          noExcursionsMessage: t("divingNoExcursionsMessage"),
-          featured: t("featured"),
-        }}
-      />
-
-      <WaterExcursionsSection
-        id="snorkeling-excursions"
-        heading={t("snorkelingSectionHeading")}
-        subheading={t("snorkelingSectionSubheading")}
-        iconType="snorkeling"
-        variant="sand"
-        excursions={snorkelingExcursions.map((e) => mapExcursionCard(e, locale))}
+        excursions={excursions.map((e) => mapExcursionCard(e, locale))}
         labels={{
           from: t("from"),
           perPerson: t("perPerson"),

@@ -42,7 +42,6 @@ export interface DivingExcursionCard {
   duration: LocalizedString;
   isFeatured: boolean;
   badge: LocalizedString | null;
-  activityType: string;
   experienceLevel: string;
 }
 
@@ -90,7 +89,6 @@ const excursionCardProjection = /* groq */ `{
   duration,
   isFeatured,
   badge,
-  activityType,
   experienceLevel
 }`;
 
@@ -128,9 +126,7 @@ export const divingSnorkelingPageQuery = /* groq */ `*[_type == "divingSnorkelin
   }
 }`;
 
-export const divingExcursionsQuery = /* groq */ `*[_type == "divingExcursion" && activityType in ["scuba-diving", "freediving", "scuba-snorkeling"]] | order(sortOrder asc) ${excursionCardProjection}`;
-
-export const snorkelingExcursionsQuery = /* groq */ `*[_type == "divingExcursion" && activityType in ["snorkeling", "snuba"]] | order(sortOrder asc) ${excursionCardProjection}`;
+export const scubaDivingExcursionsQuery = /* groq */ `*[_type == "divingExcursion"] | order(sortOrder asc) ${excursionCardProjection}`;
 
 // =============================================================================
 // Fetch functions
@@ -140,12 +136,8 @@ export async function getDivingSnorkelingPage(): Promise<DivingSnorkelingPageDat
   return client.fetch<DivingSnorkelingPageData>(divingSnorkelingPageQuery);
 }
 
-export async function getDivingExcursions(): Promise<DivingExcursionCard[]> {
-  return client.fetch<DivingExcursionCard[]>(divingExcursionsQuery);
-}
-
-export async function getSnorkelingExcursions(): Promise<DivingExcursionCard[]> {
-  return client.fetch<DivingExcursionCard[]>(snorkelingExcursionsQuery);
+export async function getScubaDivingExcursions(): Promise<DivingExcursionCard[]> {
+  return client.fetch<DivingExcursionCard[]>(scubaDivingExcursionsQuery);
 }
 
 // =============================================================================

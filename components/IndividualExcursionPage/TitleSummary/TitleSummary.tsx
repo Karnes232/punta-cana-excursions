@@ -15,7 +15,7 @@ interface TitleSummaryProps {
     title: string;
     slug: string;
   };
-  /** Override breadcrumb section href (e.g. "/diving-snorkeling"). Default: "/excursions". */
+  /** Override breadcrumb section href (e.g. "/scuba-diving"). Default: "/excursions". */
   sectionHref?: string;
   /** Override breadcrumb category href. Default: `${sectionHref}?category=${slug}`. */
   categoryHref?: string;

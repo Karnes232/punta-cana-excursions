@@ -19,6 +19,7 @@ interface PriceCtaGroupProps {
   depositAmount: number;
   pricePerPerson: number;
   childAgeRange?: string;
+  externalBookingUrl?: string;
   bookingLabels?: BookingLabels;
 }
 
@@ -35,6 +36,7 @@ export function PriceCtaGroup({
   depositAmount,
   pricePerPerson,
   childAgeRange,
+  externalBookingUrl,
   bookingLabels,
 }: PriceCtaGroupProps) {
   const [isVisible, setIsVisible] = useState(false);
@@ -100,6 +102,16 @@ export function PriceCtaGroup({
           >
             {reserveInner}
           </button>
+        ) : externalBookingUrl ? (
+          <a
+            href={externalBookingUrl}
+            target="_blank"
+            rel="noopener"
+            className={reserveClasses}
+            style={reserveStyle}
+          >
+            {reserveInner}
+          </a>
         ) : (
           <Link href="/contact" className={reserveClasses} style={reserveStyle}>
             {reserveInner}

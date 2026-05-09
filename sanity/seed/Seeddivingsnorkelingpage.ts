@@ -45,7 +45,7 @@ const divingSnorkelingPageData = {
       en: "Explore Diving Trips",
       es: "Explorar Buceo",
     },
-    href: "#diving-excursions",
+    href: "/scuba-diving",
   },
 
   heroSecondaryCTA: {
@@ -53,7 +53,7 @@ const divingSnorkelingPageData = {
       en: "Snorkeling Adventures",
       es: "Aventuras de Snorkel",
     },
-    href: "#snorkeling-excursions",
+    href: "/scuba-diving",
   },
 
   // ─── Intro ──────────────────────────────────────────────────────────────────
@@ -227,12 +227,12 @@ const divingSnorkelingPageData = {
 
   seo: {
     metaTitle: {
-      en: "Diving & Snorkeling in Punta Cana | Grand Bay Excursions",
-      es: "Buceo y Snorkel en Punta Cana | Excursiones Grand Bay",
+      en: "Scuba Diving in Punta Cana | Grand Bay Excursions",
+      es: "Buceo en Punta Cana | Excursiones Grand Bay",
     },
     metaDescription: {
-      en: "Explore Punta Cana's best diving and snorkeling experiences with certified local guides. PADI-certified instructors, top equipment, and hidden reef spots. Book with Grand Bay.",
-      es: "Explora las mejores experiencias de buceo y snorkel en Punta Cana con guías locales certificados. Instructores PADI, equipo de primera y arrecifes escondidos. Reserva con Grand Bay.",
+      en: "Explore Punta Cana's best scuba diving experiences with certified local guides. PADI-certified instructors, top equipment, and hidden reef spots. Book with Grand Bay.",
+      es: "Explora las mejores experiencias de buceo en Punta Cana con guías locales certificados. Instructores PADI, equipo de primera y arrecifes escondidos. Reserva con Grand Bay.",
     },
   },
 };

@@ -18,6 +18,7 @@ interface PriceDepositProps {
   daysAvailable?: string[];
   timeSlots?: string[];
   bookingNoticeHours?: number;
+  externalBookingUrl?: string;
   labels: {
     from: string;
     perPerson: string;
@@ -46,6 +47,7 @@ export function PriceDeposit({
   daysAvailable,
   timeSlots,
   bookingNoticeHours,
+  externalBookingUrl,
   labels,
   bookingLabels,
 }: PriceDepositProps) {
@@ -79,6 +81,7 @@ export function PriceDeposit({
           depositAmount={depositAmount}
           pricePerPerson={price}
           childAgeRange={childAgeRange}
+          externalBookingUrl={externalBookingUrl}
           bookingLabels={bookingLabels}
         />
       </div>

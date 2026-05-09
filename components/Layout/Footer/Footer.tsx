@@ -132,8 +132,7 @@ export default function Footer({
               {[
                 { label: "Island Tours", href: "/excursions/island-tours" },
                 { label: "Catamaran Trips", href: "/excursions/catamaran" },
-                { label: "Snorkeling", href: "/diving-snorkeling" },
-                { label: "Diving", href: "/diving-snorkeling#diving" },
+                { label: "Scuba Diving", href: "/scuba-diving" },
                 { label: "Adventure Tours", href: "/excursions/adventure" },
                 { label: "Private Tours", href: "/private-tours" },
                 { label: "Family Tours", href: "/excursions/family" },

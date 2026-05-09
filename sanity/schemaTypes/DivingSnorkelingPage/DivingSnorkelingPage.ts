@@ -11,7 +11,7 @@ import { DropIcon } from "@sanity/icons";
 
 export const divingSnorkelingPage = defineType({
   name: "divingSnorkelingPage",
-  title: "Diving & Snorkeling Page",
+  title: "Scuba Diving Page",
   type: "document",
   icon: DropIcon,
 
@@ -86,7 +86,7 @@ export const divingSnorkelingPage = defineType({
           name: "href",
           title: "Link",
           type: "string",
-          description: 'URL or anchor, e.g. "#diving-excursions"',
+          description: 'URL or anchor, e.g. "/scuba-diving"',
           validation: (rule) => rule.required(),
         }),
       ],
@@ -109,7 +109,7 @@ export const divingSnorkelingPage = defineType({
           title: "Link",
           type: "string",
           description:
-            'URL or anchor, e.g. "#snorkeling-excursions" or "/contact"',
+            'URL or anchor, e.g. "/scuba-diving" or "/contact"',
           validation: (rule) => rule.required(),
         }),
       ],

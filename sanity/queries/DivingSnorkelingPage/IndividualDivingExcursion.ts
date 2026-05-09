@@ -38,7 +38,6 @@ export interface RelatedDivingExcursion {
   duration: LocalizedField;
   isFeatured: boolean;
   badge: LocalizedField | null;
-  activityType: string;
   heroImage: {
     asset: {
       _id: string;
@@ -56,6 +55,7 @@ export interface IndividualDivingExcursion {
   // Content
   title: LocalizedField;
   slug: { current: string };
+  externalBookingUrl: string;
   shortSummary: LocalizedField;
   badge: LocalizedField | null;
 
@@ -76,7 +76,6 @@ export interface IndividualDivingExcursion {
   gallery: DivingGalleryImage[];
 
   // Diving details
-  activityType: string;
   experienceLevel: string;
   certificationRequired: boolean;
   certificationDetails: LocalizedField | null;
@@ -121,6 +120,7 @@ export const individualDivingExcursionQuery = `*[_type == "divingExcursion" && s
   _type,
   title,
   slug,
+  externalBookingUrl,
   shortSummary,
   badge,
   heroImage {
@@ -139,7 +139,6 @@ export const individualDivingExcursionQuery = `*[_type == "divingExcursion" && s
     },
     alt, hotspot, crop
   },
-  activityType,
   experienceLevel,
   certificationRequired,
   certificationDetails,
@@ -169,7 +168,6 @@ export const individualDivingExcursionQuery = `*[_type == "divingExcursion" && s
     duration,
     isFeatured,
     badge,
-    activityType,
     heroImage {
       asset-> { _id, url, metadata { lqip } },
       alt

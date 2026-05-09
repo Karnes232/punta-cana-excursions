@@ -41,7 +41,7 @@ export async function generateMetadata({
     seo: pageSeo?.seo,
     defaults: defaultSeo?.defaultSeo,
     locale: locale as "en" | "es",
-    path: `/diving-snorkeling/${slug}`,
+    path: `/scuba-diving/${slug}`,
     fallbackTitle: getLocalized(excursion?.title, locale),
     fallbackDescription: getLocalized(excursion?.shortSummary, locale),
     fallbackImage: heroImage?.asset?.url
@@ -68,27 +68,11 @@ export async function generateStaticParams() {
 // Helpers
 // =============================================================================
 
-const activityTypeLabels: Record<string, { en: string; es: string }> = {
-  "scuba-diving": { en: "Scuba Diving", es: "Buceo" },
-  snorkeling: { en: "Snorkeling", es: "Snorkel" },
-  freediving: { en: "Freediving", es: "Apnea" },
-  snuba: { en: "Snuba", es: "Snuba" },
-  "scuba-snorkeling": { en: "Scuba + Snorkeling", es: "Buceo + Snorkel" },
-};
-
 const experienceLevelLabels: Record<string, { en: string; es: string }> = {
   "all-levels": { en: "All Levels", es: "Todos los Niveles" },
   beginner: { en: "Beginner", es: "Principiante" },
   intermediate: { en: "Intermediate", es: "Intermedio" },
   advanced: { en: "Advanced", es: "Avanzado" },
-};
-
-const activitySectionAnchors: Record<string, string> = {
-  "scuba-diving": "#diving-excursions",
-  freediving: "#diving-excursions",
-  "scuba-snorkeling": "#diving-excursions",
-  snorkeling: "#snorkeling-excursions",
-  snuba: "#snorkeling-excursions",
 };
 
 // =============================================================================
@@ -116,9 +100,8 @@ export default async function DivingExcursionDetailPage({
   const l = locale as "en" | "es";
   const isEs = locale === "es";
 
-  const activityLabel = activityTypeLabels[excursion.activityType]?.[l] ?? excursion.activityType;
+  const scubaDivingLabel = isEs ? "Buceo" : "Scuba Diving";
   const experienceLabel = experienceLevelLabels[excursion.experienceLevel]?.[l] ?? excursion.experienceLevel;
-  const sectionAnchor = activitySectionAnchors[excursion.activityType] ?? "";
 
   const faq = excursion.faq?.map((item) => ({
     _key: item._key,
@@ -155,7 +138,7 @@ export default async function DivingExcursionDetailPage({
           })) ?? []
         }
         excursionTitle={getLocalized(excursion.title, locale)}
-        categoryBadge={activityLabel}
+        categoryBadge={scubaDivingLabel}
         labels={{
           viewAllPhotos: isEs ? "Ver todas las fotos" : "View All Photos",
           photoOf: isEs ? "Foto de" : "Photo of",
@@ -171,11 +154,11 @@ export default async function DivingExcursionDetailPage({
         badge={excursion.badge ? getLocalized(excursion.badge, locale) : null}
         summary={getLocalized(excursion.shortSummary, locale)}
         category={{
-          title: activityLabel,
-          slug: excursion.activityType,
+          title: scubaDivingLabel,
+          slug: "scuba-diving",
         }}
-        sectionHref="/diving-snorkeling"
-        categoryHref={`/diving-snorkeling${sectionAnchor}`}
+        sectionHref="/scuba-diving"
+        categoryHref="/scuba-diving"
         stats={{
           duration: getLocalized(excursion.duration, locale),
           pickupTime: experienceLabel,
@@ -214,6 +197,7 @@ export default async function DivingExcursionDetailPage({
             excursionTitle={getLocalized(excursion.title, locale)}
             whatsappNumber="18091234567"
             locale={locale}
+            externalBookingUrl={excursion.externalBookingUrl}
             labels={{
               from: isEs ? "Desde" : "From",
               perPerson: isEs ? "por persona" : "per person",
@@ -322,7 +306,7 @@ export default async function DivingExcursionDetailPage({
         <RelatedExcursions
           excursions={excursion.relatedExcursions.map((rel) => ({
             slug: rel.slug.current,
-            href: `/diving-snorkeling/${rel.slug.current}`,
+            href: `/scuba-diving/${rel.slug.current}`,
             title: getLocalized(rel.title, locale),
             summary: getLocalized(rel.shortSummary, locale),
             image: {
@@ -335,8 +319,7 @@ export default async function DivingExcursionDetailPage({
             },
             price: rel.price,
             duration: getLocalized(rel.duration, locale),
-            category:
-              activityTypeLabels[rel.activityType]?.[l] ?? rel.activityType,
+            category: scubaDivingLabel,
           }))}
           labels={{
             heading: isEs ? "Excursiones Relacionadas" : "Related Excursions",

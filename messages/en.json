@@ -2,7 +2,7 @@
   "Navigation": {
     "home": "Inicio",
     "excursions": "Excursions",
-    "divingSnorkeling": "Diving & Snorkeling",
+    "scubaDiving": "Scuba Diving",
     "about": "Sobre Nosotros",
     "blog": "Blog",
     "faq": "Preguntas Frecuentes",
@@ -17,18 +17,14 @@
     "termsOfService": "Terms of Service",
     "cancellationPolicy": "Cancellation Policy"
   },
-  "divingSnorkeling": {
-    "divingSectionHeading": "Diving Excursions",
-    "divingSectionSubheading": "Explore our diving trips",
-    "snorkelingSectionHeading": "Snorkeling Excursions",
-    "snorkelingSectionSubheading": "Explore our snorkeling trips",
+  "scubaDiving": {
+    "sectionHeading": "Scuba Diving Excursions",
+    "sectionSubheading": "Explore our scuba diving trips",
     "from": "From",
     "perPerson": "Per Person",
     "viewDetails": "View Details",
     "noExcursions": "No excursions found",
     "noExcursionsMessage": "There are no excursions available at the moment. Please check back later.",
-    "featured": "Featured",
-    "divingNoExcursions": "No diving trips found",
-    "divingNoExcursionsMessage": "There are no diving trips available at the moment. Please check back later."
+    "featured": "Featured"
   }
 }

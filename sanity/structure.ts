@@ -75,21 +75,21 @@ export const structure: StructureResolver = (S) =>
         ),
       S.divider(),
       S.listItem()
-        .title("Diving & Snorkeling page")
+        .title("Scuba Diving page")
         .icon(() => "🧭")
         .child(
           S.document()
             .schemaType("divingSnorkelingPage")
             .documentId("divingSnorkelingPage")
-            .title("Diving & Snorkeling page"),
+            .title("Scuba Diving page"),
         ),
       S.divider(),
       S.listItem()
-        .title("Diving & Snorkeling Excursions")
+        .title("Scuba Diving Excursions")
         .icon(() => "🤿")
         .child(
           S.documentList()
-            .title("Diving & Snorkeling Excursions")
+            .title("Scuba Diving Excursions")
             .apiVersion(apiVersion)
             .filter("_type == 'divingExcursion'")
             .defaultOrdering([{ field: "sortOrder", direction: "asc" }]),
