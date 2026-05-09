@@ -44,6 +44,16 @@ export const generalLayout = defineType({
     }),
 
     defineField({
+      name: "favicon",
+      title: "Favicon",
+      type: "image",
+      description:
+        "Square brand mark used as the browser tab icon and home-screen icon. SVG or PNG, 512×512 minimum recommended. Falls back to the main logo if blank.",
+      options: { hotspot: false, accept: "image/png,image/svg+xml,image/jpeg" },
+      group: "branding",
+    }),
+
+    defineField({
       name: "companyName",
       title: "Company Name",
       type: "localizedString",

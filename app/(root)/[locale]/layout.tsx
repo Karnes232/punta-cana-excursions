@@ -13,6 +13,7 @@ import {
 } from "@/sanity/queries/GeneralLayout/generalLayoutQuery";
 import { Logo as LogoType } from "@/sanity/queries/GeneralLayout/generalLayoutQuery";
 import { getDefaultSeo } from "@/sanity/queries/SEO/seoProjection";
+import { urlFor } from "@/sanity/lib/image";
 import { SITE_URL } from "@/lib/seo/constants";
 import Footer from "@/components/Layout/Footer/Footer";
 
@@ -30,10 +31,36 @@ export async function generateMetadata({
   const defaultTitle =
     getLocalized(defaults?.metaTitle, locale) || siteName;
 
+  const iconSource = result?.favicon ?? result?.logo ?? null;
+  const icons: Metadata["icons"] | undefined = iconSource
+    ? {
+        icon: [
+          {
+            url: urlFor(iconSource).width(32).height(32).fit("crop").auto("format").url(),
+            sizes: "32x32",
+            type: "image/png",
+          },
+          {
+            url: urlFor(iconSource).width(192).height(192).fit("crop").auto("format").url(),
+            sizes: "192x192",
+            type: "image/png",
+          },
+        ],
+        apple: [
+          {
+            url: urlFor(iconSource).width(180).height(180).fit("crop").auto("format").url(),
+            sizes: "180x180",
+            type: "image/png",
+          },
+        ],
+      }
+    : undefined;
+
   return {
     metadataBase: new URL(SITE_URL),
     title: { default: defaultTitle, template: `%s | ${siteName}` },
     description: getLocalized(defaults?.metaDescription, locale) || undefined,
+    icons,
   };
 }
 

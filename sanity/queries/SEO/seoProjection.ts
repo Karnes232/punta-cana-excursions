@@ -97,14 +97,22 @@ export const seoSingleLanguageProjection = `
 // Site-wide default SEO (from generalLayout)
 // =============================================================================
 
+export interface SanityImageRef {
+  asset: { _ref: string };
+}
+
 export interface DefaultSeoResult {
   defaultSeo: SeoData | null;
   companyName: LocalizedField | null;
+  favicon: SanityImageRef | null;
+  logo: SanityImageRef | null;
 }
 
 export const defaultSeoQuery = `*[_type == "generalLayout"][0]{
   "defaultSeo": defaultSeo { ${seoProjection} },
-  companyName
+  companyName,
+  favicon,
+  logo
 }`;
 
 export async function getDefaultSeo(): Promise<DefaultSeoResult | null> {
