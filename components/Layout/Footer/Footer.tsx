@@ -130,12 +130,13 @@ export default function Footer({
             </h4>
             <ul className="space-y-2">
               {[
-                { label: "Island Tours", href: "/excursions/island-tours" },
-                { label: "Catamaran Trips", href: "/excursions/catamaran" },
                 { label: "Scuba Diving", href: "/scuba-diving" },
-                { label: "Adventure Tours", href: "/excursions/adventure" },
-                { label: "Private Tours", href: "/private-tours" },
-                { label: "Family Tours", href: "/excursions/family" },
+                { label: "Island Tours", href: "/excursions?category=island-tours" },
+                { label: "Catamaran Trips", href: "/excursions?category=catamaran" },
+                
+                { label: "Adventure Tours", href: "/excursions?category=adventure" },
+                //{ label: "Private Tours", href: "/private-tours" },
+                { label: "Family Tours", href: "/excursions?category=family-tours" },
               ].map((link) => (
                 <li key={link.href}>
                   <Link
