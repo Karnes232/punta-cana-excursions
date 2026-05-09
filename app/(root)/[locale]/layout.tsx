@@ -31,6 +31,10 @@ export async function generateMetadata({
   const defaultTitle =
     getLocalized(defaults?.metaTitle, locale) || siteName;
 
+  // Sanity-driven favicon (preferred). When unset, this metadata block is
+  // omitted so Next.js falls back to the file-based icon convention
+  // (`app/icon.*` / `app/apple-icon.*`) — that static file also serves the
+  // Sanity Studio routes which don't go through this layout.
   const iconSource = result?.favicon ?? result?.logo ?? null;
   const icons: Metadata["icons"] | undefined = iconSource
     ? {
@@ -60,7 +64,7 @@ export async function generateMetadata({
     metadataBase: new URL(SITE_URL),
     title: { default: defaultTitle, template: `%s | ${siteName}` },
     description: getLocalized(defaults?.metaDescription, locale) || undefined,
-    icons,
+    ...(icons ? { icons } : {}),
   };
 }
 

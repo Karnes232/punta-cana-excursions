@@ -1,14 +1,48 @@
+import Image from "next/image";
+
 interface BlogHeroProps {
   headline: string;
   subheadline: string;
+  backgroundImage?: {
+    url: string;
+    lqip?: string;
+  } | null;
 }
 
-export function BlogHero({ headline, subheadline }: BlogHeroProps) {
+export function BlogHero({ headline, subheadline, backgroundImage }: BlogHeroProps) {
+  const hasImage = !!backgroundImage?.url;
+
   return (
     <div
       className="relative pt-28 pb-20 overflow-hidden"
-      style={{ background: "linear-gradient(135deg, #005F86 0%, #0EA5B7 100%)" }}
+      style={
+        hasImage
+          ? undefined
+          : { background: "linear-gradient(135deg, #005F86 0%, #0EA5B7 100%)" }
+      }
     >
+      {hasImage && (
+        <>
+          <Image
+            src={backgroundImage!.url}
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+            placeholder={backgroundImage!.lqip ? "blur" : undefined}
+            blurDataURL={backgroundImage!.lqip}
+          />
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                "linear-gradient(135deg, rgba(0,95,134,0.85) 0%, rgba(14,165,183,0.75) 100%)",
+            }}
+          />
+        </>
+      )}
+
       <div
         className="absolute inset-0 opacity-10 pointer-events-none"
         style={{

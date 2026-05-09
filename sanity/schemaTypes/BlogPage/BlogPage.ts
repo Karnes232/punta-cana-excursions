@@ -19,6 +19,12 @@ export const blogPage = defineType({
       title: "Hero Subheadline",
       type: "localizedText",
     }),
+    defineField({
+      name: "heroImage",
+      title: "Hero Background Image",
+      type: "image",
+      options: { hotspot: true, metadata: ["lqip"] },
+    }),
 
     defineField({
       name: "seo",

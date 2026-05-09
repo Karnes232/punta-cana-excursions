@@ -91,6 +91,14 @@ export default async function BlogIndexPage({
       <BlogHero
         headline={blogData?.heroHeadline?.[lk] ?? "Blog"}
         subheadline={blogData?.heroSubheadline?.[lk] ?? ""}
+        backgroundImage={
+          blogData?.heroImage?.asset?.url
+            ? {
+                url: blogData.heroImage.asset.url,
+                lqip: blogData.heroImage.asset.metadata?.lqip,
+              }
+            : undefined
+        }
       />
 
       <section className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-14 md:py-20">

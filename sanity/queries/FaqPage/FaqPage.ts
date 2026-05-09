@@ -21,6 +21,11 @@ export interface FaqCategory {
 export interface FaqPageData {
   heroHeadline: LocalizedField;
   heroSubheadline: LocalizedField;
+  heroImage: {
+    asset: { url: string; metadata: { lqip?: string } };
+    hotspot?: { x: number; y: number };
+    crop?: { top: number; bottom: number; left: number; right: number };
+  } | null;
   categories: FaqCategory[];
 }
 
@@ -31,6 +36,11 @@ export interface FaqPageData {
 const faqPageQuery = /* groq */ `*[_type == "faqPage"][0] {
   heroHeadline,
   heroSubheadline,
+  heroImage {
+    asset-> { url, metadata { lqip } },
+    hotspot,
+    crop
+  },
   categories[] {
     _key,
     categoryName,

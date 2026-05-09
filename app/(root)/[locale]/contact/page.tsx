@@ -120,6 +120,14 @@ export default async function ContactPage({
       <ContactHero
         headline={contactData?.heroHeadline?.[lk] ?? (isEs ? "Contáctenos" : "Get in Touch")}
         subheadline={contactData?.heroSubheadline?.[lk] ?? ""}
+        backgroundImage={
+          contactData?.heroImage?.asset?.url
+            ? {
+                url: contactData.heroImage.asset.url,
+                lqip: contactData.heroImage.asset.metadata?.lqip,
+              }
+            : undefined
+        }
       />
 
       <section className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-16 md:py-24">

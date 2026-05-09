@@ -20,6 +20,12 @@ export const faqPage = defineType({
       type: "localizedText",
     }),
     defineField({
+      name: "heroImage",
+      title: "Hero Background Image",
+      type: "image",
+      options: { hotspot: true, metadata: ["lqip"] },
+    }),
+    defineField({
       name: "categories",
       title: "FAQ Categories",
       type: "array",

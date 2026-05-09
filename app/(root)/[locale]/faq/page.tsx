@@ -62,6 +62,14 @@ export default async function FaqPage({
       <FaqHero
         headline={page?.heroHeadline?.[lk] ?? (isEs ? "Preguntas Frecuentes" : "Frequently Asked Questions")}
         subheadline={page?.heroSubheadline?.[lk] ?? ""}
+        backgroundImage={
+          page?.heroImage?.asset?.url
+            ? {
+                url: page.heroImage.asset.url,
+                lqip: page.heroImage.asset.metadata?.lqip,
+              }
+            : undefined
+        }
       />
 
       <FaqCategories

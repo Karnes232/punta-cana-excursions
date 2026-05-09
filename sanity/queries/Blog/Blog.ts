@@ -9,6 +9,11 @@ import type { PortableTextBlock } from "@portabletext/types";
 export interface BlogPageData {
   heroHeadline: LocalizedField;
   heroSubheadline: LocalizedField;
+  heroImage: {
+    asset: { url: string; metadata: { lqip?: string } };
+    hotspot?: { x: number; y: number };
+    crop?: { top: number; bottom: number; left: number; right: number };
+  } | null;
 }
 
 export interface BlogCategoryRef {
@@ -64,7 +69,12 @@ export interface BlogCategoryItem {
 
 const blogPageQuery = /* groq */ `*[_type == "blogPage"][0] {
   heroHeadline,
-  heroSubheadline
+  heroSubheadline,
+  heroImage {
+    asset-> { url, metadata { lqip } },
+    hotspot,
+    crop
+  }
 }`;
 
 const featuredImageFragment = /* groq */ `featuredImage {
