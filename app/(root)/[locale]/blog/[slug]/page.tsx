@@ -4,10 +4,45 @@ import { BlogPostBody } from "@/components/IndividualBlogPost/BlogPostBody/BlogP
 import { BlogPostTranslations } from "@/components/IndividualBlogPost/BlogPostTranslations/BlogPostTranslations";
 import {
   getBlogArticle,
+  getBlogArticleSeo,
   getBlogArticleTranslations,
   getBlogArticleSlugs,
 } from "@/sanity/queries/Blog/Blog";
 import type { LocalizedField } from "@/sanity/queries/GeneralLayout/generalLayoutQuery";
+import type { Metadata } from "next";
+import { getDefaultSeo } from "@/sanity/queries/SEO/seoProjection";
+import { buildSingleLanguageMetadata } from "@/lib/seo/buildMetadata";
+import { JsonLd } from "@/components/seo/JsonLd";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const [pageSeo, defaultSeo, article] = await Promise.all([
+    getBlogArticleSeo(slug),
+    getDefaultSeo(),
+    getBlogArticle(slug),
+  ]);
+  const featuredImage = article?.featuredImage;
+  return buildSingleLanguageMetadata({
+    seo: pageSeo?.seo,
+    defaults: defaultSeo?.defaultSeo,
+    locale: locale as "en" | "es",
+    path: `/blog/${slug}`,
+    fallbackTitle: article?.title ?? undefined,
+    fallbackDescription: article?.excerpt ?? undefined,
+    fallbackImage: featuredImage?.asset?.url
+      ? {
+          url: featuredImage.asset.url,
+          alt: featuredImage.alt ?? undefined,
+          width: featuredImage.asset.metadata?.dimensions?.width,
+          height: featuredImage.asset.metadata?.dimensions?.height,
+        }
+      : undefined,
+  });
+}
 
 export async function generateStaticParams() {
   const slugs = await getBlogArticleSlugs();
@@ -21,11 +56,16 @@ export default async function BlogArticlePage({
 }) {
   const { locale, slug } = await params;
 
-  const article = await getBlogArticle(slug);
+  const [article, pageSeo] = await Promise.all([
+    getBlogArticle(slug),
+    getBlogArticleSeo(slug),
+  ]);
 
   if (!article) {
     redirect({ href: "/blog", locale });
   }
+
+  const jsonLd = pageSeo?.seo?.structuredData;
 
   const translations = await getBlogArticleTranslations(
     article!.translationGroup,
@@ -52,6 +92,7 @@ export default async function BlogArticlePage({
 
   return (
     <main className="min-h-screen bg-white">
+      <JsonLd data={jsonLd} />
       <BlogPostHero
         title={article!.title}
         excerpt={article!.excerpt}

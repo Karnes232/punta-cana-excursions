@@ -14,8 +14,45 @@ import {
   getLocalizedPortableText,
   getLocalizedStringArray,
 } from "@/sanity/queries/GeneralLayout/generalLayoutQuery";
-import { getIndividualExcursion } from "@/sanity/queries/IndividualExcursions/Excursionqueries";
+import {
+  getIndividualExcursion,
+  getIndividualExcursionSeo,
+} from "@/sanity/queries/IndividualExcursions/Excursionqueries";
 import type { BookingLabels } from "@/components/IndividualExcursionPage/PriceDeposit/bookingTypes";
+import type { Metadata } from "next";
+import { getDefaultSeo } from "@/sanity/queries/SEO/seoProjection";
+import { buildMetadata } from "@/lib/seo/buildMetadata";
+import { JsonLd } from "@/components/seo/JsonLd";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const [pageSeo, defaultSeo, excursion] = await Promise.all([
+    getIndividualExcursionSeo(slug),
+    getDefaultSeo(),
+    getIndividualExcursion(slug),
+  ]);
+  const heroImage = excursion?.heroImage;
+  return buildMetadata({
+    seo: pageSeo?.seo,
+    defaults: defaultSeo?.defaultSeo,
+    locale: locale as "en" | "es",
+    path: `/excursions/${slug}`,
+    fallbackTitle: getLocalized(excursion?.title, locale),
+    fallbackDescription: getLocalized(excursion?.shortSummary, locale),
+    fallbackImage: heroImage?.asset?.url
+      ? {
+          url: heroImage.asset.url,
+          alt: getLocalized(heroImage.alt, locale) || undefined,
+          width: heroImage.asset.metadata?.dimensions?.width,
+          height: heroImage.asset.metadata?.dimensions?.height,
+        }
+      : undefined,
+  });
+}
 
 export default async function ExcursionPage({
   params,
@@ -23,7 +60,14 @@ export default async function ExcursionPage({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
-  const excursion = await getIndividualExcursion(slug);
+  const [excursion, pageSeo] = await Promise.all([
+    getIndividualExcursion(slug),
+    getIndividualExcursionSeo(slug),
+  ]);
+  const jsonLd =
+    locale === "es"
+      ? pageSeo?.seo?.structuredDataEs
+      : pageSeo?.seo?.structuredDataEn;
 
   const childAgeRange = getLocalized(excursion?.childAgeRange, locale);
   const infantPolicy = excursion?.infantPolicy
@@ -101,6 +145,7 @@ export default async function ExcursionPage({
 
   return (
     <>
+      <JsonLd data={jsonLd} />
       <ImageGalleryHero
         heroImage={{
           url: excursion?.heroImage.asset.url || "",

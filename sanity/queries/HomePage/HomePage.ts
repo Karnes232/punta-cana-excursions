@@ -207,3 +207,17 @@ export const homePageQuery = `*[_type == "homePage"][0] {
 export async function getHomePage(): Promise<HomePage | null> {
   return await client.fetch(homePageQuery);
 }
+
+// =============================================================================
+// SEO
+// =============================================================================
+
+import { seoProjection, type SeoData } from "../SEO/seoProjection";
+
+export const homePageSeoQuery = `*[_type == "homePage"][0]{
+  "seo": seo { ${seoProjection} }
+}`;
+
+export async function getHomePageSeo(): Promise<{ seo: SeoData | null } | null> {
+  return client.fetch(homePageSeoQuery);
+}

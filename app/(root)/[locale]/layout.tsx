@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { Montserrat, Inter } from "next/font/google";
 import "../../globals.css";
@@ -5,12 +6,36 @@ import Navbar, { NavCtaButtonType } from "@/components/Layout/Navbar/Navbar";
 import {
   FooterQuickLink,
   getGeneralLayout,
+  getLocalized,
   LocalizedField,
   NavLink,
   SocialLink,
 } from "@/sanity/queries/GeneralLayout/generalLayoutQuery";
 import { Logo as LogoType } from "@/sanity/queries/GeneralLayout/generalLayoutQuery";
+import { getDefaultSeo } from "@/sanity/queries/SEO/seoProjection";
+import { SITE_URL } from "@/lib/seo/constants";
 import Footer from "@/components/Layout/Footer/Footer";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const result = await getDefaultSeo();
+  const defaults = result?.defaultSeo;
+  const siteName =
+    getLocalized(result?.companyName ?? null, locale) ||
+    "Punta Cana Excursions";
+  const defaultTitle =
+    getLocalized(defaults?.metaTitle, locale) || siteName;
+
+  return {
+    metadataBase: new URL(SITE_URL),
+    title: { default: defaultTitle, template: `%s | ${siteName}` },
+    description: getLocalized(defaults?.metaDescription, locale) || undefined,
+  };
+}
 
 const montserrat = Montserrat({
   subsets: ["latin"],

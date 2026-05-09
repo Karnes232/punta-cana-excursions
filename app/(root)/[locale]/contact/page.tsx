@@ -1,20 +1,50 @@
 import { ContactHero } from "@/components/ContactPage/ContactHero/ContactHero";
 import { ContactInfo } from "@/components/ContactPage/ContactInfo/ContactInfo";
 import { ContactForm } from "@/components/ContactPage/ContactForm/ContactForm";
-import { getContactPage } from "@/sanity/queries/ContactPage/ContactPage";
+import {
+  getContactPage,
+  getContactPageSeo,
+} from "@/sanity/queries/ContactPage/ContactPage";
 import { getGeneralLayout } from "@/sanity/queries/GeneralLayout/generalLayoutQuery";
 import type { LocalizedField } from "@/sanity/queries/GeneralLayout/generalLayoutQuery";
+import type { Metadata } from "next";
+import { getDefaultSeo } from "@/sanity/queries/SEO/seoProjection";
+import { buildMetadata } from "@/lib/seo/buildMetadata";
+import { JsonLd } from "@/components/seo/JsonLd";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const [pageSeo, defaultSeo] = await Promise.all([
+    getContactPageSeo(),
+    getDefaultSeo(),
+  ]);
+  return buildMetadata({
+    seo: pageSeo?.seo,
+    defaults: defaultSeo?.defaultSeo,
+    locale: locale as "en" | "es",
+    path: "/contact",
+  });
+}
 
 export default async function ContactPage({
   params,
 }: {
   params: Promise<{ locale: string }>;
 }) {
-  const [{ locale }, contactData, layout] = await Promise.all([
+  const [{ locale }, contactData, layout, pageSeo] = await Promise.all([
     params,
     getContactPage(),
     getGeneralLayout(),
+    getContactPageSeo(),
   ]);
+  const jsonLd =
+    locale === "es"
+      ? pageSeo?.seo?.structuredDataEs
+      : pageSeo?.seo?.structuredDataEn;
 
   const lk = locale as keyof LocalizedField;
 
@@ -86,6 +116,7 @@ export default async function ContactPage({
 
   return (
     <main className="min-h-screen bg-white">
+      <JsonLd data={jsonLd} />
       <ContactHero
         headline={contactData?.heroHeadline?.[lk] ?? (isEs ? "Contáctenos" : "Get in Touch")}
         subheadline={contactData?.heroSubheadline?.[lk] ?? ""}

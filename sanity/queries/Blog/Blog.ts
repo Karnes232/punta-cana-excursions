@@ -149,3 +149,32 @@ export async function getBlogArticleTranslations(
 export async function getBlogArticleSlugs(): Promise<BlogSlug[]> {
   return client.fetch<BlogSlug[]>(slugsQuery);
 }
+
+// =============================================================================
+// SEO
+// =============================================================================
+
+import {
+  seoProjection,
+  seoSingleLanguageProjection,
+  type SeoData,
+  type SeoSingleLanguageData,
+} from "../SEO/seoProjection";
+
+export const blogPageSeoQuery = `*[_type == "blogPage"][0]{
+  "seo": seo { ${seoProjection} }
+}`;
+
+export async function getBlogPageSeo(): Promise<{ seo: SeoData | null } | null> {
+  return client.fetch(blogPageSeoQuery);
+}
+
+export const blogArticleSeoQuery = `*[_type == "blogArticle" && slug.current == $slug][0]{
+  "seo": seo { ${seoSingleLanguageProjection} }
+}`;
+
+export async function getBlogArticleSeo(
+  slug: string,
+): Promise<{ seo: SeoSingleLanguageData | null } | null> {
+  return client.fetch(blogArticleSeoQuery, { slug });
+}

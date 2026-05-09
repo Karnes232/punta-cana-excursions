@@ -26,6 +26,12 @@ export const legalDocument = defineType({
       type: "date",
       description: "Displayed at the top of the page.",
     }),
+
+    defineField({
+      name: "seo",
+      title: "SEO",
+      type: "seo",
+    }),
   ],
 
   preview: {

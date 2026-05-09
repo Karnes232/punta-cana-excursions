@@ -19,6 +19,12 @@ export const blogPage = defineType({
       title: "Hero Subheadline",
       type: "localizedText",
     }),
+
+    defineField({
+      name: "seo",
+      title: "SEO",
+      type: "seo",
+    }),
   ],
 
   preview: {

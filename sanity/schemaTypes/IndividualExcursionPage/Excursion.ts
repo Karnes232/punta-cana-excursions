@@ -441,13 +441,13 @@ export const excursion = defineType({
     // SEO
     // =========================================================================
 
-    // defineField({
-    //   name: "seo",
-    //   title: "SEO",
-    //   type: "seo",
-    //   description: "Page-level SEO metadata (title, description, OG image).",
-    //   group: "seo",
-    // }),
+    defineField({
+      name: "seo",
+      title: "SEO",
+      type: "seo",
+      description: "Page-level SEO metadata (title, description, OG image, JSON-LD).",
+      group: "seo",
+    }),
   ],
 
   // ===========================================================================

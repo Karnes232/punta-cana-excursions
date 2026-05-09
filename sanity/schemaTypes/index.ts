@@ -6,6 +6,9 @@ import {
   localizedStringArray,
   localizedText,
 } from "./Localized/localizedTypes";
+// SEO Types
+import { seo } from "./SEO/seo";
+import { seoSingleLanguage } from "./SEO/seoSingleLanguage";
 // General Layout Types
 import { generalLayout } from "./GeneralLayout/generalLayout";
 // Home Page Types
@@ -39,6 +42,9 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     localizedText,
     localizedBlockContent,
     localizedStringArray,
+    // SEO Types
+    seo,
+    seoSingleLanguage,
     // General Layout Types
     generalLayout,
     // Home Page Types

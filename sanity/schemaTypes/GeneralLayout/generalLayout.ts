@@ -15,6 +15,7 @@ export const generalLayout = defineType({
     { name: "social", title: "Social Media" },
     { name: "navigation", title: "Navigation" },
     { name: "footer", title: "Footer" },
+    { name: "seo", title: "Default SEO" },
   ],
 
   fields: [
@@ -280,6 +281,19 @@ export const generalLayout = defineType({
           },
         }),
       ],
+    }),
+
+    // =========================================================================
+    // DEFAULT SEO (site-wide fallbacks)
+    // =========================================================================
+
+    defineField({
+      name: "defaultSeo",
+      title: "Default SEO",
+      type: "seo",
+      group: "seo",
+      description:
+        "Used as fallback when a page does not provide its own SEO values. Set the default site title, description, OG image, etc.",
     }),
   ],
 

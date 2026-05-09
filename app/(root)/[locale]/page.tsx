@@ -7,30 +7,71 @@ import { HowBookingWorks } from "@/components/HomePage/HowBookingWorks/HowBookin
 import { Reviews } from "@/components/HomePage/Reviews/Reviews";
 import { FaqPreview } from "@/components/HomePage/FaqPreview/FaqPreview";
 import { CtaBanner } from "@/components/HomePage/CtaBanner/CtaBanner";
-import { getHomePage } from "@/sanity/queries/HomePage/HomePage";
+import type { Metadata } from "next";
+import { getHomePage, getHomePageSeo } from "@/sanity/queries/HomePage/HomePage";
 import {
   getLocalized,
   LocalizedField,
 } from "@/sanity/queries/GeneralLayout/generalLayoutQuery";
 import { getExcursionCategoryHomePage } from "@/sanity/queries/ExcursionCategory/ExcursionCategory";
 import { getFeaturedExcursions } from "@/sanity/queries/IndividualExcursions/Excursionqueries";
+import { getDefaultSeo } from "@/sanity/queries/SEO/seoProjection";
+import { buildMetadata } from "@/lib/seo/buildMetadata";
+import { JsonLd } from "@/components/seo/JsonLd";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const [pageSeo, defaultSeo, homePage] = await Promise.all([
+    getHomePageSeo(),
+    getDefaultSeo(),
+    getHomePage(),
+  ]);
+  const lk = locale as keyof LocalizedField;
+  const heroImage = homePage?.heroImage;
+  return buildMetadata({
+    seo: pageSeo?.seo,
+    defaults: defaultSeo?.defaultSeo,
+    locale: locale as "en" | "es",
+    path: "/",
+    fallbackTitle: homePage?.heroHeadline?.[lk],
+    fallbackDescription: homePage?.heroSubheadline?.[lk],
+    fallbackImage: heroImage?.asset?.url
+      ? {
+          url: heroImage.asset.url,
+          alt: homePage?.heroImageAlt?.[lk] || undefined,
+          width: heroImage.asset.metadata?.dimensions?.width,
+          height: heroImage.asset.metadata?.dimensions?.height,
+        }
+      : undefined,
+  });
+}
 
 export default async function Home({
   params,
 }: {
   params: Promise<{ locale: string }>;
 }) {
-  const [{ locale }, homePage, excursionCategories, featuredExcursions] =
+  const [{ locale }, homePage, excursionCategories, featuredExcursions, pageSeo] =
     await Promise.all([
       params,
       getHomePage(),
       getExcursionCategoryHomePage(),
       getFeaturedExcursions(),
+      getHomePageSeo(),
     ]);
   const localeKey = locale as keyof LocalizedField;
+  const jsonLd =
+    locale === "es"
+      ? pageSeo?.seo?.structuredDataEs
+      : pageSeo?.seo?.structuredDataEn;
 
   return (
     <>
+      <JsonLd data={jsonLd} />
       <Hero
         backgroundImage={{
           url: homePage?.heroImage?.asset?.url ?? "",

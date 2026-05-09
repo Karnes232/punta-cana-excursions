@@ -430,25 +430,8 @@ export const divingExcursion = defineType({
     defineField({
       name: "seo",
       title: "SEO",
-      type: "object",
+      type: "seo",
       group: "seo",
-      fields: [
-        defineField({
-          name: "metaTitle",
-          title: "Meta Title",
-          type: "localizedString",
-        }),
-        defineField({
-          name: "metaDescription",
-          title: "Meta Description",
-          type: "localizedText",
-        }),
-        defineField({
-          name: "ogImage",
-          title: "Open Graph Image",
-          type: "image",
-        }),
-      ],
     }),
   ],
 

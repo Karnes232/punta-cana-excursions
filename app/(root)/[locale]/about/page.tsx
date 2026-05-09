@@ -4,20 +4,55 @@ import { ByTheNumbers } from "@/components/AboutPage/ByTheNumbers/ByTheNumbers";
 import { OurStory } from "@/components/AboutPage/OurStory/OurStory";
 import { OurTeam } from "@/components/AboutPage/OurTeam/OurTeam";
 import { OurValues } from "@/components/AboutPage/OurValues/OurValues";
-import { getAboutPage } from "@/sanity/queries/AboutPage/AboutPage";
+import { getAboutPage, getAboutPageSeo } from "@/sanity/queries/AboutPage/AboutPage";
 import type { LocalizedField } from "@/sanity/queries/GeneralLayout/generalLayoutQuery";
+import type { Metadata } from "next";
+import { getDefaultSeo } from "@/sanity/queries/SEO/seoProjection";
+import { buildMetadata } from "@/lib/seo/buildMetadata";
+import { JsonLd } from "@/components/seo/JsonLd";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const [pageSeo, defaultSeo, page] = await Promise.all([
+    getAboutPageSeo(),
+    getDefaultSeo(),
+    getAboutPage(),
+  ]);
+  const lk = locale as keyof LocalizedField;
+  return buildMetadata({
+    seo: pageSeo?.seo,
+    defaults: defaultSeo?.defaultSeo,
+    locale: locale as "en" | "es",
+    path: "/about",
+    fallbackTitle: page?.heroHeadline?.[lk],
+    fallbackDescription: page?.heroSubheadline?.[lk],
+  });
+}
 
 export default async function AboutPage({
   params,
 }: {
   params: Promise<{ locale: string }>;
 }) {
-  const [{ locale }, page] = await Promise.all([params, getAboutPage()]);
+  const [{ locale }, page, pageSeo] = await Promise.all([
+    params,
+    getAboutPage(),
+    getAboutPageSeo(),
+  ]);
 
   const lk = locale as keyof LocalizedField;
+  const jsonLd =
+    locale === "es"
+      ? pageSeo?.seo?.structuredDataEs
+      : pageSeo?.seo?.structuredDataEn;
 
   return (
     <>
+      <JsonLd data={jsonLd} />
       <AboutHero
         backgroundImage={page?.heroImage ?? null}
         badge={page?.heroBadge?.[lk] ?? ""}

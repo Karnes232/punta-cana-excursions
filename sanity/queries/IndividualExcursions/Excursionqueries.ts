@@ -405,3 +405,17 @@ export async function getFeaturedExcursions(): Promise<ExcursionListItem[]> {
 export async function getExcursionSlugs(): Promise<ExcursionSlug[]> {
   return await client.fetch(excursionSlugsQuery);
 }
+
+// =============================================================================
+// SEO
+// =============================================================================
+
+import { seoProjection, type SeoData } from "../SEO/seoProjection";
+
+export const individualExcursionSeoQuery = `*[_type == "excursion" && slug.current == $slug][0]{
+  "seo": seo { ${seoProjection} }
+}`;
+
+export async function getIndividualExcursionSeo(slug: string): Promise<{ seo: SeoData | null } | null> {
+  return client.fetch(individualExcursionSeoQuery, { slug });
+}

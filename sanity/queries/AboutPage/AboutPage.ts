@@ -110,3 +110,17 @@ export const aboutPageQuery = /* groq */ `*[_type == "aboutPage"][0] {
 export async function getAboutPage(): Promise<AboutPageData | null> {
   return client.fetch<AboutPageData>(aboutPageQuery);
 }
+
+// =============================================================================
+// SEO
+// =============================================================================
+
+import { seoProjection, type SeoData } from "../SEO/seoProjection";
+
+export const aboutPageSeoQuery = `*[_type == "aboutPage"][0]{
+  "seo": seo { ${seoProjection} }
+}`;
+
+export async function getAboutPageSeo(): Promise<{ seo: SeoData | null } | null> {
+  return client.fetch(aboutPageSeoQuery);
+}

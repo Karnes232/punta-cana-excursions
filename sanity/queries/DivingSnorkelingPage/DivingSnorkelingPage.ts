@@ -147,3 +147,17 @@ export async function getDivingExcursions(): Promise<DivingExcursionCard[]> {
 export async function getSnorkelingExcursions(): Promise<DivingExcursionCard[]> {
   return client.fetch<DivingExcursionCard[]>(snorkelingExcursionsQuery);
 }
+
+// =============================================================================
+// SEO
+// =============================================================================
+
+import { seoProjection, type SeoData } from "../SEO/seoProjection";
+
+export const divingSnorkelingPageSeoQuery = `*[_type == "divingSnorkelingPage"][0]{
+  "seo": seo { ${seoProjection} }
+}`;
+
+export async function getDivingSnorkelingPageSeo(): Promise<{ seo: SeoData | null } | null> {
+  return client.fetch(divingSnorkelingPageSeoQuery);
+}

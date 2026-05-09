@@ -49,3 +49,17 @@ export async function getExcursionsPage(): Promise<ExcursionsPage | null> {
   const result = await client.fetch<ExcursionsPage>(excursionsPageQuery);
   return result;
 }
+
+// =============================================================================
+// SEO
+// =============================================================================
+
+import { seoProjection, type SeoData } from "../SEO/seoProjection";
+
+export const excursionsPageSeoQuery = `*[_type == "excursionsPage"][0]{
+  "seo": seo { ${seoProjection} }
+}`;
+
+export async function getExcursionsPageSeo(): Promise<{ seo: SeoData | null } | null> {
+  return client.fetch(excursionsPageSeoQuery);
+}

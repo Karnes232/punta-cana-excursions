@@ -50,3 +50,17 @@ const faqPageQuery = /* groq */ `*[_type == "faqPage"][0] {
 export async function getFaqPage(): Promise<FaqPageData | null> {
   return client.fetch<FaqPageData>(faqPageQuery);
 }
+
+// =============================================================================
+// SEO
+// =============================================================================
+
+import { seoProjection, type SeoData } from "../SEO/seoProjection";
+
+export const faqPageSeoQuery = `*[_type == "faqPage"][0]{
+  "seo": seo { ${seoProjection} }
+}`;
+
+export async function getFaqPageSeo(): Promise<{ seo: SeoData | null } | null> {
+  return client.fetch(faqPageSeoQuery);
+}

@@ -37,6 +37,12 @@ export const contactPage = defineType({
       type: "localizedString",
       description: "Heading above the contact info cards column.",
     }),
+
+    defineField({
+      name: "seo",
+      title: "SEO",
+      type: "seo",
+    }),
   ],
 
   preview: {

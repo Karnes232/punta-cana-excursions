@@ -4,10 +4,37 @@ import { BlogFilters } from "@/components/BlogPage/BlogFilters/BlogFilters";
 import { BlogGrid } from "@/components/BlogPage/BlogGrid/BlogGrid";
 import {
   getBlogPage,
+  getBlogPageSeo,
   getBlogArticles,
   getBlogCategories,
 } from "@/sanity/queries/Blog/Blog";
 import type { LocalizedField } from "@/sanity/queries/GeneralLayout/generalLayoutQuery";
+import type { Metadata } from "next";
+import { getDefaultSeo } from "@/sanity/queries/SEO/seoProjection";
+import { buildMetadata } from "@/lib/seo/buildMetadata";
+import { JsonLd } from "@/components/seo/JsonLd";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const [pageSeo, defaultSeo, blogData] = await Promise.all([
+    getBlogPageSeo(),
+    getDefaultSeo(),
+    getBlogPage(),
+  ]);
+  const lk = locale as keyof LocalizedField;
+  return buildMetadata({
+    seo: pageSeo?.seo,
+    defaults: defaultSeo?.defaultSeo,
+    locale: locale as "en" | "es",
+    path: "/blog",
+    fallbackTitle: blogData?.heroHeadline?.[lk],
+    fallbackDescription: blogData?.heroSubheadline?.[lk],
+  });
+}
 
 export default async function BlogIndexPage({
   params,
@@ -24,11 +51,16 @@ export default async function BlogIndexPage({
   const isEs = locale === "es";
   const lk = locale as keyof LocalizedField;
 
-  const [blogData, articles, rawCategories] = await Promise.all([
+  const [blogData, articles, rawCategories, pageSeo] = await Promise.all([
     getBlogPage(),
     getBlogArticles(activeLang, activeCategory),
     getBlogCategories(),
+    getBlogPageSeo(),
   ]);
+  const jsonLd =
+    locale === "es"
+      ? pageSeo?.seo?.structuredDataEs
+      : pageSeo?.seo?.structuredDataEn;
 
   const categoryOptions = (rawCategories ?? []).map((cat) => ({
     slug: cat.slug,
@@ -55,6 +87,7 @@ export default async function BlogIndexPage({
 
   return (
     <main className="min-h-screen bg-white">
+      <JsonLd data={jsonLd} />
       <BlogHero
         headline={blogData?.heroHeadline?.[lk] ?? "Blog"}
         subheadline={blogData?.heroSubheadline?.[lk] ?? ""}

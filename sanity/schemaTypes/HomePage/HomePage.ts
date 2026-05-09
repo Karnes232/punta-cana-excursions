@@ -17,6 +17,7 @@ export const homePage = defineType({
     { name: "reviews", title: "Reviews" },
     { name: "faqPreview", title: "FAQ Preview" },
     { name: "ctaBanner", title: "CTA Banner" },
+    { name: "seo", title: "SEO" },
   ],
 
   fields: [
@@ -571,6 +572,17 @@ export const homePage = defineType({
       type: "localizedString",
       description: 'e.g. "Chat on WhatsApp"',
       group: "ctaBanner",
+    }),
+
+    // =========================================================================
+    // SEO
+    // =========================================================================
+
+    defineField({
+      name: "seo",
+      title: "SEO",
+      type: "seo",
+      group: "seo",
     }),
   ],
 

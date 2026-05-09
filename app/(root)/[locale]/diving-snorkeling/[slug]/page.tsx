@@ -18,7 +18,42 @@ import {
 import {
   getIndividualDivingExcursion,
   getDivingExcursionSlugs,
+  getDivingExcursionSeo,
 } from "@/sanity/queries/DivingSnorkelingPage/IndividualDivingExcursion";
+import type { Metadata } from "next";
+import { getDefaultSeo } from "@/sanity/queries/SEO/seoProjection";
+import { buildMetadata } from "@/lib/seo/buildMetadata";
+import { JsonLd } from "@/components/seo/JsonLd";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const [pageSeo, defaultSeo, excursion] = await Promise.all([
+    getDivingExcursionSeo(slug),
+    getDefaultSeo(),
+    getIndividualDivingExcursion(slug),
+  ]);
+  const heroImage = excursion?.heroImage;
+  return buildMetadata({
+    seo: pageSeo?.seo,
+    defaults: defaultSeo?.defaultSeo,
+    locale: locale as "en" | "es",
+    path: `/diving-snorkeling/${slug}`,
+    fallbackTitle: getLocalized(excursion?.title, locale),
+    fallbackDescription: getLocalized(excursion?.shortSummary, locale),
+    fallbackImage: heroImage?.asset?.url
+      ? {
+          url: heroImage.asset.url,
+          alt: getLocalized(heroImage.alt, locale) || undefined,
+          width: heroImage.asset.metadata?.dimensions?.width,
+          height: heroImage.asset.metadata?.dimensions?.height,
+        }
+      : undefined,
+  });
+}
 
 // =============================================================================
 // Static params
@@ -66,9 +101,17 @@ export default async function DivingExcursionDetailPage({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
-  const excursion = await getIndividualDivingExcursion(slug);
+  const [excursion, pageSeo] = await Promise.all([
+    getIndividualDivingExcursion(slug),
+    getDivingExcursionSeo(slug),
+  ]);
 
   if (!excursion) notFound();
+
+  const jsonLd =
+    locale === "es"
+      ? pageSeo?.seo?.structuredDataEs
+      : pageSeo?.seo?.structuredDataEn;
 
   const l = locale as "en" | "es";
   const isEs = locale === "es";
@@ -97,6 +140,7 @@ export default async function DivingExcursionDetailPage({
 
   return (
     <>
+      <JsonLd data={jsonLd} />
       <ImageGalleryHero
         heroImage={{
           url: excursion.heroImage?.asset?.url ?? "",

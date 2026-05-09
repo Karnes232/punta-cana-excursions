@@ -5,6 +5,7 @@ import { WaterExcursionsSection } from "@/components/DivingSnorkelingPage/WaterE
 import { WhyBookWithUs } from "@/components/DivingSnorkelingPage/WhyBookWithUs/WhyBookWithUs";
 import {
   getDivingSnorkelingPage,
+  getDivingSnorkelingPageSeo,
   getDivingExcursions,
   getSnorkelingExcursions,
   type DivingExcursionCard,
@@ -14,6 +15,32 @@ import {
   LocalizedField,
 } from "@/sanity/queries/GeneralLayout/generalLayoutQuery";
 import { getTranslations } from "next-intl/server";
+import type { Metadata } from "next";
+import { getDefaultSeo } from "@/sanity/queries/SEO/seoProjection";
+import { buildMetadata } from "@/lib/seo/buildMetadata";
+import { JsonLd } from "@/components/seo/JsonLd";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const [pageSeo, defaultSeo, page] = await Promise.all([
+    getDivingSnorkelingPageSeo(),
+    getDefaultSeo(),
+    getDivingSnorkelingPage(),
+  ]);
+  const lk = locale as keyof LocalizedField;
+  return buildMetadata({
+    seo: pageSeo?.seo,
+    defaults: defaultSeo?.defaultSeo,
+    locale: locale as "en" | "es",
+    path: "/diving-snorkeling",
+    fallbackTitle: page?.heroHeadline?.[lk],
+    fallbackDescription: page?.heroSubheadline?.[lk],
+  });
+}
 
 function mapExcursionCard(e: DivingExcursionCard, locale: string) {
   return {
@@ -38,19 +65,25 @@ export default async function DivingSnorkelingPage({
 }: {
   params: { locale: string };
 }) {
-  const [{ locale }, page, divingExcursions, snorkelingExcursions, t] =
+  const [{ locale }, page, divingExcursions, snorkelingExcursions, t, pageSeo] =
     await Promise.all([
       params,
       getDivingSnorkelingPage(),
       getDivingExcursions(),
       getSnorkelingExcursions(),
       getTranslations("divingSnorkeling"),
+      getDivingSnorkelingPageSeo(),
     ]);
 
   const localeKey = locale as keyof LocalizedField;
+  const jsonLd =
+    locale === "es"
+      ? pageSeo?.seo?.structuredDataEs
+      : pageSeo?.seo?.structuredDataEn;
 
   return (
     <>
+      <JsonLd data={jsonLd} />
       <DivingHero
         backgroundImage={page?.heroImage || { url: "", lqip: "" }}
         badge={page?.heroBadge?.[localeKey] || ""}

@@ -40,3 +40,17 @@ const contactPageQuery = /* groq */ `*[_type == "contactPage"][0] {
 export async function getContactPage(): Promise<ContactPageData | null> {
   return client.fetch<ContactPageData>(contactPageQuery);
 }
+
+// =============================================================================
+// SEO
+// =============================================================================
+
+import { seoProjection, type SeoData } from "../SEO/seoProjection";
+
+export const contactPageSeoQuery = `*[_type == "contactPage"][0]{
+  "seo": seo { ${seoProjection} }
+}`;
+
+export async function getContactPageSeo(): Promise<{ seo: SeoData | null } | null> {
+  return client.fetch(contactPageSeoQuery);
+}

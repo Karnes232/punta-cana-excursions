@@ -2,12 +2,41 @@ import { ExcursionsBrowseSection } from "@/components/ExcursionsPage/ExcursionsB
 import { ExcursionsHero } from "@/components/ExcursionsPage/Hero/ExcursionsHero";
 import { WhatsAppCTAStrip } from "@/components/ExcursionsPage/WhatsAppCTA/WhatsAppCTAStrip";
 import { getExcursionCategoryPage } from "@/sanity/queries/ExcursionCategory/ExcursionCategory";
-import { getExcursionsPage } from "@/sanity/queries/ExcursionsPage/ExcursionsPage";
+import {
+  getExcursionsPage,
+  getExcursionsPageSeo,
+} from "@/sanity/queries/ExcursionsPage/ExcursionsPage";
 import { getExcursionList } from "@/sanity/queries/IndividualExcursions/Excursionqueries";
 import {
   getLocalized,
   LocalizedField,
 } from "@/sanity/queries/GeneralLayout/generalLayoutQuery";
+import type { Metadata } from "next";
+import { getDefaultSeo } from "@/sanity/queries/SEO/seoProjection";
+import { buildMetadata } from "@/lib/seo/buildMetadata";
+import { JsonLd } from "@/components/seo/JsonLd";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const [pageSeo, defaultSeo, excursionsPage] = await Promise.all([
+    getExcursionsPageSeo(),
+    getDefaultSeo(),
+    getExcursionsPage(),
+  ]);
+  const lk = locale as keyof LocalizedField;
+  return buildMetadata({
+    seo: pageSeo?.seo,
+    defaults: defaultSeo?.defaultSeo,
+    locale: locale as "en" | "es",
+    path: "/excursions",
+    fallbackTitle: excursionsPage?.heroHeadline?.[lk],
+    fallbackDescription: excursionsPage?.heroSubheadline?.[lk],
+  });
+}
 
 export default async function Excursions({
   params,
@@ -22,13 +51,19 @@ export default async function Excursions({
     excursionCategories,
     excursionsPage,
     excursionList,
+    pageSeo,
   ] = await Promise.all([
     params,
     searchParams,
     getExcursionCategoryPage(),
     getExcursionsPage(),
     getExcursionList(),
+    getExcursionsPageSeo(),
   ]);
+  const jsonLd =
+    locale === "es"
+      ? pageSeo?.seo?.structuredDataEs
+      : pageSeo?.seo?.structuredDataEn;
 
   const localeKey = locale as keyof LocalizedField;
 
@@ -61,6 +96,7 @@ export default async function Excursions({
 
   return (
     <>
+      <JsonLd data={jsonLd} />
       <ExcursionsHero
         backgroundImage={{
           url: excursionsPage?.heroImage?.asset?.url ?? "",

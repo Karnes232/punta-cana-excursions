@@ -129,37 +129,12 @@ export const blogArticle = defineType({
     // ── SEO ───────────────────────────────────────────────────────────────────
 
     defineField({
-      name: "seoTitle",
-      title: "SEO Title",
-      type: "string",
-      group: "seo",
-      description: "Overrides the article title in <title> tags. Keep under 60 characters.",
-      validation: (r) => r.max(60).warning("SEO titles over 60 characters may be truncated."),
-    }),
-
-    defineField({
-      name: "seoDescription",
-      title: "SEO Description",
-      type: "text",
-      rows: 3,
-      group: "seo",
-      description: "Meta description shown in search results. Aim for 120–160 characters.",
-      validation: (r) =>
-        r
-          .min(120)
-          .warning("Short descriptions may not display well in search results.")
-          .max(160)
-          .warning("Descriptions over 160 characters will be cut off by Google."),
-    }),
-
-    defineField({
-      name: "ogImage",
-      title: "Social Sharing Image",
-      type: "image",
+      name: "seo",
+      title: "SEO",
+      type: "seoSingleLanguage",
       group: "seo",
       description:
-        "Shown when shared on social media. Ideal size: 1200 × 630 px. Falls back to featured image if not set.",
-      options: { hotspot: true },
+        "Falls back to the article title, excerpt, and featured image when blank.",
     }),
   ],
 

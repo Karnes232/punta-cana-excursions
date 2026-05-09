@@ -195,3 +195,17 @@ export async function getIndividualDivingExcursion(
 export async function getDivingExcursionSlugs(): Promise<DivingExcursionSlug[]> {
   return await client.fetch(divingExcursionSlugsQuery);
 }
+
+// =============================================================================
+// SEO
+// =============================================================================
+
+import { seoProjection, type SeoData } from "../SEO/seoProjection";
+
+export const divingExcursionSeoQuery = `*[_type == "divingExcursion" && slug.current == $slug][0]{
+  "seo": seo { ${seoProjection} }
+}`;
+
+export async function getDivingExcursionSeo(slug: string): Promise<{ seo: SeoData | null } | null> {
+  return client.fetch(divingExcursionSeoQuery, { slug });
+}
