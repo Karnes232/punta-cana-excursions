@@ -76,13 +76,13 @@ export default async function ContactPage({
         hotel: "Hotel (opcional)",
         excursion: "Excursión de interés (opcional)",
         message: "Mensaje",
-        submit: "Enviar por WhatsApp",
-        submitting: "Preparando...",
-        successTitle: "¡Mensaje listo!",
+        submit: "Enviar mensaje",
+        submitting: "Enviando...",
+        successTitle: "¡Mensaje enviado!",
         successMessage:
-          "Se ha abierto WhatsApp con su mensaje. Haga clic en Enviar para contactarnos directamente.",
-        whatsappFallback:
-          "Si WhatsApp no se abrió automáticamente, puede escribirnos directamente.",
+          "Recibimos tu mensaje. Te responderemos por correo electrónico lo antes posible.",
+        errorMessage:
+          "No se pudo enviar tu mensaje. Inténtalo de nuevo.",
         required: "Este campo es requerido",
         namePlaceholder: "Juan García",
         emailPlaceholder: "juan@ejemplo.com",
@@ -98,13 +98,13 @@ export default async function ContactPage({
         hotel: "Hotel (optional)",
         excursion: "Excursion of interest (optional)",
         message: "Message",
-        submit: "Send via WhatsApp",
-        submitting: "Preparing...",
-        successTitle: "Message ready!",
+        submit: "Send message",
+        submitting: "Sending...",
+        successTitle: "Message sent!",
         successMessage:
-          "WhatsApp has opened with your message. Click Send to contact us directly.",
-        whatsappFallback:
-          "If WhatsApp didn't open automatically, you can write to us directly.",
+          "We've received your message and will reply by email as soon as possible.",
+        errorMessage:
+          "We couldn't send your message. Please try again.",
         required: "This field is required",
         namePlaceholder: "John Smith",
         emailPlaceholder: "john@example.com",
@@ -154,7 +154,7 @@ export default async function ContactPage({
                 contactData?.formHeadline?.[lk] ??
                 (isEs ? "Envíenos un Mensaje" : "Send Us a Message")
               }
-              phone={layout?.phone ?? ""}
+              locale={locale as "en" | "es"}
               labels={formLabels}
             />
           </div>
