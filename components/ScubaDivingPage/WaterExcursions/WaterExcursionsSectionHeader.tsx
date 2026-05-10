@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
 
 /* ---------------------------------------------------------------------------
    WaterExcursionsSectionHeader — Section heading with contextual icon
@@ -57,17 +58,12 @@ export function WaterExcursionsSectionHeader({
       </div>
 
       {/* Heading */}
-      <h2
-        className="font-heading font-bold text-slate leading-tight transition-all duration-600 ease-out"
-        style={{
-          fontSize: "clamp(1.5rem, 3vw + 0.25rem, 2.25rem)",
-          transform: isVisible ? "translateY(0)" : "translateY(16px)",
-          opacity: isVisible ? 1 : 0,
-          transitionDelay: "100ms",
-        }}
-      >
-        {heading}
-      </h2>
+      <WordRevealHeading
+        as="h2"
+        text={heading}
+        className="font-heading font-bold text-slate leading-tight"
+        style={{ fontSize: "clamp(1.5rem, 3vw + 0.25rem, 2.25rem)" }}
+      />
 
       {/* Accent divider — ocean/teal depending on type */}
       <div

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
+import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
 import { LOCALE_LABELS } from "@/i18n/blogLocales";
 import type { BlogLocale } from "@/i18n/blogLocales";
 import type { LocalizedField } from "@/sanity/queries/GeneralLayout/generalLayoutQuery";
@@ -82,9 +83,12 @@ export function BlogPostHero({
 
       {/* Title */}
       <div className="max-w-3xl mx-auto px-5 sm:px-8 mb-6">
-        <h1 className="font-heading font-bold text-navy text-3xl sm:text-4xl md:text-5xl leading-tight">
-          {title}
-        </h1>
+        <WordRevealHeading
+          as="h1"
+          text={title}
+          triggerOnMount
+          className="font-heading font-bold text-navy text-3xl sm:text-4xl md:text-5xl leading-tight"
+        />
       </div>
 
       {/* Excerpt */}

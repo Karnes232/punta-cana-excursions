@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
 
 interface RelatedExcursionsHeaderProps {
   heading: string;
@@ -30,16 +31,12 @@ export function RelatedExcursionsHeader({
 
   return (
     <div ref={ref} className="text-center max-w-2xl mx-auto">
-      <h2
-        className="font-heading font-bold text-slate leading-tight transition-all duration-600 ease-out"
-        style={{
-          fontSize: "clamp(1.375rem, 3.5vw, 2rem)",
-          opacity: isVisible ? 1 : 0,
-          transform: isVisible ? "translateY(0)" : "translateY(14px)",
-        }}
-      >
-        {heading}
-      </h2>
+      <WordRevealHeading
+        as="h2"
+        text={heading}
+        className="font-heading font-bold text-slate leading-tight"
+        style={{ fontSize: "clamp(1.375rem, 3.5vw, 2rem)" }}
+      />
 
       {/* Centered symmetrical accent divider */}
       <div

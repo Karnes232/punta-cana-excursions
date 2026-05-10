@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
 
 interface AboutHeroProps {
   backgroundImage: { url: string; lqip?: string } | null;
@@ -77,9 +78,12 @@ export function AboutHero({ backgroundImage, badge, headline, subheadline }: Abo
         )}
 
         {/* Headline */}
-        <h1 className="font-heading font-bold text-white text-4xl sm:text-5xl lg:text-6xl leading-tight mb-6">
-          {headline}
-        </h1>
+        <WordRevealHeading
+          as="h1"
+          text={headline}
+          triggerOnMount
+          className="font-heading font-bold text-white text-4xl sm:text-5xl lg:text-6xl leading-tight mb-6"
+        />
 
         {/* Subheadline */}
         {subheadline && (

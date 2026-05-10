@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Link } from "@/i18n/navigation";
+import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
 
 interface CtaBannerContentProps {
   headline: string;
@@ -41,16 +42,12 @@ export function CtaBannerContent({
   return (
     <div ref={ref} className="text-center">
       {/* Headline */}
-      <h2
-        className="font-heading font-bold text-white leading-tight mb-4 transition-all duration-700 ease-out"
-        style={{
-          fontSize: "clamp(1.5rem, 3.5vw + 0.25rem, 2.5rem)",
-          transform: isVisible ? "translateY(0)" : "translateY(20px)",
-          opacity: isVisible ? 1 : 0,
-        }}
-      >
-        {headline}
-      </h2>
+      <WordRevealHeading
+        as="h2"
+        text={headline}
+        className="font-heading font-bold text-white leading-tight mb-4"
+        style={{ fontSize: "clamp(1.5rem, 3.5vw + 0.25rem, 2.5rem)" }}
+      />
 
       {/* Subheadline */}
       {subheadline && (

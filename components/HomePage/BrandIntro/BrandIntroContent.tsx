@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
 
 interface BrandIntroContentProps {
   heading: string;
@@ -48,17 +49,12 @@ export function BrandIntroContent({
       )}
 
       {/* Heading */}
-      <h2
-        className="font-heading font-bold text-slate leading-tight mb-5 transition-all duration-600 ease-out"
-        style={{
-          fontSize: "clamp(1.625rem, 3vw + 0.25rem, 2.25rem)",
-          transform: isVisible ? "translateY(0)" : "translateY(16px)",
-          opacity: isVisible ? 1 : 0,
-          transitionDelay: "200ms",
-        }}
-      >
-        {heading}
-      </h2>
+      <WordRevealHeading
+        as="h2"
+        text={heading}
+        className="font-heading font-bold text-slate leading-tight mb-5"
+        style={{ fontSize: "clamp(1.625rem, 3vw + 0.25rem, 2.25rem)" }}
+      />
 
       {/* Accent divider */}
       <div

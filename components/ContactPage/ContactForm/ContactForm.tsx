@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
 
 interface ContactFormProps {
   headline: string;
@@ -131,9 +132,11 @@ export function ContactForm({ headline, locale, labels }: ContactFormProps) {
 
   return (
     <div>
-      <h2 className="font-heading font-bold text-navy text-2xl mb-8">
-        {headline}
-      </h2>
+      <WordRevealHeading
+        as="h2"
+        text={headline}
+        className="font-heading font-bold text-navy text-2xl mb-8"
+      />
 
       <form onSubmit={handleSubmit} noValidate className="space-y-5">
         {/* Name */}

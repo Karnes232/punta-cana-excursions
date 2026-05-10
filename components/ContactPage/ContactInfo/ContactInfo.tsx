@@ -1,3 +1,5 @@
+import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
+
 interface ContactInfoProps {
   headline: string;
   email: string;
@@ -27,9 +29,11 @@ export function ContactInfo({
 
   return (
     <div>
-      <h2 className="font-heading font-bold text-navy text-2xl mb-8">
-        {headline}
-      </h2>
+      <WordRevealHeading
+        as="h2"
+        text={headline}
+        className="font-heading font-bold text-navy text-2xl mb-8"
+      />
 
       <div className="space-y-5">
         {/* Email */}

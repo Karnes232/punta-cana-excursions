@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { TrustPillarIcon } from "@/components/HomePage/WhyChooseUs/TrustPillarIcon";
+import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
 
 interface ValueItem {
   icon: string;
@@ -44,9 +45,11 @@ export function OurValues({ headline, subheading, values }: OurValuesProps) {
             transform: isVisible ? "translateY(0)" : "translateY(16px)",
           }}
         >
-          <h2 className="font-heading font-bold text-navy text-3xl sm:text-4xl mb-4">
-            {headline}
-          </h2>
+          <WordRevealHeading
+            as="h2"
+            text={headline}
+            className="font-heading font-bold text-navy text-3xl sm:text-4xl mb-4"
+          />
           <div className="flex items-center justify-center gap-3 mb-5">
             <div className="h-px w-16 bg-teal" />
             <div className="w-1.5 h-1.5 rounded-full bg-sunset" />

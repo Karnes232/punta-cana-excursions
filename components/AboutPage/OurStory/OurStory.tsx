@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
 
 interface OurStoryProps {
   tagline: string;
@@ -69,9 +70,11 @@ export function OurStory({ tagline, headline, body, image, foundedYear }: OurSto
             </div>
 
             {/* Headline */}
-            <h2 className="font-heading font-bold text-navy text-3xl sm:text-4xl leading-tight mb-8">
-              {headline}
-            </h2>
+            <WordRevealHeading
+              as="h2"
+              text={headline}
+              className="font-heading font-bold text-navy text-3xl sm:text-4xl leading-tight mb-8"
+            />
 
             {/* Body paragraphs */}
             <div className="space-y-5">

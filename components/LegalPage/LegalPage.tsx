@@ -3,6 +3,7 @@
 import { PortableText } from "@portabletext/react";
 import type { PortableTextBlock } from "@portabletext/types";
 import { portableTextComponents } from "@/components/IndividualExcursionPage/FullDescription/FullDescriptionBody";
+import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
 
 interface LegalPageProps {
   title: string;
@@ -30,9 +31,12 @@ export function LegalPage({ title, lastUpdated, body, lastUpdatedLabel }: LegalP
               {lastUpdatedLabel}: {formattedDate}
             </p>
           )}
-          <h1 className="font-heading font-bold text-white text-3xl sm:text-4xl md:text-5xl leading-tight">
-            {title}
-          </h1>
+          <WordRevealHeading
+            as="h1"
+            text={title}
+            triggerOnMount
+            className="font-heading font-bold text-white text-3xl sm:text-4xl md:text-5xl leading-tight"
+          />
           {/* Accent divider */}
           <div className="flex items-center gap-2 mt-6">
             <div className="h-[2px] w-12 bg-teal/60 rounded-full" />

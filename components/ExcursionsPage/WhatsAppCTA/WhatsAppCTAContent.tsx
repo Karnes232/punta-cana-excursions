@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "@/i18n/navigation";
 import { WhatsAppIcon } from "./WhatsAppIcon";
+import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
 
 interface WhatsAppCTAContentProps {
   headline: string;
@@ -59,9 +60,11 @@ export function WhatsAppCTAContent({
           <span className="block w-2 h-2 rounded-full bg-sunset/50" />
         </div>
 
-        <h2 className="font-heading font-bold text-slate text-xl md:text-2xl leading-snug mb-3">
-          {headline}
-        </h2>
+        <WordRevealHeading
+          as="h2"
+          text={headline}
+          className="font-heading font-bold text-slate text-xl md:text-2xl leading-snug mb-3"
+        />
         <p className="font-body text-gray-dark text-sm md:text-base leading-relaxed max-w-lg mx-auto lg:mx-0">
           {description}
         </p>

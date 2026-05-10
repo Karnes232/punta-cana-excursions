@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
 
 interface StatItem {
   value: string;
@@ -52,15 +53,11 @@ export function ByTheNumbers({ headline, stats }: ByTheNumbersProps) {
         {/* Headline */}
         {headline && (
           <div className="text-center mb-14">
-            <h2
-              className="font-heading font-bold text-navy text-3xl sm:text-4xl transition-all duration-700 ease-out"
-              style={{
-                opacity: isVisible ? 1 : 0,
-                transform: isVisible ? "translateY(0)" : "translateY(16px)",
-              }}
-            >
-              {headline}
-            </h2>
+            <WordRevealHeading
+              as="h2"
+              text={headline}
+              className="font-heading font-bold text-navy text-3xl sm:text-4xl"
+            />
             <div
               className="flex items-center justify-center gap-3 mt-4 transition-all duration-700 ease-out"
               style={{

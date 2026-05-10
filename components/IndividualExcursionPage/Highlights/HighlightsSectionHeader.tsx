@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
 
 interface HighlightsSectionHeaderProps {
   heading: string;
@@ -31,16 +32,12 @@ export function HighlightsSectionHeader({
   return (
     <div ref={ref}>
       {/* Heading */}
-      <h2
-        className="font-heading font-bold text-slate leading-tight transition-all duration-600 ease-out"
-        style={{
-          fontSize: "clamp(1.25rem, 3vw, 1.75rem)",
-          opacity: isVisible ? 1 : 0,
-          transform: isVisible ? "translateY(0)" : "translateY(10px)",
-        }}
-      >
-        {heading}
-      </h2>
+      <WordRevealHeading
+        as="h2"
+        text={heading}
+        className="font-heading font-bold text-slate leading-tight"
+        style={{ fontSize: "clamp(1.25rem, 3vw, 1.75rem)" }}
+      />
 
       {/* Accent divider */}
       <div

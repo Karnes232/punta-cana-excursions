@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
 
 interface TitleHeadingProps {
   title: string;
@@ -18,16 +19,13 @@ export function TitleHeading({ title, badge }: TitleHeadingProps) {
   return (
     <div className="flex flex-wrap items-start gap-3 md:gap-4">
       {/* H1 — the most important heading on the page */}
-      <h1
-        className="font-heading font-bold text-slate leading-[1.12] tracking-tight transition-all duration-700 ease-out"
-        style={{
-          fontSize: "clamp(1.625rem, 4vw, 2.75rem)",
-          opacity: isVisible ? 1 : 0,
-          transform: isVisible ? "translateY(0)" : "translateY(12px)",
-        }}
-      >
-        {title}
-      </h1>
+      <WordRevealHeading
+        as="h1"
+        text={title}
+        triggerOnMount
+        className="font-heading font-bold text-slate leading-[1.12] tracking-tight"
+        style={{ fontSize: "clamp(1.625rem, 4vw, 2.75rem)" }}
+      />
 
       {/* Badge pill — "Most Popular", "Best Seller", etc. */}
       {badge && (

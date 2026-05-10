@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
 
 interface BookingStepsHeaderProps {
   heading: string;
@@ -31,16 +32,12 @@ export function BookingStepsHeader({
 
   return (
     <div ref={ref} className="text-center mb-12 md:mb-16">
-      <h2
-        className="font-heading font-bold text-slate leading-tight mb-4 transition-all duration-600 ease-out"
-        style={{
-          fontSize: "clamp(1.625rem, 3vw + 0.25rem, 2.25rem)",
-          transform: isVisible ? "translateY(0)" : "translateY(16px)",
-          opacity: isVisible ? 1 : 0,
-        }}
-      >
-        {heading}
-      </h2>
+      <WordRevealHeading
+        as="h2"
+        text={heading}
+        className="font-heading font-bold text-slate leading-tight mb-4"
+        style={{ fontSize: "clamp(1.625rem, 3vw + 0.25rem, 2.25rem)" }}
+      />
 
       <div
         className="flex items-center justify-center gap-2 mb-5 transition-all duration-600 ease-out"

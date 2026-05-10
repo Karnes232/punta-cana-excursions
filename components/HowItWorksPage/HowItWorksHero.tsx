@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
 
 interface HowItWorksHeroProps {
   headline: string;
@@ -74,9 +75,12 @@ export function HowItWorksHero({
       </div>
 
       <div className="relative z-10 max-w-3xl mx-auto px-5 sm:px-8 text-center">
-        <h1 className="font-heading font-bold text-white text-4xl sm:text-5xl leading-tight mb-5">
-          {headline}
-        </h1>
+        <WordRevealHeading
+          as="h1"
+          text={headline}
+          triggerOnMount
+          className="font-heading font-bold text-white text-4xl sm:text-5xl leading-tight mb-5"
+        />
         {subheadline && (
           <p className="font-body text-white/80 text-lg leading-relaxed max-w-xl mx-auto">
             {subheadline}

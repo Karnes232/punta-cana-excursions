@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
 
 /* ---------------------------------------------------------------------------
    DivingCTAContent — Headline + CTAs with scroll-triggered reveal
@@ -59,16 +60,12 @@ export function DivingCTAContent({
       className="relative z-10 max-w-3xl mx-auto px-5 sm:px-8 lg:px-12 text-center"
     >
       {/* Headline */}
-      <h2
-        className="font-heading font-bold text-white leading-tight mb-4 transition-all duration-700 ease-out"
-        style={{
-          fontSize: "clamp(1.625rem, 3.5vw + 0.25rem, 2.5rem)",
-          transform: isVisible ? "translateY(0)" : "translateY(20px)",
-          opacity: isVisible ? 1 : 0,
-        }}
-      >
-        {headline}
-      </h2>
+      <WordRevealHeading
+        as="h2"
+        text={headline}
+        className="font-heading font-bold text-white leading-tight mb-4"
+        style={{ fontSize: "clamp(1.625rem, 3.5vw + 0.25rem, 2.5rem)" }}
+      />
 
       {/* Subtext */}
       {subtext && (

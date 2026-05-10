@@ -1,4 +1,5 @@
 import { Link } from "@/i18n/navigation";
+import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
 
 interface AboutCTAProps {
   headline: string;
@@ -49,9 +50,11 @@ export function AboutCTA({
       </div>
 
       <div className="relative z-10 max-w-3xl mx-auto px-5 sm:px-8 text-center">
-        <h2 className="font-heading font-bold text-white text-3xl sm:text-4xl lg:text-5xl leading-tight mb-5">
-          {headline}
-        </h2>
+        <WordRevealHeading
+          as="h2"
+          text={headline}
+          className="font-heading font-bold text-white text-3xl sm:text-4xl lg:text-5xl leading-tight mb-5"
+        />
         {subheadline && (
           <p className="font-body text-white/80 text-lg leading-relaxed mb-10 max-w-xl mx-auto">
             {subheadline}
