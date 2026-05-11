@@ -18,6 +18,7 @@ export const divingSnorkelingPage = defineType({
   groups: [
     { name: "hero", title: "Hero", default: true },
     { name: "intro", title: "Intro Section" },
+    { name: "excursionSections", title: "Excursion Sections" },
     { name: "trust", title: "Why Book With Us" },
     { name: "cta", title: "CTA Section" },
     { name: "seo", title: "SEO" },
@@ -191,6 +192,44 @@ export const divingSnorkelingPage = defineType({
         },
       ],
       validation: (rule) => rule.max(4),
+    }),
+
+    // =========================================================================
+    // EXCURSION SECTIONS — Headings for Courses + Certified Divers lists
+    // =========================================================================
+
+    defineField({
+      name: "coursesHeading",
+      title: "Courses Section Heading",
+      type: "localizedString",
+      description:
+        'Heading for the courses/certification section, e.g. "Diving Courses & Certifications"',
+      group: "excursionSections",
+    }),
+
+    defineField({
+      name: "coursesSubheading",
+      title: "Courses Section Subheading",
+      type: "localizedText",
+      description: "Optional supporting copy under the courses heading.",
+      group: "excursionSections",
+    }),
+
+    defineField({
+      name: "certifiedHeading",
+      title: "Certified Divers Section Heading",
+      type: "localizedString",
+      description:
+        'Heading for the certified-divers section, e.g. "Excursions for Certified Divers"',
+      group: "excursionSections",
+    }),
+
+    defineField({
+      name: "certifiedSubheading",
+      title: "Certified Divers Section Subheading",
+      type: "localizedText",
+      description: "Optional supporting copy under the certified-divers heading.",
+      group: "excursionSections",
     }),
 
     // =========================================================================

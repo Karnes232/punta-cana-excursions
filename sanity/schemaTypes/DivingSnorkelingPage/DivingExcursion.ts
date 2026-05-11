@@ -142,6 +142,25 @@ export const divingExcursion = defineType({
     // =========================================================================
 
     defineField({
+      name: "audienceType",
+      title: "Audience Type",
+      type: "string",
+      description:
+        "Who is this excursion for? Drives which section it appears in on the Scuba Diving page.",
+      group: "diving",
+      options: {
+        list: [
+          { title: "Course / Certification", value: "course" },
+          { title: "Certified Divers Only", value: "certified" },
+          { title: "All / No Certification Required", value: "all" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "all",
+      validation: (rule) => rule.required(),
+    }),
+
+    defineField({
       name: "experienceLevel",
       title: "Experience Level",
       type: "string",

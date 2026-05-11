@@ -43,6 +43,7 @@ export interface DivingExcursionCard {
   isFeatured: boolean;
   badge: LocalizedString | null;
   experienceLevel: string;
+  audienceType: "course" | "certified" | "all";
 }
 
 export interface DivingSnorkelingPageData {
@@ -57,6 +58,10 @@ export interface DivingSnorkelingPageData {
   introBody: LocalizedBlockContent;
   introImage: { url: string; lqip?: string };
   introStats: Array<{ value: LocalizedString; label: LocalizedString }>;
+  coursesHeading: LocalizedString;
+  coursesSubheading: LocalizedText;
+  certifiedHeading: LocalizedString;
+  certifiedSubheading: LocalizedText;
   trustHeadline: LocalizedString;
   trustPillars: TrustPillar[];
   ctaHeadline: LocalizedString;
@@ -89,7 +94,8 @@ const excursionCardProjection = /* groq */ `{
   duration,
   isFeatured,
   badge,
-  experienceLevel
+  experienceLevel,
+  audienceType
 }`;
 
 // =============================================================================
@@ -114,6 +120,10 @@ export const divingSnorkelingPageQuery = /* groq */ `*[_type == "divingSnorkelin
     "lqip": asset->metadata.lqip
   },
   introStats[] { value, label },
+  coursesHeading,
+  coursesSubheading,
+  certifiedHeading,
+  certifiedSubheading,
   trustHeadline,
   trustPillars[] { icon, title, description },
   ctaHeadline,
@@ -128,6 +138,11 @@ export const divingSnorkelingPageQuery = /* groq */ `*[_type == "divingSnorkelin
 
 export const scubaDivingExcursionsQuery = /* groq */ `*[_type == "divingExcursion"] | order(sortOrder asc) ${excursionCardProjection}`;
 
+export const scubaDivingExcursionsByAudienceQuery = /* groq */ `{
+  "courses":   *[_type == "divingExcursion" && audienceType == "course"]    | order(sortOrder asc) ${excursionCardProjection},
+  "certified": *[_type == "divingExcursion" && audienceType == "certified"] | order(sortOrder asc) ${excursionCardProjection}
+}`;
+
 // =============================================================================
 // Fetch functions
 // =============================================================================
@@ -138,6 +153,17 @@ export async function getDivingSnorkelingPage(): Promise<DivingSnorkelingPageDat
 
 export async function getScubaDivingExcursions(): Promise<DivingExcursionCard[]> {
   return client.fetch<DivingExcursionCard[]>(scubaDivingExcursionsQuery);
+}
+
+export interface ScubaDivingExcursionsByAudience {
+  courses: DivingExcursionCard[];
+  certified: DivingExcursionCard[];
+}
+
+export async function getScubaDivingExcursionsByAudience(): Promise<ScubaDivingExcursionsByAudience> {
+  return client.fetch<ScubaDivingExcursionsByAudience>(
+    scubaDivingExcursionsByAudienceQuery
+  );
 }
 
 // =============================================================================

@@ -6,7 +6,7 @@ import { WhyBookWithUs } from "@/components/ScubaDivingPage/WhyBookWithUs/WhyBoo
 import {
   getDivingSnorkelingPage,
   getDivingSnorkelingPageSeo,
-  getScubaDivingExcursions,
+  getScubaDivingExcursionsByAudience,
   type DivingExcursionCard,
 } from "@/sanity/queries/DivingSnorkelingPage/DivingSnorkelingPage";
 import {
@@ -68,7 +68,7 @@ export default async function ScubaDivingPage({
     await Promise.all([
       params,
       getDivingSnorkelingPage(),
-      getScubaDivingExcursions(),
+      getScubaDivingExcursionsByAudience(),
       getTranslations("scubaDiving"),
       getDivingSnorkelingPageSeo(),
     ]);
@@ -109,12 +109,29 @@ export default async function ScubaDivingPage({
       />
 
       <WaterExcursionsSection
-        id="excursions"
-        heading={t("sectionHeading")}
-        subheading={t("sectionSubheading")}
+        id="courses"
+        heading={page?.coursesHeading?.[localeKey] || ""}
+        subheading={page?.coursesSubheading?.[localeKey]}
         iconType="diving"
         variant="white"
-        excursions={excursions.map((e) => mapExcursionCard(e, locale))}
+        excursions={excursions.courses.map((e) => mapExcursionCard(e, locale))}
+        labels={{
+          from: t("from"),
+          perPerson: t("perPerson"),
+          viewDetails: t("viewDetails"),
+          noExcursions: t("noExcursions"),
+          noExcursionsMessage: t("noExcursionsMessage"),
+          featured: t("featured"),
+        }}
+      />
+
+      <WaterExcursionsSection
+        id="certified-divers"
+        heading={page?.certifiedHeading?.[localeKey] || ""}
+        subheading={page?.certifiedSubheading?.[localeKey]}
+        iconType="diving"
+        variant="sand"
+        excursions={excursions.certified.map((e) => mapExcursionCard(e, locale))}
         labels={{
           from: t("from"),
           perPerson: t("perPerson"),
