@@ -24,6 +24,7 @@ import type { Metadata } from "next";
 import { getDefaultSeo } from "@/sanity/queries/SEO/seoProjection";
 import { buildMetadata } from "@/lib/seo/buildMetadata";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { setRequestLocale } from "next-intl/server";
 
 export const revalidate = 60;
 
@@ -63,7 +64,9 @@ export async function generateMetadata({
 
 export async function generateStaticParams() {
   const slugs = await getDivingExcursionSlugs();
-  return slugs.map(({ slug }) => ({ slug }));
+  return ["en", "es"].flatMap((locale) =>
+    slugs.map(({ slug }) => ({ locale, slug })),
+  );
 }
 
 // =============================================================================
@@ -87,6 +90,7 @@ export default async function DivingExcursionDetailPage({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
+  setRequestLocale(locale);
   const [excursion, pageSeo] = await Promise.all([
     getIndividualDivingExcursion(slug),
     getDivingExcursionSeo(slug),

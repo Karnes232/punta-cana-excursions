@@ -13,6 +13,7 @@ import type { Metadata } from "next";
 import { getDefaultSeo } from "@/sanity/queries/SEO/seoProjection";
 import { buildSingleLanguageMetadata } from "@/lib/seo/buildMetadata";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { setRequestLocale } from "next-intl/server";
 
 export const revalidate = 60;
 
@@ -48,7 +49,9 @@ export async function generateMetadata({
 
 export async function generateStaticParams() {
   const slugs = await getBlogArticleSlugs();
-  return slugs.map((s) => ({ slug: s.slug }));
+  return ["en", "es"].flatMap((locale) =>
+    slugs.map((s) => ({ locale, slug: s.slug })),
+  );
 }
 
 export default async function BlogArticlePage({
@@ -57,6 +60,7 @@ export default async function BlogArticlePage({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
+  setRequestLocale(locale);
 
   const [article, pageSeo] = await Promise.all([
     getBlogArticle(slug),

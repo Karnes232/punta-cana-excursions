@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
+import { setRequestLocale } from "next-intl/server";
+import { notFound } from "next/navigation";
+import { routing } from "@/i18n/routing";
 import { Montserrat, Inter } from "next/font/google";
 import "../../globals.css";
 import Navbar, { NavCtaButtonType } from "@/components/Layout/Navbar/Navbar";
@@ -78,6 +81,10 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
+
 export default async function RootLayout({
   children,
   params,
@@ -86,12 +93,16 @@ export default async function RootLayout({
   params: Promise<{ locale: string }>;
 }>) {
   const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) {
+    notFound();
+  }
+  setRequestLocale(locale);
   const [generalLayout] = await Promise.all([getGeneralLayout()]);
 
   return (
     <html lang={locale} className={`${montserrat.variable} ${inter.variable}`} data-scroll-behavior="smooth">
       <body className={`antialiased`}>
-        <NextIntlClientProvider>
+        <NextIntlClientProvider locale={locale}>
           <Navbar
             locale={locale as "en" | "es"}
             logo={generalLayout?.logo as LogoType}
