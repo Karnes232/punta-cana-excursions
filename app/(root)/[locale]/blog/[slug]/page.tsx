@@ -14,6 +14,8 @@ import { getDefaultSeo } from "@/sanity/queries/SEO/seoProjection";
 import { buildSingleLanguageMetadata } from "@/lib/seo/buildMetadata";
 import { JsonLd } from "@/components/seo/JsonLd";
 
+export const revalidate = 60;
+
 export async function generateMetadata({
   params,
 }: {
