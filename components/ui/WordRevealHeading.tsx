@@ -59,7 +59,7 @@ export function WordRevealHeading({
     words.map((word, i) => (
       <span
         key={i}
-        className="inline-block overflow-hidden mr-[0.28em] last:mr-0 align-bottom"
+        className="inline-block mr-[0.28em] last:mr-0 align-bottom"
       >
         <span
           className="inline-block ease-out"
