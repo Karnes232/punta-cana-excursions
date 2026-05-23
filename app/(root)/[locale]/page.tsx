@@ -181,7 +181,7 @@ export default async function Home({
           })) ?? []
         }
       />
-       <Reviews
+     {/*   <Reviews
         heading={
           homePage?.reviewsHeading?.[localeKey] ??
           homePage?.reviewsHeading?.en ??
@@ -201,8 +201,8 @@ export default async function Home({
             excursionTitle: review.excursionTitle,
           })) ?? []
         }
-      />
-     {/*   <FaqPreview
+      />*/}
+       <FaqPreview
         heading={
           homePage?.faqPreviewHeading?.[localeKey] ??
           homePage?.faqPreviewHeading?.en ??
@@ -254,7 +254,7 @@ export default async function Home({
           homePage?.ctaBannerWhatsappLabel?.en ??
           ""
         }
-      /> */}
+      /> 
     </>
   );
 }
