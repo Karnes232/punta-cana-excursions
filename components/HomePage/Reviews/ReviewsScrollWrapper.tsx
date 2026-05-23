@@ -134,6 +134,7 @@ export function ReviewsScrollWrapper({ children }: ReviewsScrollWrapperProps) {
           max-w-7xl lg:mx-auto
           pb-2 lg:pb-0
           scrollbar-hide
+
         "
         style={{
           /* Hide scrollbar across browsers */

@@ -181,7 +181,7 @@ export default async function Home({
           })) ?? []
         }
       />
-     {/*   <Reviews
+       <Reviews
         heading={
           homePage?.reviewsHeading?.[localeKey] ??
           homePage?.reviewsHeading?.en ??
@@ -201,7 +201,7 @@ export default async function Home({
             excursionTitle: review.excursionTitle,
           })) ?? []
         }
-      />*/}
+      />
        <FaqPreview
         heading={
           homePage?.faqPreviewHeading?.[localeKey] ??
