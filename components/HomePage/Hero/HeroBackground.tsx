@@ -1,25 +1,36 @@
-import Image from "next/image";
-
 interface HeroBackgroundProps {
   src: string;
   alt: string;
-  lqip?: string;
 }
 
-export function HeroBackground({ src, alt, lqip }: HeroBackgroundProps) {
+const MOBILE_WIDTH = 750;
+const MOBILE_HEIGHT = 560;
+const DESKTOP_WIDTH = 1600;
+const DESKTOP_HEIGHT = 900;
+
+function sanityUrl(base: string, w: number, h: number) {
+  const sep = base.includes("?") ? "&" : "?";
+  return `${base}${sep}w=${w}&h=${h}&fit=crop&q=80&auto=format`;
+}
+
+export function HeroBackground({ src, alt }: HeroBackgroundProps) {
+  const mobileSrc = sanityUrl(src, MOBILE_WIDTH, MOBILE_HEIGHT);
+  const desktopSrc = sanityUrl(src, DESKTOP_WIDTH, DESKTOP_HEIGHT);
+
   return (
     <>
-      {/* Main background image — priority load for LCP */}
-      <Image
-        src={src}
-        alt={alt}
-        fill
-        priority
-        quality={85}
+      {/* Main background image — direct Sanity CDN, high priority for LCP */}
+      <img
+        src={desktopSrc}
+        srcSet={`${mobileSrc} ${MOBILE_WIDTH}w, ${desktopSrc} ${DESKTOP_WIDTH}w`}
         sizes="100vw"
-        placeholder={lqip ? "blur" : "empty"}
-        blurDataURL={lqip}
-        className="object-cover object-center"
+        alt={alt}
+        width={DESKTOP_WIDTH}
+        height={DESKTOP_HEIGHT}
+        fetchPriority="high"
+        decoding="sync"
+        loading="eager"
+        className="absolute inset-0 w-full h-full object-cover object-center"
       />
 
       {/* Gradient overlay — dark enough for white text,

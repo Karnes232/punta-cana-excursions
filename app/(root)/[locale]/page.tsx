@@ -72,20 +72,10 @@ export default async function Home({
   return (
     <>
       <JsonLd data={jsonLd} />
-      {homePage?.heroImage?.asset?.url && (
-        <link
-          rel="preload"
-          as="image"
-          href={homePage.heroImage.asset.url}
-          fetchPriority="high"
-          imageSizes="100vw"
-        />
-      )}
       <Hero
         backgroundImage={{
           url: homePage?.heroImage?.asset?.url ?? "",
           alt: homePage?.heroImageAlt?.[localeKey] ?? "",
-          lqip: homePage?.heroImage?.asset?.metadata?.lqip ?? "",
         }}
         headline={homePage?.heroHeadline?.[localeKey] ?? ""}
         subheadline={homePage?.heroSubheadline?.[localeKey] ?? ""}

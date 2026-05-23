@@ -13,7 +13,6 @@ interface HeroProps {
   backgroundImage: {
     url: string;
     alt: string;
-    lqip?: string; // Low-quality image placeholder from Sanity
   };
   headline: string;
   subheadline: string;
@@ -35,7 +34,6 @@ export function Hero({
         <HeroBackground
           src={backgroundImage.url}
           alt={backgroundImage.alt}
-          lqip={backgroundImage.lqip}
         />
       )}
 
