@@ -76,6 +76,7 @@ export default async function Home({
         backgroundImage={{
           url: homePage?.heroImage?.asset?.url ?? "",
           alt: homePage?.heroImageAlt?.[localeKey] ?? "",
+          lqip: homePage?.heroImage?.asset?.metadata?.lqip ?? "",
         }}
         headline={homePage?.heroHeadline?.[localeKey] ?? ""}
         subheadline={homePage?.heroSubheadline?.[localeKey] ?? ""}
