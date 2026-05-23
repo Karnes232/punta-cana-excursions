@@ -30,12 +30,12 @@ export function Hero({
   return (
     <section className="relative min-h-[85vh] md:min-h-[90vh] flex items-center overflow-hidden">
       {/* Full-bleed background image with overlay */}
-      {backgroundImage.url && (
+      {/* {backgroundImage.url && (
         <HeroBackground
           src={backgroundImage.url}
           alt={backgroundImage.alt}
         />
-      )}
+      )} */}
 
       {/* Content layer */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-24 md:py-32">
