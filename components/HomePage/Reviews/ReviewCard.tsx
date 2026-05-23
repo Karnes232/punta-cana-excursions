@@ -1,6 +1,3 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
 import { StarRating } from "./StarRating";
 
 interface ReviewData {
@@ -16,25 +13,7 @@ interface ReviewCardProps {
   index: number;
 }
 
-export function ReviewCard({ review, index }: ReviewCardProps) {
-  const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.15 },
-    );
-
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
-
+export function ReviewCard({ review }: ReviewCardProps) {
   // Generate initials for avatar
   const initials = review.name
     .split(" ")
@@ -44,19 +23,7 @@ export function ReviewCard({ review, index }: ReviewCardProps) {
     .toUpperCase();
 
   return (
-    <div
-      ref={ref}
-      className="
-        flex-shrink-0 snap-start
-        w-[85vw] sm:w-[380px] lg:w-auto
-        transition-all duration-700 ease-out
-      "
-      style={{
-        transform: isVisible ? "translateY(0)" : "translateY(24px)",
-        opacity: isVisible ? 1 : 0,
-        transitionDelay: `${index * 120}ms`,
-      }}
-    >
+    <div className="flex-shrink-0 w-[85vw] sm:w-[380px] lg:w-auto">
       <div className="bg-white rounded-xl p-6 md:p-7 shadow-sm h-full flex flex-col">
         {/* Star rating */}
         <div className="mb-4">

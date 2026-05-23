@@ -130,8 +130,6 @@ export function ReviewsScrollWrapper({ children }: ReviewsScrollWrapperProps) {
           flex lg:grid lg:grid-cols-3
           gap-5 lg:gap-6
           overflow-x-auto lg:overflow-visible
-          snap-x snap-mandatory lg:snap-none
-          scroll-smooth
           px-5 sm:px-8 lg:px-12
           max-w-7xl lg:mx-auto
           pb-2 lg:pb-0
