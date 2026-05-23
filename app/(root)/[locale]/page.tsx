@@ -160,7 +160,7 @@ export default async function Home({
           })) ?? []
         }
       />
-      <HowBookingWorks
+    {/*   <HowBookingWorks
         heading={
           homePage?.howBookingWorksHeading?.[localeKey] ??
           homePage?.howBookingWorksHeading?.en ??
@@ -181,7 +181,7 @@ export default async function Home({
           })) ?? []
         }
       />
-    {/*    <Reviews
+       <Reviews
         heading={
           homePage?.reviewsHeading?.[localeKey] ??
           homePage?.reviewsHeading?.en ??
