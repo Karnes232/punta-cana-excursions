@@ -71,7 +71,7 @@ export default async function Home({
 
   return (
     <>
-      {/* <JsonLd data={jsonLd} /> */}
+      <JsonLd data={jsonLd} />
      <Hero
         backgroundImage={{
           url: homePage?.heroImage?.asset?.url ?? "",
@@ -89,7 +89,7 @@ export default async function Home({
           href: homePage?.heroSecondaryCta?.href ?? "",
         }}
       />
-      {/*  <BrandIntro
+     <BrandIntro
         image={{
           url: homePage?.brandIntroImage?.asset?.url ?? "",
           alt: homePage?.brandIntroImageAlt?.[localeKey] ?? "",
@@ -140,7 +140,7 @@ export default async function Home({
           },
         }))}
       />
-      <WhyChooseUs
+      {/*   <WhyChooseUs
         heading={
           homePage?.whyChooseUsHeading?.[localeKey] ??
           homePage?.whyChooseUsHeading?.en ??
