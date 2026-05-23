@@ -40,7 +40,7 @@ export function HeroBackground({ src, alt }: HeroBackgroundProps) {
           fetchPriority="high"
           decoding="sync"
           loading="eager"
-          className="absolute inset-0 w-full h-full object-cover object-center"
+          className="absolute inset-0 w-full h-full object-cover object-center df"
         />
       </picture>
 
