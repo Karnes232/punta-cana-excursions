@@ -72,7 +72,7 @@ export default async function Home({
   return (
     <>
       <JsonLd data={jsonLd} />
-      <Hero
+      {/* <Hero
         backgroundImage={{
           url: homePage?.heroImage?.asset?.url ?? "",
           alt: homePage?.heroImageAlt?.[localeKey] ?? "",
@@ -88,7 +88,7 @@ export default async function Home({
           text: homePage?.heroSecondaryCta?.text?.[localeKey] ?? "",
           href: homePage?.heroSecondaryCta?.href ?? "",
         }}
-      />
+      /> */}
       <BrandIntro
         image={{
           url: homePage?.brandIntroImage?.asset?.url ?? "",
@@ -99,7 +99,7 @@ export default async function Home({
         body={homePage?.brandIntroBody?.[localeKey] ?? ""}
         tagline={homePage?.brandIntroTagline?.[localeKey] ?? ""}
       />
-      {/* <FeaturedExcursions
+      <FeaturedExcursions
         heading={homePage?.featuredHeading?.[localeKey] ?? ""}
         subheading={homePage?.featuredSubheading?.[localeKey] ?? ""}
         viewAllText={homePage?.featuredViewAllText?.[localeKey] ?? ""}
@@ -118,8 +118,8 @@ export default async function Home({
           category: getLocalized(exc.category?.title, locale),
           badge: exc.badge ? getLocalized(exc.badge, locale) : undefined,
         }))}
-      /> */}
-      {/* <ExcursionCategories
+      />
+      <ExcursionCategories
         heading={
           homePage?.categoriesHeading?.[localeKey] ??
           homePage?.categoriesHeading?.en ??
@@ -139,7 +139,7 @@ export default async function Home({
             lqip: category.image?.asset?.metadata?.lqip ?? "",
           },
         }))}
-      /> */}
+      />
       <WhyChooseUs
         heading={
           homePage?.whyChooseUsHeading?.[localeKey] ??
