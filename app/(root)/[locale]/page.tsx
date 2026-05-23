@@ -140,7 +140,7 @@ export default async function Home({
           },
         }))}
       />
-      {/*   <WhyChooseUs
+       <WhyChooseUs
         heading={
           homePage?.whyChooseUsHeading?.[localeKey] ??
           homePage?.whyChooseUsHeading?.en ??
@@ -181,7 +181,7 @@ export default async function Home({
           })) ?? []
         }
       />
-      <Reviews
+    {/*    <Reviews
         heading={
           homePage?.reviewsHeading?.[localeKey] ??
           homePage?.reviewsHeading?.en ??
