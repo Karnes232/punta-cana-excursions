@@ -71,8 +71,11 @@ export default async function Home({
 
   return (
     <>
-      <JsonLd data={jsonLd} />
-      <Hero
+      {/* <JsonLd data={jsonLd} /> */}
+      <main className="min-h-screen bg-white">
+        <h1 className="text-4xl font-bold">Hello World</h1>
+      </main>
+      {/* <Hero
         backgroundImage={{
           url: homePage?.heroImage?.asset?.url ?? "",
           alt: homePage?.heroImageAlt?.[localeKey] ?? "",
@@ -89,7 +92,7 @@ export default async function Home({
           href: homePage?.heroSecondaryCta?.href ?? "",
         }}
       />
-      {/* <BrandIntro
+      <BrandIntro
         image={{
           url: homePage?.brandIntroImage?.asset?.url ?? "",
           alt: homePage?.brandIntroImageAlt?.[localeKey] ?? "",
@@ -98,7 +101,7 @@ export default async function Home({
         heading={homePage?.brandIntroHeading?.[localeKey] ?? ""}
         body={homePage?.brandIntroBody?.[localeKey] ?? ""}
         tagline={homePage?.brandIntroTagline?.[localeKey] ?? ""}
-      /> */}
+      />
       <FeaturedExcursions
         heading={homePage?.featuredHeading?.[localeKey] ?? ""}
         subheading={homePage?.featuredSubheading?.[localeKey] ?? ""}
@@ -254,7 +257,7 @@ export default async function Home({
           homePage?.ctaBannerWhatsappLabel?.en ??
           ""
         }
-      />
+      /> */}
     </>
   );
 }
