@@ -22,7 +22,7 @@ export function HeroBackground({ src, alt, lqip }: HeroBackgroundProps) {
         className="object-cover object-center"
       />
 
-      {/* Gradient overlay — dark enough for white text, 
+      {/* Gradient overlay — dark enough for white text,
           stronger on the left where content sits */}
       <div
         className="absolute inset-0 z-[1]"
@@ -30,10 +30,10 @@ export function HeroBackground({ src, alt, lqip }: HeroBackgroundProps) {
           background: `
             linear-gradient(
               135deg,
-              rgba(0, 40, 60, 0.72) 0%,
-              rgba(0, 40, 60, 0.55) 40%,
-              rgba(0, 40, 60, 0.30) 70%,
-              rgba(0, 40, 60, 0.18) 100%
+              rgba(0, 40, 60, 0.55) 0%,
+              rgba(0, 40, 60, 0.42) 40%,
+              rgba(0, 40, 60, 0.22) 70%,
+              rgba(0, 40, 60, 0.12) 100%
             )
           `,
         }}
@@ -41,7 +41,7 @@ export function HeroBackground({ src, alt, lqip }: HeroBackgroundProps) {
 
       {/* Subtle warm gradient accent — adds depth and tropical warmth */}
       <div
-        className="absolute inset-0 z-[2] mix-blend-soft-light opacity-40"
+        className="absolute inset-0 z-[2] mix-blend-soft-light opacity-25"
         style={{
           background: `
             radial-gradient(

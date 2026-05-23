@@ -30,29 +30,17 @@ export function WordRevealHeading({
   style,
 }: WordRevealHeadingProps) {
   const ref = useRef<HTMLHeadingElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-  const [reducedMotion, setReducedMotion] = useState(false);
+  const [isRunning, setIsRunning] = useState(triggerOnMount);
 
   useEffect(() => {
-    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (mql.matches) {
-      setReducedMotion(true);
-      setIsVisible(true);
-      return;
-    }
-
-    if (triggerOnMount) {
-      const t = setTimeout(() => setIsVisible(true), 150);
-      return () => clearTimeout(t);
-    }
-
+    if (triggerOnMount) return;
     const el = ref.current;
     if (!el) return;
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setIsVisible(true);
+            setIsRunning(true);
             observer.unobserve(entry.target);
           }
         });
@@ -75,17 +63,12 @@ export function WordRevealHeading({
       >
         <span
           className="inline-block ease-out"
-          style={
-            reducedMotion
-              ? undefined
-              : {
-                  transform: isVisible ? "translateY(0)" : "translateY(100%)",
-                  opacity: isVisible ? 1 : 0,
-                  transition: `transform ${durationMs}ms ease-out, opacity ${durationMs}ms ease-out`,
-                  transitionDelay: `${initialDelayMs + i * staggerMs}ms`,
-                  willChange: "transform, opacity",
-                }
-          }
+          data-animate="word-reveal"
+          style={{
+            animation: `word-reveal ${durationMs}ms ease-out ${initialDelayMs + i * staggerMs}ms both`,
+            animationPlayState: isRunning ? "running" : "paused",
+            willChange: "transform, opacity",
+          }}
         >
           {word}
         </span>
