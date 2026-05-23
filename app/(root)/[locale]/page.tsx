@@ -72,7 +72,7 @@ export default async function Home({
   return (
     <>
       <JsonLd data={jsonLd} />
-      {/* <Hero
+      <Hero
         backgroundImage={{
           url: homePage?.heroImage?.asset?.url ?? "",
           alt: homePage?.heroImageAlt?.[localeKey] ?? "",
@@ -88,7 +88,7 @@ export default async function Home({
           text: homePage?.heroSecondaryCta?.text?.[localeKey] ?? "",
           href: homePage?.heroSecondaryCta?.href ?? "",
         }}
-      /> */}
+      />
       <BrandIntro
         image={{
           url: homePage?.brandIntroImage?.asset?.url ?? "",
