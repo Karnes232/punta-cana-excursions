@@ -89,7 +89,7 @@ export default async function Home({
           href: homePage?.heroSecondaryCta?.href ?? "",
         }}
       />
-      <BrandIntro
+      {/* <BrandIntro
         image={{
           url: homePage?.brandIntroImage?.asset?.url ?? "",
           alt: homePage?.brandIntroImageAlt?.[localeKey] ?? "",
@@ -98,7 +98,7 @@ export default async function Home({
         heading={homePage?.brandIntroHeading?.[localeKey] ?? ""}
         body={homePage?.brandIntroBody?.[localeKey] ?? ""}
         tagline={homePage?.brandIntroTagline?.[localeKey] ?? ""}
-      />
+      /> */}
       <FeaturedExcursions
         heading={homePage?.featuredHeading?.[localeKey] ?? ""}
         subheading={homePage?.featuredSubheading?.[localeKey] ?? ""}
