@@ -8,30 +8,41 @@ const MOBILE_HEIGHT = 560;
 const DESKTOP_WIDTH = 1600;
 const DESKTOP_HEIGHT = 900;
 
-function sanityUrl(base: string, w: number, h: number) {
+function sanityUrl(base: string, w: number, h: number, fm: "webp" | "jpg") {
   const sep = base.includes("?") ? "&" : "?";
-  return `${base}${sep}w=${w}&h=${h}&fit=crop&q=80&auto=format`;
+  return `${base}${sep}w=${w}&h=${h}&fit=crop&q=80&fm=${fm}`;
 }
 
 export function HeroBackground({ src, alt }: HeroBackgroundProps) {
-  const mobileSrc = sanityUrl(src, MOBILE_WIDTH, MOBILE_HEIGHT);
-  const desktopSrc = sanityUrl(src, DESKTOP_WIDTH, DESKTOP_HEIGHT);
+  const mobileWebp = sanityUrl(src, MOBILE_WIDTH, MOBILE_HEIGHT, "webp");
+  const desktopWebp = sanityUrl(src, DESKTOP_WIDTH, DESKTOP_HEIGHT, "webp");
+  const mobileJpg = sanityUrl(src, MOBILE_WIDTH, MOBILE_HEIGHT, "jpg");
+  const desktopJpg = sanityUrl(src, DESKTOP_WIDTH, DESKTOP_HEIGHT, "jpg");
 
   return (
     <>
-      {/* Main background image — direct Sanity CDN, high priority for LCP */}
-      <img
-        src={desktopSrc}
-        srcSet={`${mobileSrc} ${MOBILE_WIDTH}w, ${desktopSrc} ${DESKTOP_WIDTH}w`}
-        sizes="100vw"
-        alt={alt}
-        width={DESKTOP_WIDTH}
-        height={DESKTOP_HEIGHT}
-        fetchPriority="high"
-        decoding="sync"
-        loading="eager"
-        className="absolute inset-0 w-full h-full object-cover object-center"
-      />
+      {/* Main background image — direct Sanity CDN, force WebP for LCP.
+          Sanity's auto=format requires Accept header negotiation that
+          Lighthouse mobile doesn't reliably send, so we force fm=webp. */}
+      <picture>
+        <source
+          type="image/webp"
+          srcSet={`${mobileWebp} ${MOBILE_WIDTH}w, ${desktopWebp} ${DESKTOP_WIDTH}w`}
+          sizes="100vw"
+        />
+        <img
+          src={desktopJpg}
+          srcSet={`${mobileJpg} ${MOBILE_WIDTH}w, ${desktopJpg} ${DESKTOP_WIDTH}w`}
+          sizes="100vw"
+          alt={alt}
+          width={DESKTOP_WIDTH}
+          height={DESKTOP_HEIGHT}
+          fetchPriority="high"
+          decoding="sync"
+          loading="eager"
+          className="absolute inset-0 w-full h-full object-cover object-center"
+        />
+      </picture>
 
       {/* Gradient overlay — dark enough for white text,
           stronger on the left where content sits */}
