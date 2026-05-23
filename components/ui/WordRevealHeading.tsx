@@ -30,17 +30,29 @@ export function WordRevealHeading({
   style,
 }: WordRevealHeadingProps) {
   const ref = useRef<HTMLHeadingElement>(null);
-  const [isRunning, setIsRunning] = useState(triggerOnMount);
+  const [isVisible, setIsVisible] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
-    if (triggerOnMount) return;
+    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (mql.matches) {
+      setReducedMotion(true);
+      setIsVisible(true);
+      return;
+    }
+
+    if (triggerOnMount) {
+      const t = setTimeout(() => setIsVisible(true), 150);
+      return () => clearTimeout(t);
+    }
+
     const el = ref.current;
     if (!el) return;
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setIsRunning(true);
+            setIsVisible(true);
             observer.unobserve(entry.target);
           }
         });
@@ -59,16 +71,21 @@ export function WordRevealHeading({
     words.map((word, i) => (
       <span
         key={i}
-        className="inline-block mr-[0.28em] last:mr-0 align-bottom"
+        className="inline-block overflow-hidden mr-[0.28em] last:mr-0 align-bottom"
       >
         <span
           className="inline-block ease-out"
-          data-animate="word-reveal"
-          style={{
-            animation: `word-reveal ${durationMs}ms ease-out ${initialDelayMs + i * staggerMs}ms both`,
-            animationPlayState: isRunning ? "running" : "paused",
-            willChange: "transform, opacity",
-          }}
+          style={
+            reducedMotion
+              ? undefined
+              : {
+                  transform: isVisible ? "translateY(0)" : "translateY(100%)",
+                  opacity: isVisible ? 1 : 0,
+                  transition: `transform ${durationMs}ms ease-out, opacity ${durationMs}ms ease-out`,
+                  transitionDelay: `${initialDelayMs + i * staggerMs}ms`,
+                  willChange: "transform, opacity",
+                }
+          }
         >
           {word}
         </span>

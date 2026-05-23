@@ -197,33 +197,6 @@
   }
 }
 
-@keyframes word-reveal {
-  from {
-    transform: translateY(0.5em);
-  }
-  to {
-    transform: translateY(0);
-  }
-}
-
-@keyframes hero-fade-up {
-  from {
-    transform: translateY(8px);
-  }
-  to {
-    transform: translateY(0);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  [data-animate="word-reveal"],
-  [data-animate="hero-fade-up"] {
-    animation: none !important;
-    opacity: 1 !important;
-    transform: none !important;
-  }
-}
-
 /* =============================================================================
       BASE — Global defaults
       ============================================================================= */

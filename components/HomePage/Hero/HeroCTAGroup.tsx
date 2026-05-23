@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { Link } from "@/i18n/navigation";
 
 interface HeroCTA {
@@ -11,12 +14,20 @@ interface HeroCTAGroupProps {
 }
 
 export function HeroCTAGroup({ primaryCTA, secondaryCTA }: HeroCTAGroupProps) {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    // Enters after subheadline has settled
+    const timer = setTimeout(() => setIsVisible(true), 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div
-      className="flex flex-col sm:flex-row gap-3 sm:gap-4"
-      data-animate="hero-fade-up"
+      className="flex flex-col sm:flex-row gap-3 sm:gap-4 transition-all duration-700 ease-out"
       style={{
-        animation: "hero-fade-up 700ms ease-out 1000ms both",
+        transform: isVisible ? "translateY(0)" : "translateY(20px)",
+        opacity: isVisible ? 1 : 0,
       }}
     >
       {/* Primary CTA — solid ocean blue, high contrast */}
