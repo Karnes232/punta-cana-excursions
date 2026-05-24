@@ -7,6 +7,7 @@ import { Link } from "@/i18n/navigation";
 interface ExcursionCategory {
   slug: string;
   title: string;
+  description?: string;
   image: {
     url: string;
     alt: string;
@@ -88,6 +89,13 @@ export function CategoryCard({ category, index }: CategoryCardProps) {
           <h3 className="font-heading font-bold text-white text-base md:text-lg leading-tight mb-1">
             {category.title}
           </h3>
+
+          {/* Short description */}
+          {category.description && (
+            <p className="font-body text-white/80 text-xs md:text-sm leading-snug line-clamp-2">
+              {category.description}
+            </p>
+          )}
 
           {/* Excursion count */}
           {category.excursionCount != null && category.excursionCount > 0 && (

@@ -10,12 +10,14 @@ export interface BookingStepData {
 }
 
 interface HowBookingWorksProps {
+  eyebrow?: string;
   heading: string;
   subheading?: string;
   steps: BookingStepData[];
 }
 
 export function HowBookingWorks({
+  eyebrow,
   heading,
   subheading,
   steps,
@@ -23,7 +25,11 @@ export function HowBookingWorks({
   return (
     <section className="relative py-20 md:py-28 section-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
-        <BookingStepsHeader heading={heading} subheading={subheading} />
+        <BookingStepsHeader
+          eyebrow={eyebrow}
+          heading={heading}
+          subheading={subheading}
+        />
 
         {/* Steps container — horizontal on desktop, vertical on mobile */}
         <div className="relative">

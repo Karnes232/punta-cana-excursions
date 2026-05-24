@@ -2,6 +2,7 @@
 
 import {
   createElement,
+  Fragment,
   useEffect,
   useRef,
   useState,
@@ -69,27 +70,27 @@ export function WordRevealHeading({
     as,
     { ref, className, style },
     words.map((word, i) => (
-      <span
-        key={i}
-        className="inline-block overflow-hidden mr-[0.28em] last:mr-0 align-bottom"
-      >
-        <span
-          className="inline-block ease-out"
-          style={
-            reducedMotion
-              ? undefined
-              : {
-                  transform: isVisible ? "translateY(0)" : "translateY(100%)",
-                  opacity: isVisible ? 1 : 0,
-                  transition: `transform ${durationMs}ms ease-out, opacity ${durationMs}ms ease-out`,
-                  transitionDelay: `${initialDelayMs + i * staggerMs}ms`,
-                  willChange: "transform, opacity",
-                }
-          }
-        >
-          {word}
+      <Fragment key={i}>
+        <span className="inline-block overflow-hidden align-bottom">
+          <span
+            className="inline-block ease-out"
+            style={
+              reducedMotion
+                ? undefined
+                : {
+                    transform: isVisible ? "translateY(0)" : "translateY(100%)",
+                    opacity: isVisible ? 1 : 0,
+                    transition: `transform ${durationMs}ms ease-out, opacity ${durationMs}ms ease-out`,
+                    transitionDelay: `${initialDelayMs + i * staggerMs}ms`,
+                    willChange: "transform, opacity",
+                  }
+            }
+          >
+            {word}
+          </span>
         </span>
-      </span>
+        {i < words.length - 1 ? " " : null}
+      </Fragment>
     )),
   );
 }

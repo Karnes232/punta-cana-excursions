@@ -18,6 +18,7 @@ export interface FeaturedExcursion {
 }
 
 interface FeaturedExcursionsProps {
+  eyebrow?: string;
   heading: string;
   subheading?: string;
   excursions: FeaturedExcursion[];
@@ -27,6 +28,7 @@ interface FeaturedExcursionsProps {
 }
 
 export function FeaturedExcursions({
+  eyebrow,
   heading,
   subheading,
   excursions,
@@ -37,7 +39,11 @@ export function FeaturedExcursions({
   return (
     <section className="relative py-20 md:py-28 section-sand overflow-hidden">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
-        <FeaturedSectionHeader heading={heading} subheading={subheading} />
+        <FeaturedSectionHeader
+          eyebrow={eyebrow}
+          heading={heading}
+          subheading={subheading}
+        />
 
         {/* Excursion card grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-12">

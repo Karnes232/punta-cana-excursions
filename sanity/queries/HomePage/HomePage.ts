@@ -1,5 +1,8 @@
 import { client } from "@/sanity/lib/client";
-import { LocalizedField } from "../GeneralLayout/generalLayoutQuery";
+import {
+  LocalizedField,
+  LocalizedBlockContent,
+} from "../GeneralLayout/generalLayoutQuery";
 
 export interface BookingStep {
   stepNumber: number;
@@ -53,6 +56,7 @@ export interface HomePage {
     };
   };
   heroImageAlt: LocalizedField;
+  heroEyebrow: LocalizedField;
   heroHeadline: LocalizedField;
   heroSubheadline: LocalizedField;
   heroPrimaryCta: {
@@ -66,7 +70,7 @@ export interface HomePage {
   //Brand Intro Section
   brandIntroTagline: LocalizedField;
   brandIntroHeading: LocalizedField;
-  brandIntroBody: LocalizedField;
+  brandIntroBody: LocalizedBlockContent;
   brandIntroImage: {
     asset: {
       url: string;
@@ -81,13 +85,16 @@ export interface HomePage {
   };
   brandIntroImageAlt: LocalizedField;
   //Featured Excursions Section
+  featuredEyebrow: LocalizedField;
   featuredHeading: LocalizedField;
   featuredSubheading: LocalizedField;
   featuredViewAllText: LocalizedField;
   //Excursion Categories Section
+  categoriesEyebrow: LocalizedField;
   categoriesHeading: LocalizedField;
   categoriesSubheading: LocalizedField;
   //Why Choose Us Section
+  whyChooseUsEyebrow: LocalizedField;
   whyChooseUsHeading: LocalizedField;
   whyChooseUsSubheading: LocalizedField;
   trustPillars: {
@@ -97,25 +104,29 @@ export interface HomePage {
   }[];
 
   //How Booking Works Section
+  howBookingWorksEyebrow: LocalizedField;
   howBookingWorksHeading: LocalizedField;
   howBookingWorksSubheading: LocalizedField;
   bookingSteps: BookingStep[];
   //Reviews Section
+  reviewsEyebrow: LocalizedField;
   reviewsHeading: LocalizedField;
   reviewsSubheading: LocalizedField;
   reviews: Review[];
   //FAQ Preview Section
+  faqPreviewEyebrow: LocalizedField;
   faqPreviewHeading: LocalizedField;
   faqPreviewSubheading: LocalizedField;
   faqPreviewItems: FaqItem[];
   faqPreviewCtaText: LocalizedField;
   //CTA Banner Section
+  ctaBannerEyebrow: LocalizedField;
   ctaBannerHeadline: LocalizedField;
   ctaBannerSubheadline: LocalizedField;
   ctaBannerButtonText: LocalizedField;
   ctaBannerButtonHref: string;
-
-  ctaBannerWhatsappLabel: LocalizedField;
+  ctaBannerSecondaryButtonText: LocalizedField;
+  ctaBannerSecondaryButtonHref: string;
 }
 
 export const homePageQuery = `*[_type == "homePage"][0] {
@@ -134,6 +145,7 @@ export const homePageQuery = `*[_type == "homePage"][0] {
         }
     },
     heroImageAlt,
+    heroEyebrow,
     heroHeadline,
     heroSubheadline,
     heroPrimaryCta {
@@ -160,11 +172,14 @@ export const homePageQuery = `*[_type == "homePage"][0] {
         }
     },
     brandIntroImageAlt,
+    featuredEyebrow,
     featuredHeading,
     featuredSubheading,
     featuredViewAllText,
+    categoriesEyebrow,
     categoriesHeading,
     categoriesSubheading,
+    whyChooseUsEyebrow,
     whyChooseUsHeading,
     whyChooseUsSubheading,
     trustPillars[] {
@@ -172,6 +187,7 @@ export const homePageQuery = `*[_type == "homePage"][0] {
         title,
         description
     },
+    howBookingWorksEyebrow,
     howBookingWorksHeading,
     howBookingWorksSubheading,
     bookingSteps[] {
@@ -180,6 +196,7 @@ export const homePageQuery = `*[_type == "homePage"][0] {
         title,
         description
     },
+    reviewsEyebrow,
     reviewsHeading,
     reviewsSubheading,
     reviews[] {
@@ -189,6 +206,7 @@ export const homePageQuery = `*[_type == "homePage"][0] {
         rating,
         excursionTitle
     },
+    faqPreviewEyebrow,
     faqPreviewHeading,
     faqPreviewSubheading,
     faqPreviewItems[] {
@@ -196,11 +214,13 @@ export const homePageQuery = `*[_type == "homePage"][0] {
         answer
     },
     faqPreviewCtaText,
+    ctaBannerEyebrow,
     ctaBannerHeadline,
     ctaBannerSubheadline,
     ctaBannerButtonText,
     ctaBannerButtonHref,
-    ctaBannerWhatsappLabel
+    ctaBannerSecondaryButtonText,
+    ctaBannerSecondaryButtonHref
 }   
 `;
 

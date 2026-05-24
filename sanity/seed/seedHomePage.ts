@@ -46,6 +46,11 @@ async function seed() {
       es: "Vista aérea de un catamarán navegando por las aguas turquesas del Caribe cerca de Punta Cana",
     },
 
+    heroEyebrow: {
+      en: "Punta Cana Excursions",
+      es: "Excursiones en Punta Cana",
+    },
+
     heroHeadline: {
       en: "Discover the Best Excursions in Punta Cana",
       es: "Descubre las Mejores Excursiones en Punta Cana",
@@ -87,8 +92,38 @@ async function seed() {
     },
 
     brandIntroBody: {
-      en: "Punta Cana Excursions by Grand Bay brings together the best tours, island trips, and ocean adventures in one place. With years of tourism experience in the Dominican Republic, we handpick every excursion so you can explore with confidence and book with ease. From the moment you reach out to the moment you get back to your hotel, our team is here to help.",
-      es: "Punta Cana Excursions by Grand Bay reúne los mejores tours, viajes a islas y aventuras oceánicas en un solo lugar. Con años de experiencia turística en República Dominicana, seleccionamos cada excursión para que explores con confianza y reserves con facilidad. Desde el momento en que nos contactas hasta que regresas a tu hotel, nuestro equipo está aquí para ayudarte.",
+      en: [
+        {
+          _type: "block",
+          _key: "biEn0",
+          style: "normal",
+          markDefs: [],
+          children: [
+            {
+              _type: "span",
+              _key: "biEn0s0",
+              marks: [],
+              text: "Punta Cana Excursions by Grand Bay brings together the best tours, island trips, and ocean adventures in one place. With years of tourism experience in the Dominican Republic, we handpick every excursion so you can explore with confidence and book with ease. From the moment you reach out to the moment you get back to your hotel, our team is here to help.",
+            },
+          ],
+        },
+      ],
+      es: [
+        {
+          _type: "block",
+          _key: "biEs0",
+          style: "normal",
+          markDefs: [],
+          children: [
+            {
+              _type: "span",
+              _key: "biEs0s0",
+              marks: [],
+              text: "Punta Cana Excursions by Grand Bay reúne los mejores tours, viajes a islas y aventuras oceánicas en un solo lugar. Con años de experiencia turística en República Dominicana, seleccionamos cada excursión para que explores con confianza y reserves con facilidad. Desde el momento en que nos contactas hasta que regresas a tu hotel, nuestro equipo está aquí para ayudarte.",
+            },
+          ],
+        },
+      ],
     },
 
     brandIntroImageAlt: {
@@ -99,6 +134,11 @@ async function seed() {
     // =========================================================================
     // FEATURED EXCURSIONS
     // =========================================================================
+
+    featuredEyebrow: {
+      en: "Traveler Favorites",
+      es: "Favoritas de los Viajeros",
+    },
 
     featuredHeading: {
       en: "Top Excursions in Punta Cana",
@@ -124,6 +164,11 @@ async function seed() {
     // EXCURSION CATEGORIES
     // =========================================================================
 
+    categoriesEyebrow: {
+      en: "Find Your Adventure",
+      es: "Encuentra Tu Aventura",
+    },
+
     categoriesHeading: {
       en: "Browse by Category",
       es: "Explora por Categoría",
@@ -141,6 +186,11 @@ async function seed() {
     // =========================================================================
     // WHY CHOOSE US
     // =========================================================================
+
+    whyChooseUsEyebrow: {
+      en: "The Grand Bay Difference",
+      es: "La Diferencia Grand Bay",
+    },
 
     whyChooseUsHeading: {
       en: "Why Book With Us",
@@ -207,6 +257,11 @@ async function seed() {
     // HOW BOOKING WORKS
     // =========================================================================
 
+    howBookingWorksEyebrow: {
+      en: "Simple & Secure",
+      es: "Simple y Seguro",
+    },
+
     howBookingWorksHeading: {
       en: "How Booking Works",
       es: "Cómo Funciona la Reserva",
@@ -262,6 +317,11 @@ async function seed() {
     // =========================================================================
     // REVIEWS / TESTIMONIALS
     // =========================================================================
+
+    reviewsEyebrow: {
+      en: "Real Traveler Stories",
+      es: "Historias Reales de Viajeros",
+    },
 
     reviewsHeading: {
       en: "What Travelers Are Saying",
@@ -346,6 +406,11 @@ async function seed() {
     // FAQ PREVIEW
     // =========================================================================
 
+    faqPreviewEyebrow: {
+      en: "Good to Know",
+      es: "Información Útil",
+    },
+
     faqPreviewHeading: {
       en: "Common Questions",
       es: "Preguntas Frecuentes",
@@ -423,6 +488,11 @@ async function seed() {
     // CTA BANNER
     // =========================================================================
 
+    ctaBannerEyebrow: {
+      en: "Ready When You Are",
+      es: "Cuando Estés Listo",
+    },
+
     ctaBannerHeadline: {
       en: "Ready to Explore Punta Cana?",
       es: "¿Listo Para Explorar Punta Cana?",
@@ -438,12 +508,14 @@ async function seed() {
       es: "Reservar Ahora",
     },
 
-    ctaBannerButtonHref: "/contact",
+    ctaBannerButtonHref: "/excursions",
 
-    ctaBannerWhatsappLabel: {
-      en: "Chat on WhatsApp",
-      es: "Chatear por WhatsApp",
+    ctaBannerSecondaryButtonText: {
+      en: "Contact Us",
+      es: "Contáctanos",
     },
+
+    ctaBannerSecondaryButtonHref: "/contact",
   };
 
   try {

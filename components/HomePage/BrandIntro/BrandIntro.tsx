@@ -1,3 +1,4 @@
+import type { PortableTextBlock } from "@portabletext/types";
 import { BrandIntroImage } from "./BrandIntroImage";
 import { BrandIntroContent } from "./BrandIntroContent";
 import { BrandIntroAccent } from "./BrandIntroAccent";
@@ -9,7 +10,7 @@ interface BrandIntroProps {
     lqip?: string;
   };
   heading: string;
-  body: string;
+  body: PortableTextBlock[];
   tagline?: string;
 }
 

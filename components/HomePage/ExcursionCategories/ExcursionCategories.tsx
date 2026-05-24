@@ -4,6 +4,7 @@ import { CategoryCard } from "./CategoryCard";
 export interface ExcursionCategory {
   slug: string;
   title: string;
+  description?: string;
   image: {
     url: string;
     alt: string;
@@ -13,12 +14,14 @@ export interface ExcursionCategory {
 }
 
 interface ExcursionCategoriesProps {
+  eyebrow?: string;
   heading: string;
   subheading?: string;
   categories: ExcursionCategory[];
 }
 
 export function ExcursionCategories({
+  eyebrow,
   heading,
   subheading,
   categories,
@@ -26,7 +29,11 @@ export function ExcursionCategories({
   return (
     <section className="relative py-20 md:py-28 section-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
-        <CategoriesSectionHeader heading={heading} subheading={subheading} />
+        <CategoriesSectionHeader
+          eyebrow={eyebrow}
+          heading={heading}
+          subheading={subheading}
+        />
 
         {/* Category grid — 2 cols mobile, 3 cols tablet, adaptive on desktop */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-5 lg:gap-6">

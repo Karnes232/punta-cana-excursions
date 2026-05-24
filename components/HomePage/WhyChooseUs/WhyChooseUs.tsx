@@ -9,12 +9,14 @@ export interface TrustPillarData {
 }
 
 interface WhyChooseUsProps {
+  eyebrow?: string;
   heading: string;
   subheading?: string;
   pillars: TrustPillarData[];
 }
 
 export function WhyChooseUs({
+  eyebrow,
   heading,
   subheading,
   pillars,
@@ -24,7 +26,11 @@ export function WhyChooseUs({
       <WhyChooseUsBackground />
 
       <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
-        <WhyChooseUsSectionHeader heading={heading} subheading={subheading} />
+        <WhyChooseUsSectionHeader
+          eyebrow={eyebrow}
+          heading={heading}
+          subheading={subheading}
+        />
 
         {/* Trust pillar grid — 2 cols mobile, 4 cols desktop */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">

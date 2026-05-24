@@ -11,6 +11,7 @@ import type { Metadata } from "next";
 import { getHomePage, getHomePageSeo } from "@/sanity/queries/HomePage/HomePage";
 import {
   getLocalized,
+  getLocalizedPortableText,
   LocalizedField,
 } from "@/sanity/queries/GeneralLayout/generalLayoutQuery";
 import { getExcursionCategoryHomePage } from "@/sanity/queries/ExcursionCategory/ExcursionCategory";
@@ -78,6 +79,7 @@ export default async function Home({
           alt: homePage?.heroImageAlt?.[localeKey] ?? "",
           lqip: homePage?.heroImage?.asset?.metadata?.lqip ?? "",
         }}
+        eyebrow={homePage?.heroEyebrow?.[localeKey] ?? ""}
         headline={homePage?.heroHeadline?.[localeKey] ?? ""}
         subheadline={homePage?.heroSubheadline?.[localeKey] ?? ""}
         primaryCTA={{
@@ -96,10 +98,11 @@ export default async function Home({
           lqip: homePage?.brandIntroImage?.asset?.metadata?.lqip ?? "",
         }}
         heading={homePage?.brandIntroHeading?.[localeKey] ?? ""}
-        body={homePage?.brandIntroBody?.[localeKey] ?? ""}
+        body={getLocalizedPortableText(homePage?.brandIntroBody, locale)}
         tagline={homePage?.brandIntroTagline?.[localeKey] ?? ""}
       />
       <FeaturedExcursions
+        eyebrow={homePage?.featuredEyebrow?.[localeKey] ?? ""}
         heading={homePage?.featuredHeading?.[localeKey] ?? ""}
         subheading={homePage?.featuredSubheading?.[localeKey] ?? ""}
         viewAllText={homePage?.featuredViewAllText?.[localeKey] ?? ""}
@@ -120,6 +123,11 @@ export default async function Home({
         }))}
       />
       <ExcursionCategories
+        eyebrow={
+          homePage?.categoriesEyebrow?.[localeKey] ??
+          homePage?.categoriesEyebrow?.en ??
+          ""
+        }
         heading={
           homePage?.categoriesHeading?.[localeKey] ??
           homePage?.categoriesHeading?.en ??
@@ -133,6 +141,10 @@ export default async function Home({
         categories={excursionCategories.map((category) => ({
           slug: category.slug,
           title: category.title?.[localeKey] ?? category.title?.en ?? "",
+          description:
+            category.description?.[localeKey] ??
+            category.description?.en ??
+            "",
           image: {
             url: category.image?.asset?.url ?? "",
             alt: category.title?.[localeKey] ?? category.title?.en ?? "",
@@ -141,6 +153,11 @@ export default async function Home({
         }))}
       />
        <WhyChooseUs
+        eyebrow={
+          homePage?.whyChooseUsEyebrow?.[localeKey] ??
+          homePage?.whyChooseUsEyebrow?.en ??
+          ""
+        }
         heading={
           homePage?.whyChooseUsHeading?.[localeKey] ??
           homePage?.whyChooseUsHeading?.en ??
@@ -161,6 +178,11 @@ export default async function Home({
         }
       />
      <HowBookingWorks
+        eyebrow={
+          homePage?.howBookingWorksEyebrow?.[localeKey] ??
+          homePage?.howBookingWorksEyebrow?.en ??
+          ""
+        }
         heading={
           homePage?.howBookingWorksHeading?.[localeKey] ??
           homePage?.howBookingWorksHeading?.en ??
@@ -182,6 +204,11 @@ export default async function Home({
         }
       />
        <Reviews
+        eyebrow={
+          homePage?.reviewsEyebrow?.[localeKey] ??
+          homePage?.reviewsEyebrow?.en ??
+          ""
+        }
         heading={
           homePage?.reviewsHeading?.[localeKey] ??
           homePage?.reviewsHeading?.en ??
@@ -203,6 +230,11 @@ export default async function Home({
         }
       />
        <FaqPreview
+        eyebrow={
+          homePage?.faqPreviewEyebrow?.[localeKey] ??
+          homePage?.faqPreviewEyebrow?.en ??
+          ""
+        }
         heading={
           homePage?.faqPreviewHeading?.[localeKey] ??
           homePage?.faqPreviewHeading?.en ??
@@ -227,6 +259,11 @@ export default async function Home({
         ctaHref="/faq"
       />
       <CtaBanner
+        eyebrow={
+          homePage?.ctaBannerEyebrow?.[localeKey] ??
+          homePage?.ctaBannerEyebrow?.en ??
+          ""
+        }
         headline={
           homePage?.ctaBannerHeadline?.[localeKey] ??
           homePage?.ctaBannerHeadline?.en ??
@@ -242,19 +279,14 @@ export default async function Home({
           homePage?.ctaBannerButtonText?.en ??
           ""
         }
-        primaryCtaHref={homePage?.ctaBannerButtonHref ?? ""}
-        whatsappNumber="1234567890"
-        whatsappText={
-          homePage?.ctaBannerWhatsappLabel?.[localeKey] ??
-          homePage?.ctaBannerWhatsappLabel?.en ??
+        primaryCtaHref={homePage?.ctaBannerButtonHref || "/excursions"}
+        secondaryCtaText={
+          homePage?.ctaBannerSecondaryButtonText?.[localeKey] ??
+          homePage?.ctaBannerSecondaryButtonText?.en ??
           ""
         }
-        whatsappLabel={
-          homePage?.ctaBannerWhatsappLabel?.[localeKey] ??
-          homePage?.ctaBannerWhatsappLabel?.en ??
-          ""
-        }
-      /> 
+        secondaryCtaHref={homePage?.ctaBannerSecondaryButtonHref || "/contact"}
+      />
     </>
   );
 }

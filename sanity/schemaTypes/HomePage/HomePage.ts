@@ -44,6 +44,14 @@ export const homePage = defineType({
     }),
 
     defineField({
+      name: "heroEyebrow",
+      title: "Eyebrow",
+      type: "localizedString",
+      description: "Small uppercase kicker shown above the headline.",
+      group: "hero",
+    }),
+
+    defineField({
       name: "heroHeadline",
       title: "Hero Headline",
       type: "localizedString",
@@ -131,7 +139,7 @@ export const homePage = defineType({
     defineField({
       name: "brandIntroBody",
       title: "Body Text",
-      type: "localizedText",
+      type: "localizedBlockContent",
       description:
         "2–3 sentences about who Grand Bay is and why they're trusted.",
       group: "brandIntro",
@@ -157,6 +165,14 @@ export const homePage = defineType({
     // =========================================================================
     // FEATURED EXCURSIONS
     // =========================================================================
+
+    defineField({
+      name: "featuredEyebrow",
+      title: "Eyebrow",
+      type: "localizedString",
+      description: "Small uppercase kicker shown above the heading.",
+      group: "featuredExcursions",
+    }),
 
     defineField({
       name: "featuredHeading",
@@ -203,6 +219,14 @@ export const homePage = defineType({
     // =========================================================================
 
     defineField({
+      name: "categoriesEyebrow",
+      title: "Eyebrow",
+      type: "localizedString",
+      description: "Small uppercase kicker shown above the heading.",
+      group: "excursionCategories",
+    }),
+
+    defineField({
       name: "categoriesHeading",
       title: "Section Heading",
       type: "localizedString",
@@ -236,6 +260,14 @@ export const homePage = defineType({
     // =========================================================================
     // WHY CHOOSE US
     // =========================================================================
+
+    defineField({
+      name: "whyChooseUsEyebrow",
+      title: "Eyebrow",
+      type: "localizedString",
+      description: "Small uppercase kicker shown above the heading.",
+      group: "whyChooseUs",
+    }),
 
     defineField({
       name: "whyChooseUsHeading",
@@ -307,6 +339,14 @@ export const homePage = defineType({
     // =========================================================================
     // HOW BOOKING WORKS
     // =========================================================================
+
+    defineField({
+      name: "howBookingWorksEyebrow",
+      title: "Eyebrow",
+      type: "localizedString",
+      description: "Small uppercase kicker shown above the heading.",
+      group: "howBookingWorks",
+    }),
 
     defineField({
       name: "howBookingWorksHeading",
@@ -388,6 +428,14 @@ export const homePage = defineType({
     // =========================================================================
     // REVIEWS / TESTIMONIALS
     // =========================================================================
+
+    defineField({
+      name: "reviewsEyebrow",
+      title: "Eyebrow",
+      type: "localizedString",
+      description: "Small uppercase kicker shown above the heading.",
+      group: "reviews",
+    }),
 
     defineField({
       name: "reviewsHeading",
@@ -473,6 +521,14 @@ export const homePage = defineType({
     // =========================================================================
 
     defineField({
+      name: "faqPreviewEyebrow",
+      title: "Eyebrow",
+      type: "localizedString",
+      description: "Small uppercase kicker shown above the heading.",
+      group: "faqPreview",
+    }),
+
+    defineField({
       name: "faqPreviewHeading",
       title: "Section Heading",
       type: "localizedString",
@@ -533,6 +589,14 @@ export const homePage = defineType({
     // =========================================================================
 
     defineField({
+      name: "ctaBannerEyebrow",
+      title: "Eyebrow",
+      type: "localizedString",
+      description: "Small uppercase kicker shown above the headline.",
+      group: "ctaBanner",
+    }),
+
+    defineField({
       name: "ctaBannerHeadline",
       title: "Headline",
       type: "localizedString",
@@ -562,15 +626,23 @@ export const homePage = defineType({
       name: "ctaBannerButtonHref",
       title: "Primary Button Link",
       type: "string",
-      description: 'Internal path, e.g. "/contact"',
+      description: 'Internal path, e.g. "/excursions"',
       group: "ctaBanner",
     }),
 
     defineField({
-      name: "ctaBannerWhatsappLabel",
-      title: "WhatsApp Button Label",
+      name: "ctaBannerSecondaryButtonText",
+      title: "Secondary Button Text",
       type: "localizedString",
-      description: 'e.g. "Chat on WhatsApp"',
+      description: 'e.g. "Contact us"',
+      group: "ctaBanner",
+    }),
+
+    defineField({
+      name: "ctaBannerSecondaryButtonHref",
+      title: "Secondary Button Link",
+      type: "string",
+      description: 'Internal path, e.g. "/contact"',
       group: "ctaBanner",
     }),
 

@@ -15,6 +15,7 @@ interface HeroProps {
     alt: string;
     lqip?: string; // Low-quality image placeholder from Sanity
   };
+  eyebrow?: string;
   headline: string;
   subheadline: string;
   primaryCTA: HeroCTA;
@@ -23,6 +24,7 @@ interface HeroProps {
 
 export function Hero({
   backgroundImage,
+  eyebrow,
   headline,
   subheadline,
   primaryCTA,
@@ -42,6 +44,11 @@ export function Hero({
       {/* Content layer */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-24 md:py-32">
         <div className="max-w-2xl lg:max-w-3xl">
+          {eyebrow && (
+            <p className="font-heading font-semibold text-sunset text-sm tracking-widest uppercase mb-4">
+              {eyebrow}
+            </p>
+          )}
           {headline && <HeroHeadline text={headline} />}
           {subheadline && <HeroSubheadline text={subheadline} />}
           {primaryCTA && secondaryCTA && (

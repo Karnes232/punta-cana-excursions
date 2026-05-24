@@ -8,6 +8,7 @@ export interface FaqItem {
 }
 
 interface FaqPreviewProps {
+  eyebrow?: string;
   heading: string;
   subheading?: string;
   faqs: FaqItem[];
@@ -16,6 +17,7 @@ interface FaqPreviewProps {
 }
 
 export function FaqPreview({
+  eyebrow,
   heading,
   subheading,
   faqs,
@@ -25,7 +27,11 @@ export function FaqPreview({
   return (
     <section className="relative py-20 md:py-28 section-white overflow-hidden">
       <div className="max-w-3xl mx-auto px-5 sm:px-8 lg:px-12">
-        <FaqPreviewHeader heading={heading} subheading={subheading} />
+        <FaqPreviewHeader
+          eyebrow={eyebrow}
+          heading={heading}
+          subheading={subheading}
+        />
         <FaqAccordionList faqs={faqs} />
         {ctaText && ctaHref && <FaqPreviewCta text={ctaText} href={ctaHref} />}
       </div>

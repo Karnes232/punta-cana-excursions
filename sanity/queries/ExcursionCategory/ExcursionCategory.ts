@@ -26,6 +26,7 @@ export interface ExcursionCategoryHomePage {
   _id: string;
   slug: string;
   title: LocalizedField;
+  description?: LocalizedField;
   image: {
     asset: {
       url: string;
@@ -44,6 +45,7 @@ export const excursionCategoryHomePageQuery = `*[_type == "excursionCategory"][0
     _id,
     "slug": slug.current,
     title,
+    description,
     image {
         asset-> {
             url,

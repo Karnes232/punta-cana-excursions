@@ -4,10 +4,7 @@ import {
   getHowItWorksPageSeo,
 } from "@/sanity/queries/HowItWorksPage/HowItWorksPage";
 import { getDefaultSeo } from "@/sanity/queries/SEO/seoProjection";
-import {
-  getGeneralLayout,
-  getLocalized,
-} from "@/sanity/queries/GeneralLayout/generalLayoutQuery";
+import { getLocalized } from "@/sanity/queries/GeneralLayout/generalLayoutQuery";
 import { buildMetadata } from "@/lib/seo/buildMetadata";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { HowItWorksHero } from "@/components/HowItWorksPage/HowItWorksHero";
@@ -41,11 +38,10 @@ export default async function HowItWorksPage({
 }: {
   params: Promise<{ locale: string }>;
 }) {
-  const [{ locale }, page, pageSeo, layout] = await Promise.all([
+  const [{ locale }, page, pageSeo] = await Promise.all([
     params,
     getHowItWorksPage(),
     getHowItWorksPageSeo(),
-    getGeneralLayout(),
   ]);
 
   const jsonLd =
@@ -104,10 +100,10 @@ export default async function HowItWorksPage({
           subheadline={getLocalized(page?.ctaSubheadline, locale) || undefined}
           primaryCtaText={getLocalized(page?.ctaButtonText, locale)}
           primaryCtaHref={page?.ctaButtonHref || "/excursions"}
-          whatsappNumber={layout?.phone || ""}
-          whatsappLabel={
+          secondaryCtaText={
             getLocalized(page?.ctaWhatsappLabel, locale) || undefined
           }
+          secondaryCtaHref="/contact"
         />
       )}
     </main>

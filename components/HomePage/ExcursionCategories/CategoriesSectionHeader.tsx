@@ -4,11 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
 
 interface CategoriesSectionHeaderProps {
+  eyebrow?: string;
   heading: string;
   subheading?: string;
 }
 
 export function CategoriesSectionHeader({
+  eyebrow,
   heading,
   subheading,
 }: CategoriesSectionHeaderProps) {
@@ -32,6 +34,19 @@ export function CategoriesSectionHeader({
 
   return (
     <div ref={ref} className="text-center mb-12 md:mb-16">
+      {eyebrow && (
+        <p
+          className="font-heading font-semibold text-teal text-sm tracking-widest uppercase mb-3 transition-all duration-600 ease-out"
+          style={{
+            transform: isVisible ? "translateY(0)" : "translateY(12px)",
+            opacity: isVisible ? 1 : 0,
+            transitionDelay: "0ms",
+          }}
+        >
+          {eyebrow}
+        </p>
+      )}
+
       <WordRevealHeading
         as="h2"
         text={heading}

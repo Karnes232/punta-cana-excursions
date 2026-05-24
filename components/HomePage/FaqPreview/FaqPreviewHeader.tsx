@@ -4,11 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
 
 interface FaqPreviewHeaderProps {
+  eyebrow?: string;
   heading: string;
   subheading?: string;
 }
 
 export function FaqPreviewHeader({
+  eyebrow,
   heading,
   subheading,
 }: FaqPreviewHeaderProps) {
@@ -32,6 +34,19 @@ export function FaqPreviewHeader({
 
   return (
     <div ref={ref} className="text-center mb-10 md:mb-12">
+      {eyebrow && (
+        <p
+          className="font-heading font-semibold text-teal text-sm tracking-widest uppercase mb-3 transition-all duration-600 ease-out"
+          style={{
+            transform: isVisible ? "translateY(0)" : "translateY(12px)",
+            opacity: isVisible ? 1 : 0,
+            transitionDelay: "0ms",
+          }}
+        >
+          {eyebrow}
+        </p>
+      )}
+
       <WordRevealHeading
         as="h2"
         text={heading}

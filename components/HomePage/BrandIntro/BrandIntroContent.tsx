@@ -1,13 +1,60 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { PortableText } from "@portabletext/react";
+import type { PortableTextReactComponents } from "@portabletext/react";
+import type { PortableTextBlock } from "@portabletext/types";
 import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
 
 interface BrandIntroContentProps {
   heading: string;
-  body: string;
+  body: PortableTextBlock[];
   tagline?: string;
 }
+
+// Custom Portable Text map preserving the Brand Intro body's original styling.
+const brandIntroComponents: Partial<PortableTextReactComponents> = {
+  block: {
+    normal: ({ children }) => (
+      <p className="font-body text-gray-dark leading-relaxed text-base md:text-[1.0625rem] mb-4 last:mb-0">
+        {children}
+      </p>
+    ),
+  },
+  list: {
+    bullet: ({ children }) => (
+      <ul className="list-disc list-inside space-y-1.5 mb-4 font-body text-gray-dark">
+        {children}
+      </ul>
+    ),
+    number: ({ children }) => (
+      <ol className="list-decimal list-inside space-y-1.5 mb-4 font-body text-gray-dark">
+        {children}
+      </ol>
+    ),
+  },
+  marks: {
+    strong: ({ children }) => (
+      <strong className="font-semibold text-slate">{children}</strong>
+    ),
+    em: ({ children }) => <em className="italic">{children}</em>,
+    link: ({ children, value }) => {
+      const href = value?.href || "#";
+      const isExternal = href.startsWith("http") || href.startsWith("mailto:");
+      return (
+        <a
+          href={href}
+          className="text-ocean underline decoration-ocean/30 underline-offset-2 hover:decoration-ocean/70 transition-colors"
+          {...(isExternal
+            ? { target: "_blank", rel: "noopener noreferrer" }
+            : {})}
+        >
+          {children}
+        </a>
+      );
+    },
+  },
+};
 
 export function BrandIntroContent({
   heading,
@@ -71,16 +118,18 @@ export function BrandIntroContent({
       </div>
 
       {/* Body text */}
-      <p
-        className="font-body text-gray-dark leading-relaxed text-base md:text-[1.0625rem] max-w-lg transition-all duration-600 ease-out"
+      <div
+        className="max-w-lg transition-all duration-600 ease-out"
         style={{
           transform: isVisible ? "translateY(0)" : "translateY(16px)",
           opacity: isVisible ? 1 : 0,
           transitionDelay: "400ms",
         }}
       >
-        {body}
-      </p>
+        {body?.length ? (
+          <PortableText value={body} components={brandIntroComponents} />
+        ) : null}
+      </div>
     </div>
   );
 }
