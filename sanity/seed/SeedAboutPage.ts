@@ -165,15 +165,16 @@ async function main() {
       en: "Message us on WhatsApp for instant answers, or browse our full excursion lineup and book your adventure today.",
       es: "Escríbenos por WhatsApp para respuestas inmediatas, o explora nuestro catálogo completo de excursiones y reserva tu aventura hoy.",
     },
-    ctaButtonText: {
-      en: "Chat on WhatsApp",
-      es: "Chatear en WhatsApp",
+    ctaPrimaryButtonText: {
+      en: "Contact Us",
+      es: "Contáctanos",
     },
-    ctaWhatsappNumber: "18091234567",
-    ctaContactText: {
+    ctaPrimaryButtonHref: "/contact",
+    ctaSecondaryButtonText: {
       en: "Browse Excursions",
       es: "Ver Excursiones",
     },
+    ctaSecondaryButtonHref: "/excursions",
   });
 
   console.log("✅ About Page seeded successfully.");

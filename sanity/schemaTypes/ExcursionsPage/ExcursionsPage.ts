@@ -10,7 +10,7 @@ export const excursionsPage = defineType({
 
   groups: [
     { name: "hero", title: "Hero", default: true },
-    { name: "cta", title: "WhatsApp CTA" },
+    { name: "cta", title: "Contact CTA" },
     { name: "seo", title: "SEO" },
   ],
 
@@ -50,7 +50,7 @@ export const excursionsPage = defineType({
     }),
 
     // =========================================================================
-    // WHATSAPP CTA STRIP
+    // CONTACT CTA STRIP
     // =========================================================================
 
     defineField({
@@ -58,7 +58,7 @@ export const excursionsPage = defineType({
       title: "CTA Headline",
       type: "localizedString",
       description:
-        'Headline for the WhatsApp help strip below the excursion grid. e.g. "Need help choosing?"',
+        'Headline for the contact help strip below the excursion grid. e.g. "Need help choosing?"',
       group: "cta",
     }),
 
@@ -72,20 +72,36 @@ export const excursionsPage = defineType({
     }),
 
     defineField({
-      name: "ctaWhatsappButtonText",
-      title: "WhatsApp Button Text",
+      name: "ctaPrimaryButtonText",
+      title: "Primary Button Text",
       type: "localizedString",
       description:
-        'Text on the WhatsApp button. e.g. "Chat on WhatsApp" / "Chatea por WhatsApp".',
+        'Text on the primary contact button. e.g. "Contact us" / "Contáctanos".',
       group: "cta",
     }),
 
     defineField({
-      name: "ctaContactButtonText",
-      title: "Contact Button Text",
+      name: "ctaPrimaryButtonHref",
+      title: "Primary Button Link",
+      type: "string",
+      description: 'Internal path, e.g. "/contact"',
+      group: "cta",
+    }),
+
+    defineField({
+      name: "ctaSecondaryButtonText",
+      title: "Secondary Button Text",
       type: "localizedString",
       description:
-        'Text on the secondary contact button. e.g. "Contact Us" / "Contáctanos".',
+        'Text on the secondary contact button. e.g. "View FAQ" / "Ver preguntas frecuentes".',
+      group: "cta",
+    }),
+
+    defineField({
+      name: "ctaSecondaryButtonHref",
+      title: "Secondary Button Link",
+      type: "string",
+      description: 'Internal path, e.g. "/faq"',
       group: "cta",
     }),
 

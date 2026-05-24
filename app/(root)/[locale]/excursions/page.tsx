@@ -1,6 +1,6 @@
 import { ExcursionsBrowseSection } from "@/components/ExcursionsPage/ExcursionsBrowseSection/ExcursionsBrowseSection";
 import { ExcursionsHero } from "@/components/ExcursionsPage/Hero/ExcursionsHero";
-import { WhatsAppCTAStrip } from "@/components/ExcursionsPage/WhatsAppCTA/WhatsAppCTAStrip";
+import { ContactCTAStrip } from "@/components/ExcursionsPage/ContactCTA/ContactCTAStrip";
 import { getExcursionCategoryPage } from "@/sanity/queries/ExcursionCategory/ExcursionCategory";
 import {
   getExcursionsPage,
@@ -149,7 +149,7 @@ export default async function Excursions({
           },
         }}
       />
-      <WhatsAppCTAStrip
+      <ContactCTAStrip
         headline={
           excursionsPage?.ctaHeadline?.[localeKey] ??
           excursionsPage?.ctaHeadline?.en ??
@@ -160,19 +160,18 @@ export default async function Excursions({
           excursionsPage?.ctaDescription?.en ??
           ""
         }
-        whatsappNumber="1234567890"
-        whatsappDefaultMessage="Hello, I have a question about the best way to get to Punta Cana."
-        whatsappButtonText={
-          excursionsPage?.ctaWhatsappButtonText?.[localeKey] ??
-          excursionsPage?.ctaWhatsappButtonText?.en ??
+        primaryButtonText={
+          excursionsPage?.ctaPrimaryButtonText?.[localeKey] ??
+          excursionsPage?.ctaPrimaryButtonText?.en ??
           ""
         }
-        contactHref="/contact"
-        contactButtonText={
-          excursionsPage?.ctaContactButtonText?.[localeKey] ??
-          excursionsPage?.ctaContactButtonText?.en ??
+        primaryButtonHref={excursionsPage?.ctaPrimaryButtonHref || "/contact"}
+        secondaryButtonText={
+          excursionsPage?.ctaSecondaryButtonText?.[localeKey] ??
+          excursionsPage?.ctaSecondaryButtonText?.en ??
           ""
         }
+        secondaryButtonHref={excursionsPage?.ctaSecondaryButtonHref || "/contact"}
       />
     </>
   );

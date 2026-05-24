@@ -302,18 +302,34 @@ export const divingSnorkelingPage = defineType({
     }),
 
     defineField({
-      name: "ctaButtonText",
-      title: "CTA Button Text",
+      name: "ctaPrimaryButtonText",
+      title: "Primary Button Text",
       type: "localizedString",
+      description: 'Text on the primary CTA button. e.g. "Contact us".',
       group: "cta",
     }),
 
     defineField({
-      name: "ctaWhatsappNumber",
-      title: "WhatsApp Number",
+      name: "ctaPrimaryButtonHref",
+      title: "Primary Button Link",
       type: "string",
-      description:
-        "Phone number for the WhatsApp CTA (include country code, no spaces).",
+      description: 'Internal path, e.g. "/contact"',
+      group: "cta",
+    }),
+
+    defineField({
+      name: "ctaSecondaryButtonText",
+      title: "Secondary Button Text",
+      type: "localizedString",
+      description: 'Text on the secondary CTA button. e.g. "Browse Excursions".',
+      group: "cta",
+    }),
+
+    defineField({
+      name: "ctaSecondaryButtonHref",
+      title: "Secondary Button Link",
+      type: "string",
+      description: 'Internal path, e.g. "/excursions"',
       group: "cta",
     }),
 

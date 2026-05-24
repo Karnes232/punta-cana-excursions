@@ -65,8 +65,10 @@ export interface DivingSnorkelingPageData {
   trustHeadline: LocalizedString;
   trustPillars: TrustPillar[];
   ctaHeadline: LocalizedString;
-  ctaButtonText: LocalizedString;
-  ctaWhatsappNumber: string;
+  ctaPrimaryButtonText: LocalizedString;
+  ctaPrimaryButtonHref: string;
+  ctaSecondaryButtonText: LocalizedString;
+  ctaSecondaryButtonHref: string;
   seo: {
     metaTitle: LocalizedString;
     metaDescription: LocalizedText;
@@ -127,8 +129,10 @@ export const divingSnorkelingPageQuery = /* groq */ `*[_type == "divingSnorkelin
   trustHeadline,
   trustPillars[] { icon, title, description },
   ctaHeadline,
-  ctaButtonText,
-  ctaWhatsappNumber,
+  ctaPrimaryButtonText,
+  ctaPrimaryButtonHref,
+  ctaSecondaryButtonText,
+  ctaSecondaryButtonHref,
   seo {
     metaTitle,
     metaDescription,

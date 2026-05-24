@@ -57,9 +57,10 @@ export interface AboutPageData {
 
   ctaHeadline: LocalizedString;
   ctaSubheadline: LocalizedText;
-  ctaButtonText: LocalizedString;
-  ctaWhatsappNumber: string;
-  ctaContactText: LocalizedString;
+  ctaPrimaryButtonText: LocalizedString;
+  ctaPrimaryButtonHref: string;
+  ctaSecondaryButtonText: LocalizedString;
+  ctaSecondaryButtonHref: string;
 
   seo: {
     metaTitle: LocalizedString;
@@ -97,9 +98,10 @@ export const aboutPageQuery = /* groq */ `*[_type == "aboutPage"][0] {
   },
   ctaHeadline,
   ctaSubheadline,
-  ctaButtonText,
-  ctaWhatsappNumber,
-  ctaContactText,
+  ctaPrimaryButtonText,
+  ctaPrimaryButtonHref,
+  ctaSecondaryButtonText,
+  ctaSecondaryButtonHref,
   seo { metaTitle, metaDescription, ogImage { "url": asset->url } }
 }`;
 

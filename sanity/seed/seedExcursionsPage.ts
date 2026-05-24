@@ -50,16 +50,18 @@ const excursionsPage = {
     en: "Our local team knows every excursion firsthand. Send us a message and we'll help you find the perfect tour for your trip.",
     es: "Nuestro equipo local conoce cada excursión de primera mano. Envíanos un mensaje y te ayudaremos a encontrar el tour perfecto para tu viaje.",
   },
-  ctaWhatsappButtonText: {
-    _type: "localizedString",
-    en: "Chat on WhatsApp",
-    es: "Chatea por WhatsApp",
-  },
-  ctaContactButtonText: {
+  ctaPrimaryButtonText: {
     _type: "localizedString",
     en: "Contact Us",
     es: "Contáctanos",
   },
+  ctaPrimaryButtonHref: "/contact",
+  ctaSecondaryButtonText: {
+    _type: "localizedString",
+    en: "View FAQ",
+    es: "Ver preguntas frecuentes",
+  },
+  ctaSecondaryButtonHref: "/faq",
   seoTitle: {
     _type: "localizedString",
     en: "Excursions in Punta Cana | Tours, Island Trips & Adventures",

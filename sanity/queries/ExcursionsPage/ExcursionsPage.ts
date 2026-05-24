@@ -19,8 +19,10 @@ export interface ExcursionsPage {
   heroSubheadline: LocalizedField;
   ctaHeadline: LocalizedField;
   ctaDescription: LocalizedField;
-  ctaWhatsappButtonText: LocalizedField;
-  ctaContactButtonText: LocalizedField;
+  ctaPrimaryButtonText: LocalizedField;
+  ctaPrimaryButtonHref: string;
+  ctaSecondaryButtonText: LocalizedField;
+  ctaSecondaryButtonHref: string;
 }
 
 export const excursionsPageQuery = `*[_type == "excursionsPage"][0] {
@@ -41,8 +43,10 @@ export const excursionsPageQuery = `*[_type == "excursionsPage"][0] {
     heroSubheadline,
     ctaHeadline,
     ctaDescription,
-    ctaWhatsappButtonText,
-    ctaContactButtonText,
+    ctaPrimaryButtonText,
+    ctaPrimaryButtonHref,
+    ctaSecondaryButtonText,
+    ctaSecondaryButtonHref,
 }`;
 
 export async function getExcursionsPage(): Promise<ExcursionsPage | null> {

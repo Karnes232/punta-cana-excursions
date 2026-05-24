@@ -1,4 +1,4 @@
-export function WhatsAppCTABackground() {
+export function ContactCTABackground() {
   return (
     <>
       {/* Base sand background */}

@@ -216,12 +216,19 @@ const divingSnorkelingPageData = {
     es: "¿Listo para Explorar el Punta Cana Submarino?",
   },
 
-  ctaButtonText: {
-    en: "Chat With Us on WhatsApp",
-    es: "Chatea Con Nosotros por WhatsApp",
+  ctaPrimaryButtonText: {
+    en: "Contact Us",
+    es: "Contáctanos",
   },
 
-  ctaWhatsappNumber: "18095551234",
+  ctaPrimaryButtonHref: "/contact",
+
+  ctaSecondaryButtonText: {
+    en: "Browse Excursions",
+    es: "Ver Excursiones",
+  },
+
+  ctaSecondaryButtonHref: "/excursions",
 
   // ─── SEO ───────────────────────────────────────────────────────────────────
 

@@ -153,10 +153,10 @@ export default async function ScubaDivingPage({
 
       <DivingCTA
         headline={page?.ctaHeadline?.[localeKey] || ""}
-        whatsappButtonText={page?.ctaButtonText?.[localeKey] || ""}
-        whatsappNumber={page?.ctaWhatsappNumber || ""}
-        contactButtonText="Contact us"
-        contactHref="/contact"
+        primaryButtonText={page?.ctaPrimaryButtonText?.[localeKey] || ""}
+        primaryButtonHref={page?.ctaPrimaryButtonHref || "/contact"}
+        secondaryButtonText={page?.ctaSecondaryButtonText?.[localeKey] || ""}
+        secondaryButtonHref={page?.ctaSecondaryButtonHref || "/excursions"}
       />
     </>
   );

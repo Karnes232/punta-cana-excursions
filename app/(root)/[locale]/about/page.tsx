@@ -106,9 +106,10 @@ export default async function AboutPage({
       <AboutCTA
         headline={page?.ctaHeadline?.[lk] ?? ""}
         subheadline={page?.ctaSubheadline?.[lk] ?? ""}
-        whatsappButtonText={page?.ctaButtonText?.[lk] ?? ""}
-        whatsappNumber={page?.ctaWhatsappNumber ?? ""}
-        contactButtonText={page?.ctaContactText?.[lk] ?? ""}
+        primaryButtonText={page?.ctaPrimaryButtonText?.[lk] ?? ""}
+        primaryButtonHref={page?.ctaPrimaryButtonHref || "/contact"}
+        secondaryButtonText={page?.ctaSecondaryButtonText?.[lk] ?? ""}
+        secondaryButtonHref={page?.ctaSecondaryButtonHref || "/excursions"}
       />
     </>
   );

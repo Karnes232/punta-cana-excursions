@@ -6,9 +6,9 @@ import { DivingCTABackground } from "./DivingCTABackground";
    
    Bold full-width section with a deep ocean gradient background,
    decorative wave top edge, headline, supporting copy, and two CTAs:
-     1. WhatsApp button (accent green — primary action)
-     2. Contact page link (ghost/outline — secondary)
-   
+     1. Primary contact link (solid sunset — primary action)
+     2. Secondary link (ghost/outline — secondary)
+
    This mirrors the Home page's CTABanner concept but with the
    diving page's underwater visual treatment.
    --------------------------------------------------------------------------- */
@@ -17,22 +17,19 @@ interface DivingCTAProps {
   headline: string;
   /** Optional supporting text below the headline */
   subtext?: string;
-  whatsappButtonText: string;
-  whatsappNumber: string;
-  /** Pre-filled WhatsApp message */
-  whatsappMessage?: string;
-  contactButtonText: string;
-  contactHref: string;
+  primaryButtonText: string;
+  primaryButtonHref: string;
+  secondaryButtonText: string;
+  secondaryButtonHref: string;
 }
 
 export function DivingCTA({
   headline,
   subtext,
-  whatsappButtonText,
-  whatsappNumber,
-  whatsappMessage = "",
-  contactButtonText,
-  contactHref,
+  primaryButtonText,
+  primaryButtonHref,
+  secondaryButtonText,
+  secondaryButtonHref,
 }: DivingCTAProps) {
   return (
     <section className="relative overflow-hidden">
@@ -61,11 +58,10 @@ export function DivingCTA({
         <DivingCTAContent
           headline={headline}
           subtext={subtext}
-          whatsappButtonText={whatsappButtonText}
-          whatsappNumber={whatsappNumber}
-          whatsappMessage={whatsappMessage}
-          contactButtonText={contactButtonText}
-          contactHref={contactHref}
+          primaryButtonText={primaryButtonText}
+          primaryButtonHref={primaryButtonHref}
+          secondaryButtonText={secondaryButtonText}
+          secondaryButtonHref={secondaryButtonHref}
         />
       </div>
     </section>
