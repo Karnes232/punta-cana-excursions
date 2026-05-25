@@ -1,5 +1,8 @@
 import { client } from "@/sanity/lib/client";
-import { LocalizedField } from "../GeneralLayout/generalLayoutQuery";
+import {
+  LocalizedField,
+  LocalizedBlockContent,
+} from "../GeneralLayout/generalLayoutQuery";
 
 export interface ExcursionsPage {
   _id: string;
@@ -15,14 +18,22 @@ export interface ExcursionsPage {
       };
     };
   };
+  heroEyebrow: LocalizedField;
   heroHeadline: LocalizedField;
   heroSubheadline: LocalizedField;
+  introEyebrow: LocalizedField;
+  introHeading: LocalizedField;
+  introBody: LocalizedBlockContent;
+  ctaEyebrow: LocalizedField;
   ctaHeadline: LocalizedField;
   ctaDescription: LocalizedField;
   ctaPrimaryButtonText: LocalizedField;
   ctaPrimaryButtonHref: string;
   ctaSecondaryButtonText: LocalizedField;
   ctaSecondaryButtonHref: string;
+  seoCopyEyebrow: LocalizedField;
+  seoCopyHeading: LocalizedField;
+  seoCopyBody: LocalizedBlockContent;
 }
 
 export const excursionsPageQuery = `*[_type == "excursionsPage"][0] {
@@ -39,14 +50,22 @@ export const excursionsPageQuery = `*[_type == "excursionsPage"][0] {
             }
         }
     },
+    heroEyebrow,
     heroHeadline,
     heroSubheadline,
+    introEyebrow,
+    introHeading,
+    introBody,
+    ctaEyebrow,
     ctaHeadline,
     ctaDescription,
     ctaPrimaryButtonText,
     ctaPrimaryButtonHref,
     ctaSecondaryButtonText,
     ctaSecondaryButtonHref,
+    seoCopyEyebrow,
+    seoCopyHeading,
+    seoCopyBody,
 }`;
 
 export async function getExcursionsPage(): Promise<ExcursionsPage | null> {

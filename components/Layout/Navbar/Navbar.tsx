@@ -65,7 +65,7 @@ export default function Navbar({
           <Logo width={60} height={60} logo={logo} />
 
           {/* Center: Nav links (desktop) */}
-          <nav className="hidden md:flex items-center gap-0.5 mx-4">
+          <nav className="hidden lg:flex items-center gap-0.5 mx-4">
             {navLinks.map((item) => (
               <Link
                 key={item.href}
@@ -84,7 +84,7 @@ export default function Navbar({
           </nav>
 
           {/* Right: Actions (desktop) */}
-          <div className="hidden md:flex items-center gap-2 shrink-0">
+          <div className="hidden lg:flex items-center gap-2 shrink-0">
             <LanguageSwitcher />
             {/* <WhatsAppButton /> */}
             <BookNowButton
@@ -94,7 +94,7 @@ export default function Navbar({
           </div>
 
           {/* Right: Mobile actions */}
-          <div className="flex md:hidden items-center gap-2">
+          <div className="flex lg:hidden items-center gap-2">
             <BookNowButton
               className="text-[12px] px-4 py-2"
               label={navCtaButton?.label[locale] as string}

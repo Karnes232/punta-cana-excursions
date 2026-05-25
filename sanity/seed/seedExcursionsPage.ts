@@ -30,6 +30,11 @@ const client = createClient({
 const excursionsPage = {
   _id: "excursionsPage",
   _type: "excursionsPage",
+  heroEyebrow: {
+    _type: "localizedString",
+    en: "Punta Cana Tours & Activities",
+    es: "Tours y Actividades en Punta Cana",
+  },
   heroHeadline: {
     _type: "localizedString",
     en: "Explore Our Excursions",
@@ -39,6 +44,56 @@ const excursionsPage = {
     _type: "localizedText",
     en: "Discover top-rated tours, island adventures, and unforgettable experiences in Punta Cana — all with local support and easy booking.",
     es: "Descubre los mejores tours, aventuras en islas y experiencias inolvidables en Punta Cana — todo con soporte local y reservas fáciles.",
+  },
+  introEyebrow: {
+    _type: "localizedString",
+    en: "Punta Cana Tours & Activities",
+    es: "Tours y Actividades en Punta Cana",
+  },
+  introHeading: {
+    _type: "localizedString",
+    en: "Browse Top-Rated Excursions in Punta Cana",
+    es: "Explora las Excursiones Mejor Valoradas en Punta Cana",
+  },
+  introBody: {
+    _type: "localizedBlockContent",
+    en: [
+      {
+        _type: "block",
+        _key: "introEn0",
+        style: "normal",
+        markDefs: [],
+        children: [
+          {
+            _type: "span",
+            _key: "introEn0s0",
+            marks: [],
+            text: "From catamaran cruises and snorkeling trips to island day tours and adventure parks, every excursion below is hand-picked and run with trusted local operators. Use the filters to find the perfect experience for your trip — then book in minutes with a small deposit.",
+          },
+        ],
+      },
+    ],
+    es: [
+      {
+        _type: "block",
+        _key: "introEs0",
+        style: "normal",
+        markDefs: [],
+        children: [
+          {
+            _type: "span",
+            _key: "introEs0s0",
+            marks: [],
+            text: "Desde paseos en catamarán y excursiones de snorkel hasta tours de un día a islas y parques de aventura, cada excursión a continuación está cuidadosamente seleccionada y operada por socios locales de confianza. Usa los filtros para encontrar la experiencia perfecta para tu viaje y reserva en minutos con un pequeño depósito.",
+          },
+        ],
+      },
+    ],
+  },
+  ctaEyebrow: {
+    _type: "localizedString",
+    en: "Still Deciding?",
+    es: "¿Aún Decidiendo?",
   },
   ctaHeadline: {
     _type: "localizedString",
@@ -62,6 +117,79 @@ const excursionsPage = {
     es: "Ver preguntas frecuentes",
   },
   ctaSecondaryButtonHref: "/faq",
+  seoCopyEyebrow: {
+    _type: "localizedString",
+    en: "Plan Your Trip",
+    es: "Planifica Tu Viaje",
+  },
+  seoCopyHeading: {
+    _type: "localizedString",
+    en: "Planning Your Punta Cana Excursion",
+    es: "Cómo Planificar Tu Excursión en Punta Cana",
+  },
+  seoCopyBody: {
+    _type: "localizedBlockContent",
+    en: [
+      {
+        _type: "block",
+        _key: "seoCopyEn0",
+        style: "normal",
+        markDefs: [],
+        children: [
+          {
+            _type: "span",
+            _key: "seoCopyEn0s0",
+            marks: [],
+            text: "Punta Cana is home to some of the Caribbean's most popular day trips — from Saona and Catalina island getaways to catamaran party cruises, buggy adventures, zip-lining, and snorkeling over coral reefs. Most excursions include hotel pickup from Bávaro, Punta Cana, Cap Cana, and Uvero Alto, so you can travel without renting a car.",
+          },
+        ],
+      },
+      {
+        _type: "block",
+        _key: "seoCopyEn1",
+        style: "normal",
+        markDefs: [],
+        children: [
+          {
+            _type: "span",
+            _key: "seoCopyEn1s0",
+            marks: [],
+            text: "Whether you're visiting with family, looking for an adults-only catamaran, or planning a private tour, you can compare prices, durations, and what's included above, then reserve online with a small deposit and pay the balance on the day. Our local team is on hand in English and Spanish if you need help choosing.",
+          },
+        ],
+      },
+    ],
+    es: [
+      {
+        _type: "block",
+        _key: "seoCopyEs0",
+        style: "normal",
+        markDefs: [],
+        children: [
+          {
+            _type: "span",
+            _key: "seoCopyEs0s0",
+            marks: [],
+            text: "Punta Cana alberga algunas de las excursiones de un día más populares del Caribe: desde escapadas a las islas Saona y Catalina hasta paseos en catamarán, aventuras en buggy, tirolesas y snorkel sobre arrecifes de coral. La mayoría de las excursiones incluyen recogida en el hotel en Bávaro, Punta Cana, Cap Cana y Uvero Alto, así que puedes viajar sin alquilar un coche.",
+          },
+        ],
+      },
+      {
+        _type: "block",
+        _key: "seoCopyEs1",
+        style: "normal",
+        markDefs: [],
+        children: [
+          {
+            _type: "span",
+            _key: "seoCopyEs1s0",
+            marks: [],
+            text: "Ya sea que viajes en familia, busques un catamarán solo para adultos o planifiques un tour privado, puedes comparar precios, duraciones y lo que incluye cada opción arriba, y luego reservar en línea con un pequeño depósito y pagar el resto el mismo día. Nuestro equipo local está disponible en inglés y español si necesitas ayuda para elegir.",
+          },
+        ],
+      },
+    ],
+  },
   seoTitle: {
     _type: "localizedString",
     en: "Excursions in Punta Cana | Tours, Island Trips & Adventures",

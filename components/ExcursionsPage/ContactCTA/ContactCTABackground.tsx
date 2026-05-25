@@ -1,42 +1,68 @@
 export function ContactCTABackground() {
   return (
     <>
-      {/* Base sand background */}
-      <div className="absolute inset-0 bg-sand" />
-
-      {/* Subtle wave pattern — faint, decorative */}
-      <svg
-        className="absolute inset-0 w-full h-full pointer-events-none opacity-[0.04]"
-        preserveAspectRatio="none"
-        viewBox="0 0 1440 320"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true"
-      >
-        <path
-          d="M0 160C240 80 480 240 720 160C960 80 1200 240 1440 160V320H0V160Z"
-          className="fill-ocean"
-        />
-        <path
-          d="M0 200C360 120 720 280 1080 200C1260 160 1350 180 1440 200V320H0V200Z"
-          className="fill-teal"
-        />
-      </svg>
-
-      {/* Warm radial accent — soft sunset glow in top-right */}
+      {/* Main gradient background */}
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0"
         style={{
           background: `
-              radial-gradient(
-                ellipse 50% 80% at 90% 20%,
-                rgba(244, 161, 26, 0.06) 0%,
-                transparent 60%
+              linear-gradient(
+                135deg,
+                var(--color-ocean-dark) 0%,
+                var(--color-ocean) 40%,
+                var(--color-ocean-light) 100%
               )
             `,
         }}
         aria-hidden="true"
       />
+
+      {/* Warm radial accent — subtle sunset glow */}
+      <div
+        className="absolute inset-0 opacity-20"
+        style={{
+          background: `
+              radial-gradient(
+                ellipse 60% 50% at 80% 50%,
+                var(--color-sunset) 0%,
+                transparent 70%
+              )
+            `,
+        }}
+        aria-hidden="true"
+      />
+
+      {/* Wave pattern overlay */}
+      <div className="absolute inset-0 opacity-[0.07]" aria-hidden="true">
+        <svg
+          className="w-full h-full"
+          preserveAspectRatio="none"
+          viewBox="0 0 1200 400"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M0 280 Q200 220 400 280 Q600 340 800 280 Q1000 220 1200 280 L1200 400 L0 400 Z"
+            fill="white"
+          />
+          <path
+            d="M0 320 Q200 260 400 320 Q600 380 800 320 Q1000 260 1200 320 L1200 400 L0 400 Z"
+            fill="white"
+            opacity="0.5"
+          />
+          <path
+            d="M0 100 Q300 60 600 100 Q900 140 1200 100"
+            stroke="white"
+            strokeWidth="1.5"
+          />
+          <path
+            d="M0 140 Q300 100 600 140 Q900 180 1200 140"
+            stroke="white"
+            strokeWidth="1"
+            opacity="0.6"
+          />
+        </svg>
+      </div>
     </>
   );
 }

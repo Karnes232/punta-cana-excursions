@@ -1,6 +1,8 @@
 import { ExcursionsBrowseSection } from "@/components/ExcursionsPage/ExcursionsBrowseSection/ExcursionsBrowseSection";
 import { ExcursionsHero } from "@/components/ExcursionsPage/Hero/ExcursionsHero";
+import { ExcursionsIntro } from "@/components/ExcursionsPage/ExcursionsIntro/ExcursionsIntro";
 import { ContactCTAStrip } from "@/components/ExcursionsPage/ContactCTA/ContactCTAStrip";
+import { ExcursionsSeoCopy } from "@/components/ExcursionsPage/ExcursionsSeoCopy/ExcursionsSeoCopy";
 import { getExcursionCategoryPage } from "@/sanity/queries/ExcursionCategory/ExcursionCategory";
 import {
   getExcursionsPage,
@@ -9,6 +11,7 @@ import {
 import { getExcursionList } from "@/sanity/queries/IndividualExcursions/Excursionqueries";
 import {
   getLocalized,
+  getLocalizedPortableText,
   LocalizedField,
 } from "@/sanity/queries/GeneralLayout/generalLayoutQuery";
 import type { Metadata } from "next";
@@ -106,6 +109,11 @@ export default async function Excursions({
             "",
           lqip: excursionsPage?.heroImage?.asset?.metadata?.lqip ?? "",
         }}
+        eyebrow={
+          excursionsPage?.heroEyebrow?.[localeKey] ??
+          excursionsPage?.heroEyebrow?.en ??
+          ""
+        }
         headline={
           excursionsPage?.heroHeadline?.[localeKey] ??
           excursionsPage?.heroHeadline?.en ??
@@ -117,6 +125,19 @@ export default async function Excursions({
           ""
         }
         totalExcursions={excursionList.length}
+      />
+      <ExcursionsIntro
+        eyebrow={
+          excursionsPage?.introEyebrow?.[localeKey] ??
+          excursionsPage?.introEyebrow?.en ??
+          ""
+        }
+        heading={
+          excursionsPage?.introHeading?.[localeKey] ??
+          excursionsPage?.introHeading?.en ??
+          ""
+        }
+        body={getLocalizedPortableText(excursionsPage?.introBody, locale)}
       />
       <ExcursionsBrowseSection
         categories={excursionCategories.map((category) => ({
@@ -149,7 +170,25 @@ export default async function Excursions({
           },
         }}
       />
+       <ExcursionsSeoCopy
+        eyebrow={
+          excursionsPage?.seoCopyEyebrow?.[localeKey] ??
+          excursionsPage?.seoCopyEyebrow?.en ??
+          ""
+        }
+        heading={
+          excursionsPage?.seoCopyHeading?.[localeKey] ??
+          excursionsPage?.seoCopyHeading?.en ??
+          ""
+        }
+        body={getLocalizedPortableText(excursionsPage?.seoCopyBody, locale)}
+      />
       <ContactCTAStrip
+        eyebrow={
+          excursionsPage?.ctaEyebrow?.[localeKey] ??
+          excursionsPage?.ctaEyebrow?.en ??
+          ""
+        }
         headline={
           excursionsPage?.ctaHeadline?.[localeKey] ??
           excursionsPage?.ctaHeadline?.en ??
@@ -173,6 +212,7 @@ export default async function Excursions({
         }
         secondaryButtonHref={excursionsPage?.ctaSecondaryButtonHref || "/contact"}
       />
+     
     </>
   );
 }

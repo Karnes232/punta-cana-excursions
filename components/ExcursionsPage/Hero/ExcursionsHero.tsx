@@ -10,6 +10,7 @@ interface ExcursionsHeroProps {
     alt: string;
     lqip?: string;
   };
+  eyebrow?: string;
   headline: string;
   subheadline: string;
   totalExcursions: number;
@@ -17,6 +18,7 @@ interface ExcursionsHeroProps {
 
 export function ExcursionsHero({
   backgroundImage,
+  eyebrow,
   headline,
   subheadline,
   totalExcursions,
@@ -33,6 +35,11 @@ export function ExcursionsHero({
       {/* Content layer */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-20 md:py-28">
         <div className="max-w-2xl lg:max-w-3xl">
+          {eyebrow && (
+            <p className="font-heading font-semibold text-sunset text-sm tracking-widest uppercase mb-4">
+              {eyebrow}
+            </p>
+          )}
           <ExcursionsHeroHeadline text={headline} />
           <ExcursionsHeroSubheadline text={subheadline} />
           <ExcursionsHeroStats totalExcursions={totalExcursions} />
