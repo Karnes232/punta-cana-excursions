@@ -1,7 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { PortableText } from "@portabletext/react";
+import type { PortableTextBlock } from "@portabletext/types";
 import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
+import { portableTextComponents } from "@/components/IndividualExcursionPage/FullDescription/FullDescriptionBody";
 
 /* ---------------------------------------------------------------------------
    WaterExcursionsSectionHeader — Section heading with contextual icon
@@ -12,14 +15,18 @@ import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
    --------------------------------------------------------------------------- */
 
 interface WaterExcursionsSectionHeaderProps {
+  eyebrow?: string;
   heading: string;
-  subheading?: string;
+  subheading?: PortableTextBlock[];
+  body?: PortableTextBlock[];
   iconType: "diving" | "snorkeling";
 }
 
 export function WaterExcursionsSectionHeader({
+  eyebrow,
   heading,
   subheading,
+  body,
   iconType,
 }: WaterExcursionsSectionHeaderProps) {
   const [isVisible, setIsVisible] = useState(false);
@@ -56,6 +63,20 @@ export function WaterExcursionsSectionHeader({
       >
         {iconType === "diving" ? <DivingIcon /> : <SnorkelingIcon />}
       </div>
+
+      {/* Eyebrow / kicker */}
+      {eyebrow && (
+        <p
+          className="font-heading font-semibold text-teal text-sm tracking-widest uppercase mb-3 transition-all duration-600 ease-out"
+          style={{
+            transform: isVisible ? "translateY(0)" : "translateY(12px)",
+            opacity: isVisible ? 1 : 0,
+            transitionDelay: "50ms",
+          }}
+        >
+          {eyebrow}
+        </p>
+      )}
 
       {/* Heading */}
       <WordRevealHeading
@@ -101,9 +122,9 @@ export function WaterExcursionsSectionHeader({
         />
       </div>
 
-      {/* Subheading */}
-      {subheading && (
-        <p
+      {/* Subheading (rich text) */}
+      {subheading && subheading.length > 0 && (
+        <div
           className="font-body text-gray-dark text-base md:text-[1.0625rem] max-w-xl mx-auto leading-relaxed transition-all duration-600 ease-out"
           style={{
             transform: isVisible ? "translateY(0)" : "translateY(12px)",
@@ -111,8 +132,22 @@ export function WaterExcursionsSectionHeader({
             transitionDelay: "300ms",
           }}
         >
-          {subheading}
-        </p>
+          <PortableText value={subheading} components={portableTextComponents} />
+        </div>
+      )}
+
+      {/* Body (rich text) */}
+      {body && body.length > 0 && (
+        <div
+          className="font-body text-gray-dark text-base max-w-xl mx-auto leading-relaxed mt-5 transition-all duration-600 ease-out"
+          style={{
+            transform: isVisible ? "translateY(0)" : "translateY(12px)",
+            opacity: isVisible ? 1 : 0,
+            transitionDelay: "400ms",
+          }}
+        >
+          <PortableText value={body} components={portableTextComponents} />
+        </div>
       )}
     </div>
   );

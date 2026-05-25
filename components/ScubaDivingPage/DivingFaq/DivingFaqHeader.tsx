@@ -1,0 +1,85 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
+
+interface DivingFaqHeaderProps {
+  eyebrow?: string;
+  heading: string;
+  subheading?: string;
+}
+
+export function DivingFaqHeader({
+  eyebrow,
+  heading,
+  subheading,
+}: DivingFaqHeaderProps) {
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 },
+    );
+
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={ref} className="text-center mb-10 md:mb-12">
+      {eyebrow && (
+        <p
+          className="font-heading font-semibold text-teal text-sm tracking-widest uppercase mb-3 transition-all duration-600 ease-out"
+          style={{
+            transform: isVisible ? "translateY(0)" : "translateY(12px)",
+            opacity: isVisible ? 1 : 0,
+            transitionDelay: "0ms",
+          }}
+        >
+          {eyebrow}
+        </p>
+      )}
+
+      <WordRevealHeading
+        as="h2"
+        text={heading}
+        className="font-heading font-bold text-slate leading-tight mb-4"
+        style={{ fontSize: "clamp(1.625rem, 3vw + 0.25rem, 2.25rem)" }}
+      />
+
+      <div
+        className="flex items-center justify-center gap-2 mb-5 transition-all duration-600 ease-out"
+        style={{
+          transform: isVisible ? "translateY(0)" : "translateY(12px)",
+          opacity: isVisible ? 1 : 0,
+          transitionDelay: "100ms",
+        }}
+        aria-hidden="true"
+      >
+        <span className="block w-6 h-[3px] rounded-full bg-teal/40" />
+        <span className="block w-10 h-[3px] rounded-full bg-sunset" />
+        <span className="block w-6 h-[3px] rounded-full bg-teal/40" />
+      </div>
+
+      {subheading && (
+        <p
+          className="font-body text-gray-dark text-base md:text-[1.0625rem] max-w-xl mx-auto leading-relaxed transition-all duration-600 ease-out"
+          style={{
+            transform: isVisible ? "translateY(0)" : "translateY(12px)",
+            opacity: isVisible ? 1 : 0,
+            transitionDelay: "200ms",
+          }}
+        >
+          {subheading}
+        </p>
+      )}
+    </div>
+  );
+}

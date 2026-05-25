@@ -1,3 +1,4 @@
+import type { PortableTextBlock } from "@portabletext/types";
 import { WaterExcursionsSectionHeader } from "./WaterExcursionsSectionHeader";
 import { WaterExcursionCard } from "./WaterExcursionCard";
 import { WaterExcursionsEmptyState } from "./WaterExcursionsEmptyState";
@@ -33,10 +34,14 @@ export interface WaterExcursion {
 interface WaterExcursionsSectionProps {
   /** Anchor ID for scroll-to, e.g. "diving-excursions" */
   id: string;
+  /** Optional uppercase kicker shown above the heading */
+  eyebrow?: string;
   /** Section heading, e.g. "Diving Excursions" */
   heading: string;
-  /** Optional subheading text */
-  subheading?: string;
+  /** Optional rich-text subheading under the heading */
+  subheading?: PortableTextBlock[];
+  /** Optional rich-text body shown below the subheading */
+  body?: PortableTextBlock[];
   /** Which icon to show in the header: "diving" or "snorkeling" */
   iconType: "diving" | "snorkeling";
   /** Excursion cards data */
@@ -58,8 +63,10 @@ interface WaterExcursionsSectionProps {
 
 export function WaterExcursionsSection({
   id,
+  eyebrow,
   heading,
   subheading,
+  body,
   iconType,
   excursions,
   variant = "white",
@@ -73,8 +80,10 @@ export function WaterExcursionsSection({
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
         {/* Section header with icon */}
         <WaterExcursionsSectionHeader
+          eyebrow={eyebrow}
           heading={heading}
           subheading={subheading}
+          body={body}
           iconType={iconType}
         />
 

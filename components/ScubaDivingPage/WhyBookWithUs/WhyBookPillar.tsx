@@ -52,7 +52,7 @@ export function WhyBookPillar({ pillar, index }: WhyBookPillarProps) {
       ref={ref}
       className="
         group relative
-        bg-sand rounded-xl
+        bg-white rounded-xl
         p-6 md:p-7
         border-l-[3px] border-teal/30
         hover:border-ocean

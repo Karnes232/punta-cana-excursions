@@ -11,7 +11,7 @@ import { WhyBookBackground } from "./WhyBookBackground";
    - Decorative background accent
    
    Differences:
-   - section-white background (snorkeling cards above use sand)
+   - section-sand background (certified cards above use white)
    - Underwater-themed decorative background (bubbles + wave)
    - Diving-specific icon set (certified, safety, local, experience)
    - Ocean-blue accent divider instead of sunset-orange
@@ -35,7 +35,7 @@ export function WhyBookWithUs({
   pillars,
 }: WhyBookWithUsProps) {
   return (
-    <section className="relative py-20 md:py-28 overflow-hidden section-white">
+    <section className="relative py-20 md:py-28 overflow-hidden section-sand">
       <WhyBookBackground />
 
       <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">

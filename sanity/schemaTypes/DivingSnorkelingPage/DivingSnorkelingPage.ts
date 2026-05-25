@@ -1,4 +1,4 @@
-import { defineType, defineField } from "sanity";
+import { defineType, defineField, defineArrayMember } from "sanity";
 import { DropIcon } from "@sanity/icons";
 
 /* ---------------------------------------------------------------------------
@@ -18,8 +18,10 @@ export const divingSnorkelingPage = defineType({
   groups: [
     { name: "hero", title: "Hero", default: true },
     { name: "intro", title: "Intro Section" },
+    { name: "whyDive", title: "Why Dive" },
     { name: "excursionSections", title: "Excursion Sections" },
     { name: "trust", title: "Why Book With Us" },
+    { name: "faq", title: "FAQ" },
     { name: "cta", title: "CTA Section" },
     { name: "seo", title: "SEO" },
   ],
@@ -195,8 +197,44 @@ export const divingSnorkelingPage = defineType({
     }),
 
     // =========================================================================
+    // WHY DIVE — "Why Dive in Punta Cana" editorial / SEO block
+    // =========================================================================
+
+    defineField({
+      name: "whyDiveEyebrow",
+      title: "Eyebrow",
+      type: "localizedString",
+      description: "Small uppercase kicker shown above the heading.",
+      group: "whyDive",
+    }),
+
+    defineField({
+      name: "whyDiveHeading",
+      title: "Heading",
+      type: "localizedString",
+      description: 'Section heading, e.g. "Why Dive in Punta Cana"',
+      group: "whyDive",
+    }),
+
+    defineField({
+      name: "whyDiveBody",
+      title: "Body",
+      type: "localizedBlockContent",
+      description: "Rich-text body for the section.",
+      group: "whyDive",
+    }),
+
+    // =========================================================================
     // EXCURSION SECTIONS — Headings for Courses + Certified Divers lists
     // =========================================================================
+
+    defineField({
+      name: "coursesEyebrow",
+      title: "Eyebrow",
+      type: "localizedString",
+      description: "Small uppercase kicker shown above the courses heading.",
+      group: "excursionSections",
+    }),
 
     defineField({
       name: "coursesHeading",
@@ -210,8 +248,25 @@ export const divingSnorkelingPage = defineType({
     defineField({
       name: "coursesSubheading",
       title: "Courses Section Subheading",
-      type: "localizedText",
+      type: "localizedBlockContent",
       description: "Optional supporting copy under the courses heading.",
+      group: "excursionSections",
+    }),
+
+    defineField({
+      name: "coursesBody",
+      title: "Courses Section Body",
+      type: "localizedBlockContent",
+      description: "Rich-text body shown below the courses subheading.",
+      group: "excursionSections",
+    }),
+
+    defineField({
+      name: "certifiedEyebrow",
+      title: "Eyebrow",
+      type: "localizedString",
+      description:
+        "Small uppercase kicker shown above the certified-divers heading.",
       group: "excursionSections",
     }),
 
@@ -227,8 +282,16 @@ export const divingSnorkelingPage = defineType({
     defineField({
       name: "certifiedSubheading",
       title: "Certified Divers Section Subheading",
-      type: "localizedText",
+      type: "localizedBlockContent",
       description: "Optional supporting copy under the certified-divers heading.",
+      group: "excursionSections",
+    }),
+
+    defineField({
+      name: "certifiedBody",
+      title: "Certified Divers Section Body",
+      type: "localizedBlockContent",
+      description: "Rich-text body shown below the certified-divers subheading.",
       group: "excursionSections",
     }),
 
@@ -286,6 +349,67 @@ export const divingSnorkelingPage = defineType({
         },
       ],
       validation: (rule) => rule.max(6),
+    }),
+
+    // =========================================================================
+    // FAQ SECTION
+    // =========================================================================
+
+    defineField({
+      name: "faqEyebrow",
+      title: "Eyebrow",
+      type: "localizedString",
+      description: "Small uppercase kicker shown above the heading.",
+      group: "faq",
+    }),
+
+    defineField({
+      name: "faqHeading",
+      title: "Heading",
+      type: "localizedString",
+      description: 'Section heading, e.g. "Diving Questions, Answered"',
+      group: "faq",
+    }),
+
+    defineField({
+      name: "faqSubheading",
+      title: "Subheading",
+      type: "localizedText",
+      description: "Optional supporting copy under the heading.",
+      group: "faq",
+    }),
+
+    defineField({
+      name: "faqItems",
+      title: "FAQ Items",
+      type: "array",
+      description: "Questions and answers shown in the accordion.",
+      group: "faq",
+      of: [
+        defineArrayMember({
+          type: "object",
+          name: "faqItem",
+          title: "FAQ Item",
+          fields: [
+            defineField({
+              name: "question",
+              title: "Question",
+              type: "localizedString",
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: "answer",
+              title: "Answer",
+              type: "localizedText",
+              validation: (rule) => rule.required(),
+            }),
+          ],
+          preview: {
+            select: { title: "question.en" },
+          },
+        }),
+      ],
+      validation: (rule) => rule.max(12),
     }),
 
     // =========================================================================

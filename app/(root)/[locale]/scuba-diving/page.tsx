@@ -2,7 +2,9 @@ import { DivingCTA } from "@/components/ScubaDivingPage/DivingCTA/DivingCTA";
 import { DivingIntro } from "@/components/ScubaDivingPage/DivingIntro/DivingIntro";
 import { DivingHero } from "@/components/ScubaDivingPage/Hero/DivingHero";
 import { WaterExcursionsSection } from "@/components/ScubaDivingPage/WaterExcursions/WaterExcursionsSection";
+import { WhyDive } from "@/components/ScubaDivingPage/WhyDive/WhyDive";
 import { WhyBookWithUs } from "@/components/ScubaDivingPage/WhyBookWithUs/WhyBookWithUs";
+import { DivingFaq } from "@/components/ScubaDivingPage/DivingFaq/DivingFaq";
 import {
   getDivingSnorkelingPage,
   getDivingSnorkelingPageSeo,
@@ -108,12 +110,20 @@ export default async function ScubaDivingPage({
         }))}
       />
 
+      <WhyDive
+        eyebrow={page?.whyDiveEyebrow?.[localeKey]}
+        heading={page?.whyDiveHeading?.[localeKey] || ""}
+        body={page?.whyDiveBody?.[localeKey] || []}
+      />
+
       <WaterExcursionsSection
         id="courses"
+        eyebrow={page?.coursesEyebrow?.[localeKey]}
         heading={page?.coursesHeading?.[localeKey] || ""}
         subheading={page?.coursesSubheading?.[localeKey]}
+        body={page?.coursesBody?.[localeKey]}
         iconType="diving"
-        variant="white"
+        variant="sand"
         excursions={excursions.courses.map((e) => mapExcursionCard(e, locale))}
         labels={{
           from: t("from"),
@@ -127,10 +137,12 @@ export default async function ScubaDivingPage({
 
       <WaterExcursionsSection
         id="certified-divers"
+        eyebrow={page?.certifiedEyebrow?.[localeKey]}
         heading={page?.certifiedHeading?.[localeKey] || ""}
         subheading={page?.certifiedSubheading?.[localeKey]}
+        body={page?.certifiedBody?.[localeKey]}
         iconType="diving"
-        variant="sand"
+        variant="white"
         excursions={excursions.certified.map((e) => mapExcursionCard(e, locale))}
         labels={{
           from: t("from"),
@@ -149,6 +161,18 @@ export default async function ScubaDivingPage({
           title: pillar.title?.[localeKey],
           description: pillar.description?.[localeKey],
         })) || []}
+      />
+
+      <DivingFaq
+        eyebrow={page?.faqEyebrow?.[localeKey]}
+        heading={page?.faqHeading?.[localeKey] || ""}
+        subheading={page?.faqSubheading?.[localeKey]}
+        faqs={
+          page?.faqItems?.map((item) => ({
+            question: item.question?.[localeKey] || "",
+            answer: item.answer?.[localeKey] || "",
+          })) || []
+        }
       />
 
       <DivingCTA

@@ -58,12 +58,23 @@ export interface DivingSnorkelingPageData {
   introBody: LocalizedBlockContent;
   introImage: { url: string; lqip?: string };
   introStats: Array<{ value: LocalizedString; label: LocalizedString }>;
+  whyDiveEyebrow: LocalizedString;
+  whyDiveHeading: LocalizedString;
+  whyDiveBody: LocalizedBlockContent;
+  coursesEyebrow: LocalizedString;
   coursesHeading: LocalizedString;
-  coursesSubheading: LocalizedText;
+  coursesSubheading: LocalizedBlockContent;
+  coursesBody: LocalizedBlockContent;
+  certifiedEyebrow: LocalizedString;
   certifiedHeading: LocalizedString;
-  certifiedSubheading: LocalizedText;
+  certifiedSubheading: LocalizedBlockContent;
+  certifiedBody: LocalizedBlockContent;
   trustHeadline: LocalizedString;
   trustPillars: TrustPillar[];
+  faqEyebrow: LocalizedString;
+  faqHeading: LocalizedString;
+  faqSubheading: LocalizedText;
+  faqItems: Array<{ question: LocalizedString; answer: LocalizedText }>;
   ctaHeadline: LocalizedString;
   ctaPrimaryButtonText: LocalizedString;
   ctaPrimaryButtonHref: string;
@@ -122,12 +133,23 @@ export const divingSnorkelingPageQuery = /* groq */ `*[_type == "divingSnorkelin
     "lqip": asset->metadata.lqip
   },
   introStats[] { value, label },
+  whyDiveEyebrow,
+  whyDiveHeading,
+  whyDiveBody,
+  coursesEyebrow,
   coursesHeading,
   coursesSubheading,
+  coursesBody,
+  certifiedEyebrow,
   certifiedHeading,
   certifiedSubheading,
+  certifiedBody,
   trustHeadline,
   trustPillars[] { icon, title, description },
+  faqEyebrow,
+  faqHeading,
+  faqSubheading,
+  faqItems[] { question, answer },
   ctaHeadline,
   ctaPrimaryButtonText,
   ctaPrimaryButtonHref,
