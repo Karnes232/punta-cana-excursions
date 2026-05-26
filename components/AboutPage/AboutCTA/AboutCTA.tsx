@@ -2,6 +2,7 @@ import { Link } from "@/i18n/navigation";
 import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
 
 interface AboutCTAProps {
+  eyebrow?: string;
   headline: string;
   subheadline: string;
   primaryButtonText: string;
@@ -11,6 +12,7 @@ interface AboutCTAProps {
 }
 
 export function AboutCTA({
+  eyebrow,
   headline,
   subheadline,
   primaryButtonText,
@@ -50,6 +52,11 @@ export function AboutCTA({
       </div>
 
       <div className="relative z-10 max-w-3xl mx-auto px-5 sm:px-8 text-center">
+        {eyebrow && (
+          <p className="font-heading font-semibold text-white/70 text-sm uppercase tracking-widest mb-4">
+            {eyebrow}
+          </p>
+        )}
         <WordRevealHeading
           as="h2"
           text={headline}

@@ -2,12 +2,18 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { PortableText } from "@portabletext/react";
+import type { PortableTextBlock } from "@portabletext/types";
 import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
+import {
+  portableTextComponents,
+  richTextBodyClass,
+} from "@/components/IndividualExcursionPage/FullDescription/FullDescriptionBody";
 
 interface OurStoryProps {
   tagline: string;
   headline: string;
-  body: string;
+  body: PortableTextBlock[];
   image: { url: string; lqip?: string } | null;
   foundedYear: number;
 }
@@ -29,8 +35,6 @@ export function OurStory({ tagline, headline, body, image, foundedYear }: OurSto
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
   }, []);
-
-  const paragraphs = body?.split("\n\n").filter(Boolean) ?? [];
 
   return (
     <section className="relative py-20 md:py-28 bg-white overflow-hidden">
@@ -76,21 +80,16 @@ export function OurStory({ tagline, headline, body, image, foundedYear }: OurSto
               className="font-heading font-bold text-navy text-3xl sm:text-4xl leading-tight mb-8"
             />
 
-            {/* Body paragraphs */}
-            <div className="space-y-5">
-              {paragraphs.map((para, i) => (
-                <p
-                  key={i}
-                  className="font-body text-gray-600 text-base md:text-lg leading-relaxed transition-all duration-600 ease-out"
-                  style={{
-                    opacity: isVisible ? 1 : 0,
-                    transform: isVisible ? "translateY(0)" : "translateY(12px)",
-                    transitionDelay: `${100 + i * 80}ms`,
-                  }}
-                >
-                  {para}
-                </p>
-              ))}
+            {/* Body — Sanity Portable Text */}
+            <div
+              className={`${richTextBodyClass} text-gray-600 transition-all duration-600 ease-out`}
+              style={{
+                opacity: isVisible ? 1 : 0,
+                transform: isVisible ? "translateY(0)" : "translateY(12px)",
+                transitionDelay: "100ms",
+              }}
+            >
+              <PortableText value={body} components={portableTextComponents} />
             </div>
 
             {/* Founded badge */}

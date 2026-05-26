@@ -1,4 +1,5 @@
 import { client } from "@/sanity/lib/client";
+import type { LocalizedBlockContent } from "../GeneralLayout/generalLayoutQuery";
 
 // =============================================================================
 // Types
@@ -25,6 +26,11 @@ export interface AboutValueItem {
   description: LocalizedText;
 }
 
+export interface AboutBeliefItem {
+  headline: LocalizedString;
+  body: LocalizedBlockContent;
+}
+
 export interface AboutTeamMember {
   name: string;
   role: LocalizedString;
@@ -40,21 +46,32 @@ export interface AboutPageData {
 
   storyTagline: LocalizedString;
   storyHeadline: LocalizedString;
-  storyBody: LocalizedText;
+  storyBody: LocalizedBlockContent;
   storyImage: { url: string; lqip?: string } | null;
   foundedYear: number;
+
+  beliefsEyebrow: LocalizedString;
+  beliefsHeadline: LocalizedString;
+  beliefsBody: LocalizedBlockContent;
+  beliefs: AboutBeliefItem[];
 
   statsHeadline: LocalizedString;
   stats: AboutStatItem[];
 
+  valuesEyebrow: LocalizedString;
   valuesHeadline: LocalizedString;
-  valuesSubheading: LocalizedText;
+  valuesSubheading: LocalizedBlockContent;
   values: AboutValueItem[];
+
+  operateEyebrow: LocalizedString;
+  operateHeadline: LocalizedString;
+  operateBody: LocalizedBlockContent;
 
   teamHeadline: LocalizedString;
   teamSubheading: LocalizedText;
   teamMembers: AboutTeamMember[];
 
+  ctaEyebrow: LocalizedString;
   ctaHeadline: LocalizedString;
   ctaSubheadline: LocalizedText;
   ctaPrimaryButtonText: LocalizedString;
@@ -83,11 +100,19 @@ export const aboutPageQuery = /* groq */ `*[_type == "aboutPage"][0] {
   storyBody,
   storyImage { "url": asset->url, "lqip": asset->metadata.lqip },
   foundedYear,
+  beliefsEyebrow,
+  beliefsHeadline,
+  beliefsBody,
+  beliefs[] { headline, body },
   statsHeadline,
   stats[] { value, label },
+  valuesEyebrow,
   valuesHeadline,
   valuesSubheading,
   values[] { icon, title, description },
+  operateEyebrow,
+  operateHeadline,
+  operateBody,
   teamHeadline,
   teamSubheading,
   teamMembers[] {
@@ -96,6 +121,7 @@ export const aboutPageQuery = /* groq */ `*[_type == "aboutPage"][0] {
     bio,
     photo { "url": asset->url, "lqip": asset->metadata.lqip }
   },
+  ctaEyebrow,
   ctaHeadline,
   ctaSubheadline,
   ctaPrimaryButtonText,

@@ -10,8 +10,10 @@ export const aboutPage = defineType({
   groups: [
     { name: "hero", title: "Hero", default: true },
     { name: "story", title: "Our Story" },
+    { name: "beliefs", title: "What We Believe" },
     { name: "stats", title: "Stats" },
     { name: "values", title: "Our Values" },
+    { name: "operate", title: "Where We Operate" },
     { name: "team", title: "Team" },
     { name: "cta", title: "CTA" },
     { name: "seo", title: "SEO" },
@@ -66,9 +68,8 @@ export const aboutPage = defineType({
     defineField({
       name: "storyBody",
       title: "Story Body",
-      type: "localizedText",
+      type: "localizedBlockContent",
       group: "story",
-      description: "Use double line breaks to separate paragraphs.",
     }),
     defineField({
       name: "storyImage",
@@ -82,6 +83,59 @@ export const aboutPage = defineType({
       title: "Founded Year",
       type: "number",
       group: "story",
+    }),
+
+    // =========================================================================
+    // WHAT WE BELIEVE
+    // =========================================================================
+    defineField({
+      name: "beliefsEyebrow",
+      title: "Eyebrow",
+      type: "localizedString",
+      description: "Small uppercase kicker shown above the headline.",
+      group: "beliefs",
+    }),
+    defineField({
+      name: "beliefsHeadline",
+      title: "Headline",
+      type: "localizedString",
+      group: "beliefs",
+    }),
+    defineField({
+      name: "beliefsBody",
+      title: "Body",
+      type: "localizedBlockContent",
+      description: "Rich-text intro shown below the headline.",
+      group: "beliefs",
+    }),
+    defineField({
+      name: "beliefs",
+      title: "Principles",
+      type: "array",
+      group: "beliefs",
+      of: [
+        defineArrayMember({
+          type: "object",
+          name: "beliefItem",
+          title: "Principle",
+          fields: [
+            defineField({
+              name: "headline",
+              title: "Principle Headline",
+              type: "localizedString",
+            }),
+            defineField({
+              name: "body",
+              title: "Principle Body",
+              type: "localizedBlockContent",
+            }),
+          ],
+          preview: {
+            select: { title: "headline.en" },
+          },
+        }),
+      ],
+      validation: (r) => r.max(8),
     }),
 
     // =========================================================================
@@ -128,6 +182,13 @@ export const aboutPage = defineType({
     // OUR VALUES
     // =========================================================================
     defineField({
+      name: "valuesEyebrow",
+      title: "Eyebrow",
+      type: "localizedString",
+      description: "Small uppercase kicker shown above the headline.",
+      group: "values",
+    }),
+    defineField({
       name: "valuesHeadline",
       title: "Values Headline",
       type: "localizedString",
@@ -136,7 +197,7 @@ export const aboutPage = defineType({
     defineField({
       name: "valuesSubheading",
       title: "Values Subheading",
-      type: "localizedText",
+      type: "localizedBlockContent",
       group: "values",
     }),
     defineField({
@@ -165,6 +226,30 @@ export const aboutPage = defineType({
           },
         }),
       ],
+    }),
+
+    // =========================================================================
+    // WHERE WE OPERATE
+    // =========================================================================
+    defineField({
+      name: "operateEyebrow",
+      title: "Eyebrow",
+      type: "localizedString",
+      description: "Small uppercase kicker shown above the headline.",
+      group: "operate",
+    }),
+    defineField({
+      name: "operateHeadline",
+      title: "Headline",
+      type: "localizedString",
+      group: "operate",
+    }),
+    defineField({
+      name: "operateBody",
+      title: "Body",
+      type: "localizedBlockContent",
+      description: "Rich-text description of the areas you serve.",
+      group: "operate",
     }),
 
     // =========================================================================
@@ -218,6 +303,13 @@ export const aboutPage = defineType({
     // =========================================================================
     // CTA
     // =========================================================================
+    defineField({
+      name: "ctaEyebrow",
+      title: "Eyebrow",
+      type: "localizedString",
+      description: "Small uppercase kicker shown above the CTA headline.",
+      group: "cta",
+    }),
     defineField({
       name: "ctaHeadline",
       title: "CTA Headline",

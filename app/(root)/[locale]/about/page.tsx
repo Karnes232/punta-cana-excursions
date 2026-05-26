@@ -2,10 +2,14 @@ import { AboutCTA } from "@/components/AboutPage/AboutCTA/AboutCTA";
 import { AboutHero } from "@/components/AboutPage/AboutHero/AboutHero";
 import { ByTheNumbers } from "@/components/AboutPage/ByTheNumbers/ByTheNumbers";
 import { OurStory } from "@/components/AboutPage/OurStory/OurStory";
-import { OurTeam } from "@/components/AboutPage/OurTeam/OurTeam";
 import { OurValues } from "@/components/AboutPage/OurValues/OurValues";
+import { WhatWeBelieve } from "@/components/AboutPage/WhatWeBelieve/WhatWeBelieve";
+import { WhereWeOperate } from "@/components/AboutPage/WhereWeOperate/WhereWeOperate";
 import { getAboutPage, getAboutPageSeo } from "@/sanity/queries/AboutPage/AboutPage";
-import type { LocalizedField } from "@/sanity/queries/GeneralLayout/generalLayoutQuery";
+import {
+  getLocalizedPortableText,
+  type LocalizedField,
+} from "@/sanity/queries/GeneralLayout/generalLayoutQuery";
 import type { Metadata } from "next";
 import { getDefaultSeo } from "@/sanity/queries/SEO/seoProjection";
 import { buildMetadata } from "@/lib/seo/buildMetadata";
@@ -63,9 +67,21 @@ export default async function AboutPage({
       <OurStory
         tagline={page?.storyTagline?.[lk] ?? ""}
         headline={page?.storyHeadline?.[lk] ?? ""}
-        body={page?.storyBody?.[lk] ?? ""}
+        body={getLocalizedPortableText(page?.storyBody, locale)}
         image={page?.storyImage ?? null}
         foundedYear={page?.foundedYear ?? 0}
+      />
+
+      <WhatWeBelieve
+        eyebrow={page?.beliefsEyebrow?.[lk] ?? ""}
+        headline={page?.beliefsHeadline?.[lk] ?? ""}
+        body={getLocalizedPortableText(page?.beliefsBody, locale)}
+        beliefs={
+          page?.beliefs?.map((b) => ({
+            headline: b.headline?.[lk] ?? "",
+            body: getLocalizedPortableText(b.body, locale),
+          })) ?? []
+        }
       />
 
       <ByTheNumbers
@@ -79,8 +95,9 @@ export default async function AboutPage({
       />
 
       <OurValues
+        eyebrow={page?.valuesEyebrow?.[lk] ?? ""}
         headline={page?.valuesHeadline?.[lk] ?? ""}
-        subheading={page?.valuesSubheading?.[lk] ?? ""}
+        subheading={getLocalizedPortableText(page?.valuesSubheading, locale)}
         values={
           page?.values?.map((v) => ({
             icon: v.icon,
@@ -90,20 +107,14 @@ export default async function AboutPage({
         }
       />
 
-      <OurTeam
-        headline={page?.teamHeadline?.[lk] ?? ""}
-        subheading={page?.teamSubheading?.[lk] ?? ""}
-        members={
-          page?.teamMembers?.map((m) => ({
-            name: m.name,
-            role: m.role?.[lk] ?? "",
-            bio: m.bio?.[lk] ?? "",
-            photo: m.photo ?? null,
-          })) ?? []
-        }
+      <WhereWeOperate
+        eyebrow={page?.operateEyebrow?.[lk] ?? ""}
+        headline={page?.operateHeadline?.[lk] ?? ""}
+        body={getLocalizedPortableText(page?.operateBody, locale)}
       />
 
       <AboutCTA
+        eyebrow={page?.ctaEyebrow?.[lk] ?? ""}
         headline={page?.ctaHeadline?.[lk] ?? ""}
         subheadline={page?.ctaSubheadline?.[lk] ?? ""}
         primaryButtonText={page?.ctaPrimaryButtonText?.[lk] ?? ""}

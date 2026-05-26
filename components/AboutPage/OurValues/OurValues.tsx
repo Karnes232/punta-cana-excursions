@@ -1,8 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { PortableText } from "@portabletext/react";
+import type { PortableTextBlock } from "@portabletext/types";
 import { TrustPillarIcon } from "@/components/HomePage/WhyChooseUs/TrustPillarIcon";
 import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
+import { portableTextComponents } from "@/components/IndividualExcursionPage/FullDescription/FullDescriptionBody";
 
 interface ValueItem {
   icon: string;
@@ -11,12 +14,13 @@ interface ValueItem {
 }
 
 interface OurValuesProps {
+  eyebrow?: string;
   headline: string;
-  subheading: string;
+  subheading: PortableTextBlock[];
   values: ValueItem[];
 }
 
-export function OurValues({ headline, subheading, values }: OurValuesProps) {
+export function OurValues({ eyebrow, headline, subheading, values }: OurValuesProps) {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -35,7 +39,7 @@ export function OurValues({ headline, subheading, values }: OurValuesProps) {
   }, []);
 
   return (
-    <section className="relative py-20 md:py-28 section-white overflow-hidden">
+    <section className="relative py-20 md:py-28 section-sand overflow-hidden">
       <div ref={ref} className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
         {/* Section header */}
         <div
@@ -45,6 +49,11 @@ export function OurValues({ headline, subheading, values }: OurValuesProps) {
             transform: isVisible ? "translateY(0)" : "translateY(16px)",
           }}
         >
+          {eyebrow && (
+            <p className="font-heading font-semibold text-teal text-sm uppercase tracking-widest mb-4">
+              {eyebrow}
+            </p>
+          )}
           <WordRevealHeading
             as="h2"
             text={headline}
@@ -55,8 +64,10 @@ export function OurValues({ headline, subheading, values }: OurValuesProps) {
             <div className="w-1.5 h-1.5 rounded-full bg-sunset" />
             <div className="h-px w-16 bg-teal" />
           </div>
-          {subheading && (
-            <p className="font-body text-gray-500 text-lg max-w-xl mx-auto">{subheading}</p>
+          {subheading && subheading.length > 0 && (
+            <div className="font-body text-gray-500 text-lg max-w-xl mx-auto">
+              <PortableText value={subheading} components={portableTextComponents} />
+            </div>
           )}
         </div>
 

@@ -32,7 +32,7 @@ export function ByTheNumbers({ headline, stats }: ByTheNumbersProps) {
   }, []);
 
   return (
-    <section className="relative py-20 md:py-24 section-sand overflow-hidden">
+    <section className="relative py-20 md:py-24 section-white overflow-hidden">
       {/* Decorative wave top */}
       <div className="absolute top-0 left-0 right-0 pointer-events-none">
         <svg
