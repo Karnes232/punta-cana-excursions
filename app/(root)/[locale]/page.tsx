@@ -138,19 +138,46 @@ export default async function Home({
           homePage?.categoriesSubheading?.en ??
           ""
         }
-        categories={excursionCategories.map((category) => ({
-          slug: category.slug,
-          title: category.title?.[localeKey] ?? category.title?.en ?? "",
-          description:
-            category.description?.[localeKey] ??
-            category.description?.en ??
-            "",
-          image: {
-            url: category.image?.asset?.url ?? "",
-            alt: category.title?.[localeKey] ?? category.title?.en ?? "",
-            lqip: category.image?.asset?.metadata?.lqip ?? "",
-          },
-        }))}
+        categories={[
+          ...(homePage?.divingCardImage?.asset?.url
+            ? [
+                {
+                  slug: "scuba-diving",
+                  href: "/scuba-diving",
+                  title:
+                    homePage?.divingCardTitle?.[localeKey] ??
+                    homePage?.divingCardTitle?.en ??
+                    "Scuba Diving",
+                  description:
+                    homePage?.divingCardDescription?.[localeKey] ??
+                    homePage?.divingCardDescription?.en ??
+                    "",
+                  image: {
+                    url: homePage.divingCardImage.asset.url,
+                    alt:
+                      homePage?.divingCardTitle?.[localeKey] ??
+                      homePage?.divingCardTitle?.en ??
+                      "Scuba Diving",
+                    lqip: homePage.divingCardImage.asset.metadata?.lqip ?? "",
+                  },
+                },
+              ]
+            : []),
+          ...excursionCategories.map((category) => ({
+            slug: category.slug,
+            title: category.title?.[localeKey] ?? category.title?.en ?? "",
+            description:
+              category.description?.[localeKey] ??
+              category.description?.en ??
+              "",
+            image: {
+              url: category.image?.asset?.url ?? "",
+              alt: category.title?.[localeKey] ?? category.title?.en ?? "",
+              lqip: category.image?.asset?.metadata?.lqip ?? "",
+            },
+          })),
+          
+        ]}
       />
        <WhyChooseUs
         eyebrow={

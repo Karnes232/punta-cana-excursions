@@ -31,6 +31,13 @@ export interface FaqPageData {
     alt?: LocalizedField | null;
   } | null;
   categories: FaqCategory[];
+  ctaEyebrow: LocalizedField;
+  ctaHeadline: LocalizedField;
+  ctaSubheadline: LocalizedField;
+  ctaPrimaryButtonText: LocalizedField;
+  ctaPrimaryButtonHref: string;
+  ctaSecondaryButtonText: LocalizedField;
+  ctaSecondaryButtonHref: string;
 }
 
 // =============================================================================
@@ -58,7 +65,14 @@ const faqPageQuery = /* groq */ `*[_type == "faqPage"][0] {
       question,
       answer
     }
-  }
+  },
+  ctaEyebrow,
+  ctaHeadline,
+  ctaSubheadline,
+  ctaPrimaryButtonText,
+  ctaPrimaryButtonHref,
+  ctaSecondaryButtonText,
+  ctaSecondaryButtonHref
 }`;
 
 // =============================================================================

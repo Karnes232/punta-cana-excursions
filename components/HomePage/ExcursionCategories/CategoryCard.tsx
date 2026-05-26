@@ -6,6 +6,7 @@ import { Link } from "@/i18n/navigation";
 
 interface ExcursionCategory {
   slug: string;
+  href?: string;
   title: string;
   description?: string;
   image: {
@@ -51,7 +52,7 @@ export function CategoryCard({ category, index }: CategoryCardProps) {
       }}
     >
       <Link
-        href={`/excursions?category=${category.slug}`}
+        href={category.href ?? `/excursions?category=${category.slug}`}
         className="group relative block aspect-[4/3] md:aspect-[3/2] rounded-xl overflow-hidden"
       >
         {/* Background image */}

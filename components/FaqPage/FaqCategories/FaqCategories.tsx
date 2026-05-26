@@ -51,7 +51,10 @@ export function FaqCategories({ categories, allLabel }: FaqCategoriesProps) {
         <FilterPill
           label={allLabel}
           active={activeCategory === "all"}
-          onClick={() => setActiveCategory("all")}
+          onClick={() => {
+            setActiveCategory("all");
+            setOpenCategory(null);
+          }}
           icon={null}
         />
         {categories.map((cat) => (

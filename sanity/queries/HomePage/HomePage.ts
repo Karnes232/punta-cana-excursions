@@ -93,6 +93,20 @@ export interface HomePage {
   categoriesEyebrow: LocalizedField;
   categoriesHeading: LocalizedField;
   categoriesSubheading: LocalizedField;
+  divingCardTitle: LocalizedField;
+  divingCardDescription: LocalizedField;
+  divingCardImage: {
+    asset: {
+      url: string;
+      metadata: {
+        lqip: string;
+        dimensions: {
+          width: number;
+          height: number;
+        };
+      };
+    };
+  } | null;
   //Why Choose Us Section
   whyChooseUsEyebrow: LocalizedField;
   whyChooseUsHeading: LocalizedField;
@@ -179,6 +193,20 @@ export const homePageQuery = `*[_type == "homePage"][0] {
     categoriesEyebrow,
     categoriesHeading,
     categoriesSubheading,
+    divingCardTitle,
+    divingCardDescription,
+    divingCardImage {
+        asset-> {
+            url,
+            metadata {
+                lqip,
+                dimensions {
+                    width,
+                    height,
+                }
+            }
+        }
+    },
     whyChooseUsEyebrow,
     whyChooseUsHeading,
     whyChooseUsSubheading,

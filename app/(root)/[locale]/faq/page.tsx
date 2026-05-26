@@ -1,5 +1,6 @@
 import { FaqHero } from "@/components/FaqPage/FaqHero/FaqHero";
 import { FaqCategories } from "@/components/FaqPage/FaqCategories/FaqCategories";
+import { CtaBanner } from "@/components/HomePage/CtaBanner/CtaBanner";
 import type { FaqCategoryData } from "@/components/FaqPage/FaqCategories/FaqCategories";
 import { getFaqPage, getFaqPageSeo } from "@/sanity/queries/FaqPage/FaqPage";
 import type { LocalizedField } from "@/sanity/queries/GeneralLayout/generalLayoutQuery";
@@ -80,6 +81,18 @@ export default async function FaqPage({
         categories={categories}
         allLabel={isEs ? "Todas" : "All"}
       />
+
+      {page?.ctaHeadline?.[lk] && (
+        <CtaBanner
+          eyebrow={page?.ctaEyebrow?.[lk] || undefined}
+          headline={page?.ctaHeadline?.[lk] ?? ""}
+          subheadline={page?.ctaSubheadline?.[lk] || undefined}
+          primaryCtaText={page?.ctaPrimaryButtonText?.[lk] ?? ""}
+          primaryCtaHref={page?.ctaPrimaryButtonHref || "/contact"}
+          secondaryCtaText={page?.ctaSecondaryButtonText?.[lk] || undefined}
+          secondaryCtaHref={page?.ctaSecondaryButtonHref || "/excursions"}
+        />
+      )}
     </main>
   );
 }

@@ -134,6 +134,50 @@ export const faqPage = defineType({
       ],
     }),
 
+    // =========================================================================
+    // CTA
+    // =========================================================================
+    defineField({
+      name: "ctaEyebrow",
+      title: "CTA Eyebrow",
+      type: "localizedString",
+      description: "Small uppercase kicker shown above the CTA headline.",
+    }),
+    defineField({
+      name: "ctaHeadline",
+      title: "CTA Headline",
+      type: "localizedString",
+    }),
+    defineField({
+      name: "ctaSubheadline",
+      title: "CTA Subheadline",
+      type: "localizedText",
+    }),
+    defineField({
+      name: "ctaPrimaryButtonText",
+      title: "Primary Button Text",
+      type: "localizedString",
+    }),
+    defineField({
+      name: "ctaPrimaryButtonHref",
+      title: "Primary Button Href",
+      type: "string",
+      description: 'Internal path, e.g. "/contact"',
+      initialValue: "/contact",
+    }),
+    defineField({
+      name: "ctaSecondaryButtonText",
+      title: "Secondary Button Text",
+      type: "localizedString",
+    }),
+    defineField({
+      name: "ctaSecondaryButtonHref",
+      title: "Secondary Button Href",
+      type: "string",
+      description: 'Internal path, e.g. "/excursions"',
+      initialValue: "/excursions",
+    }),
+
     defineField({
       name: "seo",
       title: "SEO",

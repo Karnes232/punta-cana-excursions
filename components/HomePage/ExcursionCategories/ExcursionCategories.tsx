@@ -3,6 +3,8 @@ import { CategoryCard } from "./CategoryCard";
 
 export interface ExcursionCategory {
   slug: string;
+  /** Optional explicit link; defaults to the category filter URL when omitted. */
+  href?: string;
   title: string;
   description?: string;
   image: {

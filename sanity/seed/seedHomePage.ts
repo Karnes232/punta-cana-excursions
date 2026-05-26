@@ -179,6 +179,13 @@ async function seed() {
       es: "Encuentra la experiencia perfecta para tu viaje a Punta Cana",
     },
 
+    // 6th card — links to the Scuba Diving page (image uploaded in Studio).
+    divingCardTitle: { en: "Scuba Diving", es: "Buceo" },
+    divingCardDescription: {
+      en: "Explore reefs, wrecks, and the Caribbean's clear blue depths.",
+      es: "Explora arrecifes, naufragios y las claras profundidades azules del Caribe.",
+    },
+
     // Note: displayedCategories is an array of references to excursionCategory documents.
     // Populate once those schemas exist.
     // displayedCategories: [],

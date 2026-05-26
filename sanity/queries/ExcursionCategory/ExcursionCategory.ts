@@ -41,7 +41,7 @@ export interface ExcursionCategoryHomePage {
   };
 }
 
-export const excursionCategoryHomePageQuery = `*[_type == "excursionCategory"][0...6] {
+export const excursionCategoryHomePageQuery = `*[_type == "excursionCategory"] | order(sortOrder asc) [0...5] {
     _id,
     "slug": slug.current,
     title,

@@ -242,6 +242,32 @@ export const homePage = defineType({
       group: "excursionCategories",
     }),
 
+    defineField({
+      name: "divingCardTitle",
+      title: "Diving Card Title",
+      type: "localizedString",
+      description:
+        "Title for the 6th card, which links to the Scuba Diving page.",
+      group: "excursionCategories",
+    }),
+
+    defineField({
+      name: "divingCardDescription",
+      title: "Diving Card Description",
+      type: "localizedText",
+      group: "excursionCategories",
+    }),
+
+    defineField({
+      name: "divingCardImage",
+      title: "Diving Card Image",
+      type: "image",
+      description:
+        "Background image for the Scuba Diving card. Landscape orientation, min 800×600px recommended. The card only appears once this image is set.",
+      options: { hotspot: true },
+      group: "excursionCategories",
+    }),
+
     // defineField({
     //   name: "displayedCategories",
     //   title: "Displayed Categories",
