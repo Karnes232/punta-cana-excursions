@@ -41,7 +41,7 @@ export function DivingHero({
   secondaryCTA,
 }: DivingHeroProps) {
   return (
-    <section className="relative min-h-[60vh] md:min-h-[65vh] flex items-center overflow-hidden">
+    <section className="relative min-h-[60vh] lg:min-h-[85vh] flex items-center overflow-hidden">
       {/* Full-bleed underwater background with deep-ocean overlays */}
       {backgroundImage && (
         <DivingHeroBackground

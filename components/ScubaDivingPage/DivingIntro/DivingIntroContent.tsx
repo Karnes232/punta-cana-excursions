@@ -3,7 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import { PortableText } from "@portabletext/react";
 import type { PortableTextBlock } from "@portabletext/types";
-import { portableTextComponents } from "@/components/IndividualExcursionPage/FullDescription/FullDescriptionBody";
+import {
+  portableTextComponents,
+  richTextBodyClass,
+} from "@/components/IndividualExcursionPage/FullDescription/FullDescriptionBody";
 import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
 
 /* ---------------------------------------------------------------------------
@@ -82,7 +85,7 @@ export function DivingIntroContent({
 
       {/* Body — Sanity Portable Text */}
       <div
-        className="font-body text-gray-dark leading-relaxed text-base md:text-[1.0625rem] max-w-lg transition-all duration-600 ease-out [&>p]:mb-4 [&>p:last-child]:mb-0"
+        className={`${richTextBodyClass} text-gray-dark lg:max-w-lg transition-all duration-600 ease-out`}
         style={{
           transform: isVisible ? "translateY(0)" : "translateY(16px)",
           opacity: isVisible ? 1 : 0,

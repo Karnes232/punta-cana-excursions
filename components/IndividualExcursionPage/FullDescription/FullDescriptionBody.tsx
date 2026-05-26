@@ -9,6 +9,12 @@ interface FullDescriptionBodyProps {
   body: PortableTextBlock[];
 }
 
+/** Canonical wrapper scale for inline rich-text body copy across sections.
+ *  Color, line-height, and paragraph spacing come from portableTextComponents.
+ *  Compose with layout classes (max-width / alignment) at the call site. */
+export const richTextBodyClass =
+  "font-body text-base md:text-[1.0625rem] leading-relaxed";
+
 /**
  * Custom Portable Text component map — applies the site's brand typography
  * and spacing to all block-level and inline elements from Sanity.

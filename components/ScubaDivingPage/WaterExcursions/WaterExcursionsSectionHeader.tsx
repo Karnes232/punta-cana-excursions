@@ -4,7 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import { PortableText } from "@portabletext/react";
 import type { PortableTextBlock } from "@portabletext/types";
 import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
-import { portableTextComponents } from "@/components/IndividualExcursionPage/FullDescription/FullDescriptionBody";
+import {
+  portableTextComponents,
+  richTextBodyClass,
+} from "@/components/IndividualExcursionPage/FullDescription/FullDescriptionBody";
 
 /* ---------------------------------------------------------------------------
    WaterExcursionsSectionHeader — Section heading with contextual icon
@@ -48,7 +51,7 @@ export function WaterExcursionsSectionHeader({
   }, []);
 
   return (
-    <div ref={ref} className="text-center max-w-2xl mx-auto">
+    <div ref={ref} className="text-center max-w-4xl xl:max-w-6xl mx-auto">
       {/* Icon pill */}
       <div
         className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-5 transition-all duration-600 ease-out"
@@ -125,7 +128,7 @@ export function WaterExcursionsSectionHeader({
       {/* Subheading (rich text) */}
       {subheading && subheading.length > 0 && (
         <div
-          className="font-body text-gray-dark text-base md:text-[1.0625rem] max-w-xl mx-auto leading-relaxed transition-all duration-600 ease-out"
+          className={`${richTextBodyClass} text-gray-dark text-left transition-all duration-600 ease-out`}
           style={{
             transform: isVisible ? "translateY(0)" : "translateY(12px)",
             opacity: isVisible ? 1 : 0,
@@ -139,7 +142,7 @@ export function WaterExcursionsSectionHeader({
       {/* Body (rich text) */}
       {body && body.length > 0 && (
         <div
-          className="font-body text-gray-dark text-base max-w-xl mx-auto leading-relaxed mt-5 transition-all duration-600 ease-out"
+          className={`${richTextBodyClass} text-gray-dark text-left mt-5 transition-all duration-600 ease-out`}
           style={{
             transform: isVisible ? "translateY(0)" : "translateY(12px)",
             opacity: isVisible ? 1 : 0,

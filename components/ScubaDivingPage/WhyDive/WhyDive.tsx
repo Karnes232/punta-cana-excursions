@@ -4,7 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import { PortableText } from "@portabletext/react";
 import type { PortableTextBlock } from "@portabletext/types";
 import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
-import { portableTextComponents } from "@/components/IndividualExcursionPage/FullDescription/FullDescriptionBody";
+import {
+  portableTextComponents,
+  richTextBodyClass,
+} from "@/components/IndividualExcursionPage/FullDescription/FullDescriptionBody";
 
 interface WhyDiveProps {
   eyebrow?: string;
@@ -83,7 +86,7 @@ export function WhyDive({ eyebrow, heading, body }: WhyDiveProps) {
         </div>
 
         {body && body.length > 0 && (
-          <div className="text-left">
+          <div className={`${richTextBodyClass} max-w-4xl xl:max-w-6xl mx-auto text-left`}>
             <PortableText value={body} components={portableTextComponents} />
           </div>
         )}
