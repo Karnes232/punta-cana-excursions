@@ -47,7 +47,9 @@ export default async function FaqPage({
   const categories: FaqCategoryData[] =
     page?.categories?.map((cat) => ({
       _key: cat._key,
+      eyebrow: cat.eyebrow?.[lk] ?? "",
       categoryName: cat.categoryName?.[lk] ?? "",
+      subheading: cat.subheading?.[lk] ?? "",
       icon: cat.icon ?? null,
       items: (cat.items ?? []).map((item) => ({
         _key: item._key,
@@ -60,6 +62,7 @@ export default async function FaqPage({
     <main className="min-h-screen bg-white">
       <JsonLd data={jsonLd} />
       <FaqHero
+        eyebrow={page?.heroEyebrow?.[lk] ?? (isEs ? "¿Tienes Preguntas?" : "Got Questions?")}
         headline={page?.heroHeadline?.[lk] ?? (isEs ? "Preguntas Frecuentes" : "Frequently Asked Questions")}
         subheadline={page?.heroSubheadline?.[lk] ?? ""}
         backgroundImage={
@@ -67,6 +70,7 @@ export default async function FaqPage({
             ? {
                 url: page.heroImage.asset.url,
                 lqip: page.heroImage.asset.metadata?.lqip,
+                alt: page.heroImage.alt?.[lk],
               }
             : undefined
         }

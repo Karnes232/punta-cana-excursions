@@ -9,6 +9,12 @@ export const faqPage = defineType({
 
   fields: [
     defineField({
+      name: "heroEyebrow",
+      title: "Hero Eyebrow",
+      type: "localizedString",
+      description: "Small uppercase kicker shown above the hero headline.",
+    }),
+    defineField({
       name: "heroHeadline",
       title: "Hero Headline",
       type: "localizedString",
@@ -24,6 +30,14 @@ export const faqPage = defineType({
       title: "Hero Background Image",
       type: "image",
       options: { hotspot: true, metadata: ["lqip"] },
+      fields: [
+        defineField({
+          name: "alt",
+          title: "Alt Text",
+          type: "localizedString",
+          description: "Describe the image for accessibility and SEO.",
+        }),
+      ],
     }),
     defineField({
       name: "categories",
@@ -37,23 +51,46 @@ export const faqPage = defineType({
           title: "Category",
           fields: [
             defineField({
+              name: "eyebrow",
+              title: "Eyebrow",
+              type: "localizedString",
+              description: "Small uppercase kicker shown above the category heading.",
+            }),
+            defineField({
               name: "categoryName",
               title: "Category Name",
               type: "localizedString",
+              description: "The category heading (h2) and filter pill label.",
               validation: (r) => r.required(),
+            }),
+            defineField({
+              name: "subheading",
+              title: "Subheading",
+              type: "localizedText",
+              description: "Optional supporting copy shown under the category heading.",
             }),
             defineField({
               name: "icon",
               title: "Icon Key",
               type: "string",
-              description: "Icon key: booking, excursion, cancellation, safety, general",
+              description:
+                "Icon shown beside the category. One of: booking, cancellation, transport, safety, expect, diving, planning, about.",
               options: {
                 list: [
-                  { title: "Booking", value: "booking" },
-                  { title: "Excursion", value: "excursion" },
-                  { title: "Cancellation", value: "cancellation" },
-                  { title: "Safety", value: "safety" },
-                  { title: "General", value: "general" },
+                  { title: "Booking & Payments", value: "booking" },
+                  {
+                    title: "Cancellations, Refunds & Changes",
+                    value: "cancellation",
+                  },
+                  {
+                    title: "Pickup, Transportation & Hotels",
+                    value: "transport",
+                  },
+                  { title: "Safety & Health Requirements", value: "safety" },
+                  { title: "What to Expect", value: "expect" },
+                  { title: "Diving & Snorkeling", value: "diving" },
+                  { title: "Planning Your Trip", value: "planning" },
+                  { title: "About Us & Operations", value: "about" },
                 ],
               },
             }),

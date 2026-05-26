@@ -2,15 +2,17 @@ import Image from "next/image";
 import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
 
 interface FaqHeroProps {
+  eyebrow?: string;
   headline: string;
   subheadline: string;
   backgroundImage?: {
     url: string;
     lqip?: string;
+    alt?: string;
   } | null;
 }
 
-export function FaqHero({ headline, subheadline, backgroundImage }: FaqHeroProps) {
+export function FaqHero({ eyebrow, headline, subheadline, backgroundImage }: FaqHeroProps) {
   const hasImage = !!backgroundImage?.url;
 
   return (
@@ -26,7 +28,7 @@ export function FaqHero({ headline, subheadline, backgroundImage }: FaqHeroProps
         <>
           <Image
             src={backgroundImage!.url}
-            alt=""
+            alt={backgroundImage!.alt ?? ""}
             fill
             priority
             sizes="100vw"
@@ -71,6 +73,11 @@ export function FaqHero({ headline, subheadline, backgroundImage }: FaqHeroProps
       </div>
 
       <div className="relative z-10 max-w-3xl mx-auto px-5 sm:px-8 text-center">
+        {eyebrow && (
+          <p className="font-heading font-semibold text-white/70 text-sm uppercase tracking-widest mb-4">
+            {eyebrow}
+          </p>
+        )}
         <WordRevealHeading
           as="h1"
           text={headline}

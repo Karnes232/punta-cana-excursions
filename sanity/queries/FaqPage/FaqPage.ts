@@ -13,18 +13,22 @@ export interface FaqItem {
 
 export interface FaqCategory {
   _key: string;
+  eyebrow: LocalizedField;
   categoryName: LocalizedField;
+  subheading: LocalizedField;
   icon: string | null;
   items: FaqItem[];
 }
 
 export interface FaqPageData {
+  heroEyebrow: LocalizedField;
   heroHeadline: LocalizedField;
   heroSubheadline: LocalizedField;
   heroImage: {
     asset: { url: string; metadata: { lqip?: string } };
     hotspot?: { x: number; y: number };
     crop?: { top: number; bottom: number; left: number; right: number };
+    alt?: LocalizedField | null;
   } | null;
   categories: FaqCategory[];
 }
@@ -34,16 +38,20 @@ export interface FaqPageData {
 // =============================================================================
 
 const faqPageQuery = /* groq */ `*[_type == "faqPage"][0] {
+  heroEyebrow,
   heroHeadline,
   heroSubheadline,
   heroImage {
     asset-> { url, metadata { lqip } },
     hotspot,
-    crop
+    crop,
+    alt
   },
   categories[] {
     _key,
+    eyebrow,
     categoryName,
+    subheading,
     icon,
     items[] {
       _key,

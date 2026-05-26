@@ -19,6 +19,10 @@ const faqPageData = {
   _id: "faqPage",
   _type: "faqPage",
 
+  heroEyebrow: {
+    en: "Got Questions?",
+    es: "¿Tienes Preguntas?",
+  },
   heroHeadline: {
     en: "Frequently Asked Questions",
     es: "Preguntas Frecuentes",
