@@ -7,6 +7,7 @@ interface ContactHeroProps {
   backgroundImage?: {
     url: string;
     lqip?: string;
+    alt?: string;
   } | null;
 }
 
@@ -26,7 +27,7 @@ export function ContactHero({ headline, subheadline, backgroundImage }: ContactH
         <>
           <Image
             src={backgroundImage!.url}
-            alt=""
+            alt={backgroundImage!.alt ?? ""}
             fill
             priority
             sizes="100vw"

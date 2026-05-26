@@ -4,10 +4,14 @@ import {
   getHowItWorksPageSeo,
 } from "@/sanity/queries/HowItWorksPage/HowItWorksPage";
 import { getDefaultSeo } from "@/sanity/queries/SEO/seoProjection";
-import { getLocalized } from "@/sanity/queries/GeneralLayout/generalLayoutQuery";
+import {
+  getLocalized,
+  getLocalizedPortableText,
+} from "@/sanity/queries/GeneralLayout/generalLayoutQuery";
 import { buildMetadata } from "@/lib/seo/buildMetadata";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { HowItWorksHero } from "@/components/HowItWorksPage/HowItWorksHero";
+import { HowItWorksIntro } from "@/components/HowItWorksPage/HowItWorksIntro";
 import { HowBookingWorks } from "@/components/HomePage/HowBookingWorks/HowBookingWorks";
 import { FaqPreview } from "@/components/HomePage/FaqPreview/FaqPreview";
 import { CtaBanner } from "@/components/HomePage/CtaBanner/CtaBanner";
@@ -66,6 +70,7 @@ export default async function HowItWorksPage({
       <JsonLd data={jsonLd} />
 
       <HowItWorksHero
+        eyebrow={getLocalized(page?.heroEyebrow, locale)}
         headline={getLocalized(page?.heroHeadline, locale)}
         subheadline={getLocalized(page?.heroSubheadline, locale)}
         backgroundImage={
@@ -73,21 +78,29 @@ export default async function HowItWorksPage({
             ? {
                 url: page.heroImage.asset.url,
                 lqip: page.heroImage.asset.metadata?.lqip,
+                alt: getLocalized(page.heroImage.alt, locale),
               }
             : undefined
         }
       />
 
+      <HowItWorksIntro
+        eyebrow={getLocalized(page?.introEyebrow, locale)}
+        headline={getLocalized(page?.introHeadline, locale)}
+        body={getLocalizedPortableText(page?.introBody, locale)}
+      />
+
       {steps.length > 0 && (
         <HowBookingWorks
+          eyebrow={getLocalized(page?.stepsEyebrow, locale)}
           heading={getLocalized(page?.stepsHeading, locale)}
-          subheading={getLocalized(page?.stepsSubheading, locale) || undefined}
           steps={steps}
         />
       )}
 
       {faqs.length > 0 && (
         <FaqPreview
+          eyebrow={getLocalized(page?.faqEyebrow, locale) || undefined}
           heading={getLocalized(page?.faqHeading, locale)}
           subheading={getLocalized(page?.faqSubheading, locale) || undefined}
           faqs={faqs}
@@ -96,14 +109,15 @@ export default async function HowItWorksPage({
 
       {page?.ctaHeadline && (
         <CtaBanner
+          eyebrow={getLocalized(page?.ctaEyebrow, locale) || undefined}
           headline={getLocalized(page?.ctaHeadline, locale)}
           subheadline={getLocalized(page?.ctaSubheadline, locale) || undefined}
           primaryCtaText={getLocalized(page?.ctaButtonText, locale)}
           primaryCtaHref={page?.ctaButtonHref || "/excursions"}
           secondaryCtaText={
-            getLocalized(page?.ctaWhatsappLabel, locale) || undefined
+            getLocalized(page?.ctaSecondaryButtonText, locale) || undefined
           }
-          secondaryCtaHref="/contact"
+          secondaryCtaHref={page?.ctaSecondaryButtonHref || "/contact"}
         />
       )}
     </main>

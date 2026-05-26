@@ -9,6 +9,7 @@ export const howItWorksPage = defineType({
 
   groups: [
     { name: "hero", title: "Hero", default: true },
+    { name: "intro", title: "Intro" },
     { name: "steps", title: "Steps" },
     { name: "faq", title: "FAQ" },
     { name: "cta", title: "CTA" },
@@ -19,6 +20,13 @@ export const howItWorksPage = defineType({
     // =========================================================================
     // HERO
     // =========================================================================
+    defineField({
+      name: "heroEyebrow",
+      title: "Eyebrow",
+      type: "localizedString",
+      description: "Small uppercase kicker shown above the headline.",
+      group: "hero",
+    }),
     defineField({
       name: "heroHeadline",
       title: "Headline",
@@ -38,23 +46,56 @@ export const howItWorksPage = defineType({
       type: "image",
       group: "hero",
       options: { hotspot: true, metadata: ["lqip"] },
+      fields: [
+        defineField({
+          name: "alt",
+          title: "Alt Text",
+          type: "localizedString",
+          description: "Describe the image for accessibility and SEO.",
+        }),
+      ],
+    }),
+
+    // =========================================================================
+    // INTRO
+    // =========================================================================
+    defineField({
+      name: "introEyebrow",
+      title: "Eyebrow",
+      type: "localizedString",
+      description: "Small uppercase kicker shown above the heading.",
+      group: "intro",
+    }),
+    defineField({
+      name: "introHeadline",
+      title: "Headline",
+      type: "localizedString",
+      group: "intro",
+    }),
+    defineField({
+      name: "introBody",
+      title: "Body",
+      type: "localizedBlockContent",
+      description: "Rich-text intro shown below the hero.",
+      group: "intro",
     }),
 
     // =========================================================================
     // STEPS
     // =========================================================================
     defineField({
+      name: "stepsEyebrow",
+      title: "Eyebrow",
+      type: "localizedString",
+      description: "Small uppercase kicker shown above the steps heading.",
+      group: "steps",
+    }),
+    defineField({
       name: "stepsHeading",
       title: "Steps Heading",
       type: "localizedString",
       group: "steps",
       validation: (r) => r.required(),
-    }),
-    defineField({
-      name: "stepsSubheading",
-      title: "Steps Subheading",
-      type: "localizedText",
-      group: "steps",
     }),
     defineField({
       name: "steps",
@@ -113,6 +154,13 @@ export const howItWorksPage = defineType({
     // FAQ
     // =========================================================================
     defineField({
+      name: "faqEyebrow",
+      title: "Eyebrow",
+      type: "localizedString",
+      description: "Small uppercase kicker shown above the FAQ heading.",
+      group: "faq",
+    }),
+    defineField({
       name: "faqHeading",
       title: "FAQ Heading",
       type: "localizedString",
@@ -160,6 +208,13 @@ export const howItWorksPage = defineType({
     // CTA
     // =========================================================================
     defineField({
+      name: "ctaEyebrow",
+      title: "Eyebrow",
+      type: "localizedString",
+      description: "Small uppercase kicker shown above the CTA headline.",
+      group: "cta",
+    }),
+    defineField({
       name: "ctaHeadline",
       title: "CTA Headline",
       type: "localizedString",
@@ -173,22 +228,30 @@ export const howItWorksPage = defineType({
     }),
     defineField({
       name: "ctaButtonText",
-      title: "CTA Button Text",
+      title: "Primary Button Text",
       type: "localizedString",
       group: "cta",
     }),
     defineField({
       name: "ctaButtonHref",
-      title: "CTA Button Href",
+      title: "Primary Button Href",
       type: "string",
       group: "cta",
       initialValue: "/excursions",
     }),
     defineField({
-      name: "ctaWhatsappLabel",
-      title: "WhatsApp Button Label",
+      name: "ctaSecondaryButtonText",
+      title: "Secondary Button Text",
       type: "localizedString",
       group: "cta",
+    }),
+    defineField({
+      name: "ctaSecondaryButtonHref",
+      title: "Secondary Button Href",
+      type: "string",
+      description: 'Internal path, e.g. "/contact"',
+      group: "cta",
+      initialValue: "/contact",
     }),
 
     // =========================================================================

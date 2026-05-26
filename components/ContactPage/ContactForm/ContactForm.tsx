@@ -6,6 +6,12 @@ import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
 interface ContactFormProps {
   headline: string;
   locale: "en" | "es";
+  successContent: {
+    eyebrow: string;
+    headline: string;
+    subheading: string;
+    steps: { title: string; body: string }[];
+  };
   labels: {
     name: string;
     email: string;
@@ -15,8 +21,6 @@ interface ContactFormProps {
     message: string;
     submit: string;
     submitting: string;
-    successTitle: string;
-    successMessage: string;
     errorMessage: string;
     required: string;
     namePlaceholder: string;
@@ -37,7 +41,12 @@ interface FormState {
   message: string;
 }
 
-export function ContactForm({ headline, locale, labels }: ContactFormProps) {
+export function ContactForm({
+  headline,
+  locale,
+  successContent,
+  labels,
+}: ContactFormProps) {
   const [form, setForm] = useState<FormState>({
     name: "",
     email: "",
@@ -46,7 +55,7 @@ export function ContactForm({ headline, locale, labels }: ContactFormProps) {
     excursion: "",
     message: "",
   });
-  const [submitted, setSubmitted] = useState(false);
+  const [submitted, setSubmitted] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [errors, setErrors] = useState<Partial<FormState>>({});
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -108,24 +117,40 @@ export function ContactForm({ headline, locale, labels }: ContactFormProps) {
 
   if (submitted) {
     return (
-      <div className="flex flex-col items-center justify-center py-16 px-6 text-center">
-        <div className="w-16 h-16 rounded-full bg-teal/10 flex items-center justify-center mb-5">
-          <svg
-            className="w-8 h-8 text-teal"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={2}
-            stroke="currentColor"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-          </svg>
-        </div>
-        <h3 className="font-heading font-bold text-navy text-2xl mb-3">
-          {labels.successTitle}
-        </h3>
-        <p className="font-body text-slate/70 leading-relaxed max-w-sm">
-          {labels.successMessage}
-        </p>
+      <div>
+        {successContent.eyebrow && (
+          <p className="font-heading font-semibold text-teal text-sm uppercase tracking-widest mb-3">
+            {successContent.eyebrow}
+          </p>
+        )}
+
+        <WordRevealHeading
+          as="h2"
+          text={successContent.headline}
+          triggerOnMount
+          className="font-heading font-bold text-navy text-2xl sm:text-3xl leading-tight mb-3"
+        />
+
+        {successContent.subheading && (
+          <p className="font-body text-slate/70 leading-relaxed mb-8">
+            {successContent.subheading}
+          </p>
+        )}
+
+        {successContent.steps.length > 0 && (
+          <ol className="space-y-6">
+            {successContent.steps.map((step, i) => (
+              <li key={i} className="border-l-2 border-teal/20 pl-5">
+                <h3 className="font-heading font-bold text-navy text-lg leading-snug mb-1.5">
+                  {step.title}
+                </h3>
+                <p className="font-body text-slate/70 text-sm leading-relaxed">
+                  {step.body}
+                </p>
+              </li>
+            ))}
+          </ol>
+        )}
       </div>
     );
   }

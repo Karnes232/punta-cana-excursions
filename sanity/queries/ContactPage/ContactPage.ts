@@ -12,9 +12,14 @@ export interface ContactPageData {
     asset: { url: string; metadata: { lqip?: string } };
     hotspot?: { x: number; y: number };
     crop?: { top: number; bottom: number; left: number; right: number };
+    alt?: LocalizedField | null;
   } | null;
   formHeadline: LocalizedField;
   infoHeadline: LocalizedField;
+  successEyebrow: LocalizedField;
+  successHeadline: LocalizedField;
+  successSubheading: LocalizedField;
+  successSteps: { title: LocalizedField; body: LocalizedField }[];
 }
 
 // =============================================================================
@@ -27,10 +32,15 @@ const contactPageQuery = /* groq */ `*[_type == "contactPage"][0] {
   heroImage {
     asset-> { url, metadata { lqip } },
     hotspot,
-    crop
+    crop,
+    alt
   },
   formHeadline,
-  infoHeadline
+  infoHeadline,
+  successEyebrow,
+  successHeadline,
+  successSubheading,
+  successSteps[] { title, body }
 }`;
 
 // =============================================================================

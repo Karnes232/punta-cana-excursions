@@ -15,6 +15,15 @@ const client = createClient({
 let k = 0;
 const key = () => `hiw-key-${++k}`;
 
+const blocks = (paras: string[]) =>
+  paras.map((text) => ({
+    _type: "block",
+    _key: key(),
+    style: "normal",
+    markDefs: [],
+    children: [{ _type: "span", _key: key(), text, marks: [] }],
+  }));
+
 async function main() {
   console.log("🌱 Seeding How It Works Page...\n");
 
@@ -23,6 +32,10 @@ async function main() {
     _type: "howItWorksPage",
 
     // ── HERO ──────────────────────────────────────────────────────────────
+    heroEyebrow: {
+      en: "Booking Made Simple",
+      es: "Reservar es Sencillo",
+    },
     heroHeadline: {
       en: "How Booking Works",
       es: "Cómo Funciona la Reserva",
@@ -32,14 +45,32 @@ async function main() {
       es: "Desde explorar excursiones hasta disfrutar tu día en Punta Cana — así de fácil lo hacemos.",
     },
 
+    // ── INTRO ─────────────────────────────────────────────────────────────
+    introEyebrow: {
+      en: "Before You Book",
+      es: "Antes de Reservar",
+    },
+    introHeadline: {
+      en: "Booking With Grand Bay Is Refreshingly Simple",
+      es: "Reservar con Grand Bay es Refrescantemente Sencillo",
+    },
+    introBody: {
+      en: blocks([
+        "Booking with Grand Bay is straightforward, secure, and stress-free — no call centers, no pushy upsells, no hidden fees. Here's exactly what to expect, from the moment you find an excursion you love to the day you step off the boat.",
+      ]),
+      es: blocks([
+        "Reservar con Grand Bay es sencillo, seguro y sin estrés — sin call centers, sin ventas insistentes, sin tarifas ocultas. Esto es exactamente lo que puedes esperar, desde el momento en que encuentras una excursión que te encanta hasta el día en que bajas del barco.",
+      ]),
+    },
+
     // ── STEPS ─────────────────────────────────────────────────────────────
+    stepsEyebrow: {
+      en: "The Process",
+      es: "El Proceso",
+    },
     stepsHeading: {
       en: "Five Simple Steps",
       es: "Cinco Pasos Sencillos",
-    },
-    stepsSubheading: {
-      en: "Booking with Grand Bay is straightforward, secure, and stress-free. Here's exactly what to expect from the moment you find an excursion you love to the day you step off the boat.",
-      es: "Reservar con Grand Bay es sencillo, seguro y sin estrés. Esto es exactamente lo que puedes esperar desde el momento en que encuentras una excursión que te encanta hasta el día en que bajas del barco.",
     },
     steps: [
       {
@@ -100,6 +131,10 @@ async function main() {
     ],
 
     // ── FAQ ───────────────────────────────────────────────────────────────
+    faqEyebrow: {
+      en: "Frequently Asked",
+      es: "Preguntas Frecuentes",
+    },
     faqHeading: {
       en: "Booking Questions",
       es: "Preguntas sobre Reservas",
@@ -160,6 +195,10 @@ async function main() {
     ],
 
     // ── CTA ───────────────────────────────────────────────────────────────
+    ctaEyebrow: {
+      en: "Let's Get Started",
+      es: "Comencemos",
+    },
     ctaHeadline: {
       en: "Ready to Book Your Adventure?",
       es: "¿Listo para Reservar tu Aventura?",
@@ -173,10 +212,11 @@ async function main() {
       es: "Ver Excursiones",
     },
     ctaButtonHref: "/excursions",
-    ctaWhatsappLabel: {
-      en: "Chat on WhatsApp",
-      es: "Chatea por WhatsApp",
+    ctaSecondaryButtonText: {
+      en: "Contact Us",
+      es: "Contáctanos",
     },
+    ctaSecondaryButtonHref: "/contact",
 
     // ── SEO ───────────────────────────────────────────────────────────────
     seo: {

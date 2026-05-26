@@ -180,7 +180,7 @@ export default function Footer({
             <h4 className="text-[11px] font-bold tracking-[0.08em] uppercase text-[#0EA5B7] mb-4">
               {t("contact")}
             </h4>
-
+{/* 
             {phone && (
               <ContactItem icon={<WhatsAppIcon size={15} />}>
                 <a
@@ -196,7 +196,7 @@ export default function Footer({
                   Daily · 8 am – 8 pm
                 </span>
               </ContactItem>
-            )}
+            )} */}
 
             {email && (
               <ContactItem icon={<EmailIcon />}>

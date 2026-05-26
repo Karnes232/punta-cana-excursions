@@ -78,9 +78,6 @@ export default async function ContactPage({
         message: "Mensaje",
         submit: "Enviar mensaje",
         submitting: "Enviando...",
-        successTitle: "¡Mensaje enviado!",
-        successMessage:
-          "Recibimos tu mensaje. Te responderemos por correo electrónico lo antes posible.",
         errorMessage:
           "No se pudo enviar tu mensaje. Inténtalo de nuevo.",
         required: "Este campo es requerido",
@@ -100,9 +97,6 @@ export default async function ContactPage({
         message: "Message",
         submit: "Send message",
         submitting: "Sending...",
-        successTitle: "Message sent!",
-        successMessage:
-          "We've received your message and will reply by email as soon as possible.",
         errorMessage:
           "We couldn't send your message. Please try again.",
         required: "This field is required",
@@ -125,6 +119,7 @@ export default async function ContactPage({
             ? {
                 url: contactData.heroImage.asset.url,
                 lqip: contactData.heroImage.asset.metadata?.lqip,
+                alt: contactData.heroImage.alt?.[lk],
               }
             : undefined
         }
@@ -155,6 +150,26 @@ export default async function ContactPage({
                 (isEs ? "Envíenos un Mensaje" : "Send Us a Message")
               }
               locale={locale as "en" | "es"}
+              successContent={{
+                eyebrow:
+                  contactData?.successEyebrow?.[lk] ??
+                  (isEs ? "Qué sigue" : "What happens next"),
+                headline:
+                  contactData?.successHeadline?.[lk] ??
+                  (isEs
+                    ? "Qué Sucede Después de Enviar un Mensaje"
+                    : "What Happens After You Send a Message"),
+                subheading:
+                  contactData?.successSubheading?.[lk] ??
+                  (isEs
+                    ? "Tres pasos desde la consulta hasta la confirmación."
+                    : "Three steps from inquiry to confirmation."),
+                steps:
+                  contactData?.successSteps?.map((s) => ({
+                    title: s.title?.[lk] ?? "",
+                    body: s.body?.[lk] ?? "",
+                  })) ?? [],
+              }}
               labels={formLabels}
             />
           </div>

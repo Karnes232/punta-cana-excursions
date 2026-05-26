@@ -56,7 +56,7 @@ export function ContactInfo({
         </div>
 
         {/* WhatsApp */}
-        <div className="flex gap-4 p-5 rounded-2xl bg-sand border border-slate-100 group hover:border-teal/30 transition-colors duration-200">
+        {/* <div className="flex gap-4 p-5 rounded-2xl bg-sand border border-slate-100 group hover:border-teal/30 transition-colors duration-200">
           <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-whatsapp/10 flex items-center justify-center group-hover:bg-whatsapp/15 transition-colors duration-200">
             <WhatsAppIcon />
           </div>
@@ -74,7 +74,7 @@ export function ContactInfo({
             </a>
             <p className="font-body text-slate/60 text-xs mt-0.5">{labels.chatOnWhatsApp}</p>
           </div>
-        </div>
+        </div> */}
 
         {/* Location */}
         <div className="flex gap-4 p-5 rounded-2xl bg-sand border border-slate-100 group hover:border-teal/30 transition-colors duration-200">
