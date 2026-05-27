@@ -1,6 +1,7 @@
 "use client";
 
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { ALL_LOCALES, LOCALE_LABELS } from "@/i18n/blogLocales";
 import type { BlogLocale } from "@/i18n/blogLocales";
 
@@ -25,7 +26,6 @@ export function BlogFilters({
   categoryLabel,
 }: BlogFiltersProps) {
   const router = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
 
   const activeLang = searchParams.get("lang") ?? defaultLanguage;
@@ -38,8 +38,9 @@ export function BlogFilters({
     } else {
       params.delete(key);
     }
-    const qs = params.toString();
-    router.push(qs ? `${pathname}?${qs}` : pathname);
+    // BlogFilters only ever renders on the blog index. Use the locale-aware
+    // router so the query update preserves the localized path.
+    router.push({ pathname: "/blog", query: Object.fromEntries(params) });
   }
 
   return (

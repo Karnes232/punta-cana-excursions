@@ -1,41 +1,50 @@
+import { getPathname, type AppHref } from "@/i18n/navigation";
 import { SITE_URL } from "@/lib/seo/constants";
+
 /**
- * Utility function to generate hreflang URLs for a given path
- * Ensures reciprocal hreflang tags (both en and es versions)
+ * Build an absolute URL for a typed href in a given locale. Uses next-intl's
+ * `getPathname` so localized segments (e.g. /about -> /es/sobre-nosotros) and
+ * the locale prefix are resolved correctly.
+ */
+export function getLocalizedUrl(
+  locale: "en" | "es",
+  href: AppHref,
+  baseUrl: string = SITE_URL,
+): string {
+  const path = getPathname({ locale, href });
+  return path === "/" ? baseUrl : `${baseUrl}${path}`;
+}
+
+/**
+ * Generate reciprocal hreflang URLs. Pass the same href for both locales for
+ * pages that share a slug, or distinct hrefs when the dynamic [slug] differs
+ * per locale (per-locale slugs).
  */
 export function generateHreflangUrls(
-  path: string,
+  hrefByLocale: { en: AppHref; es: AppHref },
   baseUrl: string = SITE_URL,
 ): { en: string; es: string } {
-  // Remove leading slash if present
-  const cleanPath = path.startsWith("/") ? path.slice(1) : path;
-
-  // For English, path without locale prefix
-  const enPath = cleanPath;
-  // For Spanish, add /es prefix (avoid trailing slash when path is empty)
-  const esPath = cleanPath ? `es/${cleanPath}` : "es";
-
   return {
-    en: enPath ? `${baseUrl}/${enPath}` : baseUrl,
-    es: `${baseUrl}/${esPath}`,
+    en: getLocalizedUrl("en", hrefByLocale.en, baseUrl),
+    es: getLocalizedUrl("es", hrefByLocale.es, baseUrl),
   };
 }
 
 /**
- * Generate alternates object with hreflang tags for Next.js metadata
+ * Generate the `alternates.languages` object for Next.js metadata, with
+ * x-default pointing at the English URL.
  */
 export function generateHreflangAlternates(
-  currentLocale: "en" | "es",
-  path: string,
+  hrefByLocale: { en: AppHref; es: AppHref },
   baseUrl: string = SITE_URL,
 ) {
-  const urls = generateHreflangUrls(path, baseUrl);
+  const urls = generateHreflangUrls(hrefByLocale, baseUrl);
 
   return {
     languages: {
       en: urls.en,
       es: urls.es,
-      "x-default": urls.en, // Default to English
+      "x-default": urls.en,
     },
   };
 }

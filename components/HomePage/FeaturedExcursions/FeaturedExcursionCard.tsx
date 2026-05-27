@@ -59,7 +59,7 @@ export function FeaturedExcursionCard({
       }}
     >
       <Link
-        href={`/excursions/${excursion.slug}`}
+        href={{ pathname: "/excursions/[slug]", params: { slug: excursion.slug } }}
         className="group block card-excursion h-full flex flex-col"
       >
         {/* Image container */}

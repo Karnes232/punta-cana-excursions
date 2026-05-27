@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { Link } from "@/i18n/navigation";
+import { AppLink } from "@/components/ui/AppLink";
 
 interface ExcursionCategory {
   slug: string;
@@ -51,7 +51,7 @@ export function CategoryCard({ category, index }: CategoryCardProps) {
         transitionDelay: `${index * 100}ms`,
       }}
     >
-      <Link
+      <AppLink
         href={category.href ?? `/excursions?category=${category.slug}`}
         className="group relative block aspect-[4/3] md:aspect-[3/2] rounded-xl overflow-hidden"
       >
@@ -144,7 +144,7 @@ export function CategoryCard({ category, index }: CategoryCardProps) {
             />
           </svg>
         </div>
-      </Link>
+      </AppLink>
     </div>
   );
 }

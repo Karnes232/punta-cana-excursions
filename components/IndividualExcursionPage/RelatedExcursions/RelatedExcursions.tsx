@@ -3,8 +3,8 @@ import { RelatedExcursionCard } from "./RelatedExcursionCard";
 
 export interface RelatedExcursionData {
   slug: string;
-  /** Full href for the card link. Defaults to /excursions/${slug}. */
-  href?: string;
+  /** Detail route this card links to. Defaults to "/excursions/[slug]". */
+  pathname?: "/excursions/[slug]" | "/scuba-diving/[slug]";
   title: string;
   summary: string;
   image: {

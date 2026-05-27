@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Link } from "@/i18n/navigation";
+import { AppLink } from "@/components/ui/AppLink";
 
 interface HeroCTA {
   text: string;
@@ -31,7 +31,7 @@ export function HeroCTAGroup({ primaryCTA, secondaryCTA }: HeroCTAGroupProps) {
       }}
     >
       {/* Primary CTA — solid ocean blue, high contrast */}
-      <Link
+      <AppLink
         href={primaryCTA.href}
         className="
           inline-flex items-center justify-center
@@ -63,10 +63,10 @@ export function HeroCTAGroup({ primaryCTA, secondaryCTA }: HeroCTAGroupProps) {
             d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
           />
         </svg>
-      </Link>
+      </AppLink>
 
       {/* Secondary CTA — ghost style for contrast against dark overlay */}
-      <Link
+      <AppLink
         href={secondaryCTA.href}
         className="
           inline-flex items-center justify-center
@@ -84,7 +84,7 @@ export function HeroCTAGroup({ primaryCTA, secondaryCTA }: HeroCTAGroupProps) {
         "
       >
         {secondaryCTA.text}
-      </Link>
+      </AppLink>
     </div>
   );
 }

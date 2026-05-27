@@ -56,6 +56,7 @@ export interface RelatedExcursion {
   slug: {
     current: string;
   };
+  slugEs?: { current: string } | null;
   shortSummary: LocalizedField;
   price: number;
   duration: LocalizedField;
@@ -95,6 +96,7 @@ export interface IndividualExcursion {
   slug: {
     current: string;
   };
+  slugEs?: { current: string } | null;
   shortSummary: LocalizedField;
   badge: LocalizedField | null;
 
@@ -184,6 +186,7 @@ export interface ExcursionListItem {
   slug: {
     current: string;
   };
+  slugEs?: { current: string } | null;
   shortSummary: LocalizedField;
   price: number;
   duration: LocalizedField;
@@ -217,17 +220,19 @@ export interface ExcursionListItem {
 
 export interface ExcursionSlug {
   slug: string;
+  slugEs?: string | null;
 }
 
 // =============================================================================
 // Queries
 // =============================================================================
 
-export const individualExcursionQuery = `*[_type == "excursion" && slug.current == $slug][0] {
+export const individualExcursionQuery = `*[_type == "excursion" && (slug.current == $slug || slugEs.current == $slug)][0] {
     _id,
     _type,
     title,
     slug,
+    slugEs,
     shortSummary,
     badge,
     heroImage {
@@ -296,6 +301,7 @@ export const individualExcursionQuery = `*[_type == "excursion" && slug.current 
         _id,
         title,
         slug,
+        slugEs,
         shortSummary,
         price,
         duration,
@@ -326,6 +332,7 @@ export const excursionListQuery = `*[_type == "excursion"] | order(sortOrder asc
     _id,
     title,
     slug,
+    slugEs,
     shortSummary,
     price,
     duration,
@@ -352,13 +359,15 @@ export const excursionListQuery = `*[_type == "excursion"] | order(sortOrder asc
 }`;
 
 export const excursionSlugsQuery = `*[_type == "excursion" && defined(slug.current)] {
-    "slug": slug.current
+    "slug": slug.current,
+    "slugEs": slugEs.current
 }`;
 
 export const featuredExcursionsQuery = `*[_type == "excursion" && isFeatured == true] | order(sortOrder asc) [0...3] {
     _id,
     title,
     slug,
+    slugEs,
     shortSummary,
     price,
     duration,
@@ -412,7 +421,7 @@ export async function getExcursionSlugs(): Promise<ExcursionSlug[]> {
 
 import { seoProjection, type SeoData } from "../SEO/seoProjection";
 
-export const individualExcursionSeoQuery = `*[_type == "excursion" && slug.current == $slug][0]{
+export const individualExcursionSeoQuery = `*[_type == "excursion" && (slug.current == $slug || slugEs.current == $slug)][0]{
   "seo": seo { ${seoProjection} }
 }`;
 

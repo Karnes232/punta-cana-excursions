@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { generateHreflangAlternates } from "@/i18n/hreflang";
-import { SITE_URL } from "@/lib/seo/constants";
+import { generateHreflangAlternates, getLocalizedUrl } from "@/i18n/hreflang";
+import type { AppHref } from "@/i18n/navigation";
 import { getLocalized } from "@/sanity/queries/GeneralLayout/generalLayoutQuery";
 import type {
   SeoData,
@@ -21,8 +21,10 @@ interface BuildMetadataArgs {
   seo: SeoData | null | undefined;
   defaults: SeoData | null | undefined;
   locale: Locale;
-  /** Path WITHOUT the locale prefix, e.g. "/excursions/foo" or "/" */
-  path: string;
+  /** Typed canonical href, e.g. "/about" or { pathname: "/excursions/[slug]", params: { slug } } */
+  href: AppHref;
+  /** Per-locale hrefs when the dynamic [slug] differs per locale; falls back to `href`. */
+  hrefByLocale?: Partial<Record<Locale, AppHref>>;
   fallbackTitle?: string;
   fallbackDescription?: string;
   fallbackImage?: FallbackImage | null;
@@ -32,10 +34,22 @@ interface BuildSingleLanguageMetadataArgs {
   seo: SeoSingleLanguageData | null | undefined;
   defaults: SeoData | null | undefined;
   locale: Locale;
-  path: string;
+  href: AppHref;
+  hrefByLocale?: Partial<Record<Locale, AppHref>>;
   fallbackTitle?: string;
   fallbackDescription?: string;
   fallbackImage?: FallbackImage | null;
+}
+
+/** Resolve per-locale hrefs from the single href plus any per-locale overrides. */
+function resolveHrefs(
+  href: AppHref,
+  hrefByLocale?: Partial<Record<Locale, AppHref>>,
+): { en: AppHref; es: AppHref } {
+  return {
+    en: hrefByLocale?.en ?? href,
+    es: hrefByLocale?.es ?? href,
+  };
 }
 
 const firstNonEmpty = (...values: Array<string | undefined | null>): string | undefined => {
@@ -72,7 +86,7 @@ const robotsFromSeo = (
  * with fallbacks to defaultSeo (generalLayout) and per-page hardcoded fallbacks.
  */
 export function buildMetadata(args: BuildMetadataArgs): Metadata {
-  const { seo, defaults, locale, path, fallbackTitle, fallbackDescription, fallbackImage } = args;
+  const { seo, defaults, locale, href, hrefByLocale, fallbackTitle, fallbackDescription, fallbackImage } = args;
 
   const title = firstNonEmpty(
     getLocalized(seo?.metaTitle, locale),
@@ -106,10 +120,9 @@ export function buildMetadata(args: BuildMetadataArgs): Metadata {
     (fallbackImage ?? undefined) ??
     seoImageToFallback(defaults?.ogImage);
 
-  const alternates = generateHreflangAlternates(locale, path);
-  const canonical = locale === "es"
-    ? `${SITE_URL}${path === "/" ? "/es" : `/es${path}`}`
-    : `${SITE_URL}${path}`;
+  const hrefs = resolveHrefs(href, hrefByLocale);
+  const alternates = generateHreflangAlternates(hrefs);
+  const canonical = getLocalizedUrl(locale, hrefs[locale]);
 
   const twitterCard = seo?.twitterCard ?? defaults?.twitterCard ?? "summary_large_image";
 
@@ -155,7 +168,7 @@ export function buildMetadata(args: BuildMetadataArgs): Metadata {
 export function buildSingleLanguageMetadata(
   args: BuildSingleLanguageMetadataArgs,
 ): Metadata {
-  const { seo, defaults, locale, path, fallbackTitle, fallbackDescription, fallbackImage } = args;
+  const { seo, defaults, locale, href, hrefByLocale, fallbackTitle, fallbackDescription, fallbackImage } = args;
 
   const title = firstNonEmpty(
     seo?.metaTitle,
@@ -182,10 +195,9 @@ export function buildSingleLanguageMetadata(
     (fallbackImage ?? undefined) ??
     seoImageToFallback(defaults?.ogImage);
 
-  const alternates = generateHreflangAlternates(locale, path);
-  const canonical = locale === "es"
-    ? `${SITE_URL}${path === "/" ? "/es" : `/es${path}`}`
-    : `${SITE_URL}${path}`;
+  const hrefs = resolveHrefs(href, hrefByLocale);
+  const alternates = generateHreflangAlternates(hrefs);
+  const canonical = getLocalizedUrl(locale, hrefs[locale]);
 
   const twitterCard = seo?.twitterCard ?? defaults?.twitterCard ?? "summary_large_image";
 

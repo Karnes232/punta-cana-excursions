@@ -31,10 +31,10 @@ export const excursion = defineType({
 
     defineField({
       name: "slug",
-      title: "Slug",
+      title: "Slug (English)",
       type: "slug",
       description:
-        "URL-friendly identifier. Auto-generated from the English title.",
+        "English URL segment. Auto-generated from the English title. Used at /excursions/<slug>.",
       group: "content",
       options: {
         source: "title.en",
@@ -47,6 +47,25 @@ export const excursion = defineType({
             .slice(0, 96),
       },
       validation: (rule) => rule.required(),
+    }),
+
+    defineField({
+      name: "slugEs",
+      title: "Slug (Spanish)",
+      type: "slug",
+      description:
+        "Spanish URL segment. Auto-generated from the Spanish title. Used at /es/excursiones/<slug>. Falls back to the English slug if empty.",
+      group: "content",
+      options: {
+        source: "title.es",
+        maxLength: 96,
+        slugify: (input: string) =>
+          input
+            .toLowerCase()
+            .replace(/\s+/g, "-")
+            .replace(/[^\w-]+/g, "")
+            .slice(0, 96),
+      },
     }),
 
     defineField({

@@ -15,6 +15,7 @@ import {
   getLocalized,
   LocalizedField,
 } from "@/sanity/queries/GeneralLayout/generalLayoutQuery";
+import { localizedSlug } from "@/i18n/navigation";
 import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import { getDefaultSeo } from "@/sanity/queries/SEO/seoProjection";
@@ -37,16 +38,17 @@ export async function generateMetadata({
     seo: pageSeo?.seo,
     defaults: defaultSeo?.defaultSeo,
     locale: locale as "en" | "es",
-    path: "/scuba-diving",
+    href: "/scuba-diving",
     fallbackTitle: page?.heroHeadline?.[lk],
     fallbackDescription: page?.heroSubheadline?.[lk],
   });
 }
 
 function mapExcursionCard(e: DivingExcursionCard, locale: string) {
+  const slug = localizedSlug(locale, e.slug.current, e.slugEs?.current);
   return {
-    slug: e.slug.current,
-    href: `/scuba-diving/${e.slug.current}`,
+    slug,
+    href: `/scuba-diving/${slug}`,
     title: getLocalized(e.title, locale),
     summary: getLocalized(e.shortSummary, locale),
     image: {

@@ -65,7 +65,7 @@ export function WaterExcursionCard({
       }}
     >
       <Link
-        href={excursion.href}
+        href={{ pathname: "/scuba-diving/[slug]", params: { slug: excursion.slug } }}
         className="group card-excursion flex flex-col h-full"
       >
         {/* ── Image area ──────────────────────────────────────────── */}

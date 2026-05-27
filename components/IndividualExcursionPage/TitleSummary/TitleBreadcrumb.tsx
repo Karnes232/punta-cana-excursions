@@ -1,4 +1,5 @@
 import { Link } from "@/i18n/navigation";
+import { AppLink } from "@/components/ui/AppLink";
 
 interface TitleBreadcrumbProps {
   categoryTitle: string;
@@ -33,21 +34,21 @@ export function TitleBreadcrumb({
 
       <ChevronSeparator />
 
-      <Link
+      <AppLink
         href={sectionHref}
         className="text-gray-400 hover:text-ocean transition-colors duration-200"
       >
         {excursionsLabel}
-      </Link>
+      </AppLink>
 
       <ChevronSeparator />
 
-      <Link
+      <AppLink
         href={resolvedCategoryHref}
         className="text-gray-400 hover:text-ocean transition-colors duration-200"
       >
         {categoryTitle}
-      </Link>
+      </AppLink>
     </nav>
   );
 }

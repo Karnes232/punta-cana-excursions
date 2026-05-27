@@ -1,4 +1,4 @@
-import { Link } from "@/i18n/navigation";
+import { AppLink } from "@/components/ui/AppLink";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { NavLink } from "@/sanity/queries/GeneralLayout/generalLayoutQuery";
 import BookNowButton from "./BookNowButton";
@@ -28,9 +28,10 @@ export default function MobileMenu({
     >
       <nav className="border-t border-gray-100 bg-white">
         {navLinks.map((item) => (
-          <Link
+          <AppLink
             key={item.href}
             href={item.href}
+            external={item.isExternal}
             onClick={onClose}
             className={`flex items-center justify-between px-5 py-3.5 text-[14px] font-semibold border-b border-gray-50 transition-colors duration-100 ${
               activeHref === item.href
@@ -49,7 +50,7 @@ export default function MobileMenu({
                 strokeLinejoin="round"
               />
             </svg>
-          </Link>
+          </AppLink>
         ))}
 
         {/* Mobile menu footer */}

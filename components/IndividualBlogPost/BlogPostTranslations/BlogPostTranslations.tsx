@@ -30,7 +30,7 @@ export function BlogPostTranslations({
   function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
     const slug = e.target.value;
     if (slug !== currentSlug) {
-      router.push(`/blog/${slug}`);
+      router.push({ pathname: "/blog/[slug]", params: { slug } });
     }
   }
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Link } from "@/i18n/navigation";
+import { AppLink } from "@/components/ui/AppLink";
 
 interface FeaturedViewAllProps {
   text: string;
@@ -36,7 +36,7 @@ export function FeaturedViewAll({ text, href }: FeaturedViewAllProps) {
         opacity: isVisible ? 1 : 0,
       }}
     >
-      <Link
+      <AppLink
         href={href}
         className="
           inline-flex items-center gap-2
@@ -67,7 +67,7 @@ export function FeaturedViewAll({ text, href }: FeaturedViewAllProps) {
             d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
           />
         </svg>
-      </Link>
+      </AppLink>
     </div>
   );
 }

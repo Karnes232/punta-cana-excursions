@@ -1,4 +1,4 @@
-import { Link } from "@/i18n/navigation";
+import { AppLink } from "@/components/ui/AppLink";
 export default function BookNowButton({
   className = "",
   label,
@@ -9,11 +9,11 @@ export default function BookNowButton({
   href: string;
 }) {
   return (
-    <Link
+    <AppLink
       href={href}
       className={`bg-[#005F86] hover:bg-[#004a6a] text-white text-[13px] font-bold px-5 py-2.5 rounded-full transition-colors duration-150 whitespace-nowrap shadow-sm ${className}`}
     >
       {label}
-    </Link>
+    </AppLink>
   );
 }

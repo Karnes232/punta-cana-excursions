@@ -33,6 +33,7 @@ export interface RelatedDivingExcursion {
   _id: string;
   title: LocalizedField;
   slug: { current: string };
+  slugEs?: { current: string } | null;
   shortSummary: LocalizedField;
   price: number;
   duration: LocalizedField;
@@ -55,6 +56,7 @@ export interface IndividualDivingExcursion {
   // Content
   title: LocalizedField;
   slug: { current: string };
+  slugEs?: { current: string } | null;
   externalBookingUrl: string;
   shortSummary: LocalizedField;
   badge: LocalizedField | null;
@@ -109,17 +111,19 @@ export interface IndividualDivingExcursion {
 
 export interface DivingExcursionSlug {
   slug: string;
+  slugEs?: string | null;
 }
 
 // =============================================================================
 // Queries
 // =============================================================================
 
-export const individualDivingExcursionQuery = `*[_type == "divingExcursion" && slug.current == $slug][0] {
+export const individualDivingExcursionQuery = `*[_type == "divingExcursion" && (slug.current == $slug || slugEs.current == $slug)][0] {
   _id,
   _type,
   title,
   slug,
+  slugEs,
   externalBookingUrl,
   shortSummary,
   badge,
@@ -163,6 +167,7 @@ export const individualDivingExcursionQuery = `*[_type == "divingExcursion" && s
     _id,
     title,
     slug,
+    slugEs,
     shortSummary,
     price,
     duration,
@@ -177,7 +182,8 @@ export const individualDivingExcursionQuery = `*[_type == "divingExcursion" && s
 }`;
 
 export const divingExcursionSlugsQuery = `*[_type == "divingExcursion" && defined(slug.current)] {
-  "slug": slug.current
+  "slug": slug.current,
+  "slugEs": slugEs.current
 }`;
 
 // =============================================================================
@@ -200,7 +206,7 @@ export async function getDivingExcursionSlugs(): Promise<DivingExcursionSlug[]> 
 
 import { seoProjection, type SeoData } from "../SEO/seoProjection";
 
-export const divingExcursionSeoQuery = `*[_type == "divingExcursion" && slug.current == $slug][0]{
+export const divingExcursionSeoQuery = `*[_type == "divingExcursion" && (slug.current == $slug || slugEs.current == $slug)][0]{
   "seo": seo { ${seoProjection} }
 }`;
 

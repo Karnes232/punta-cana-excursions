@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Link } from "@/i18n/navigation";
+import { AppLink } from "@/components/ui/AppLink";
 import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
 
 interface ContactCTAContentProps {
@@ -87,7 +87,7 @@ export function ContactCTAContent({
       <div className="flex flex-col sm:flex-row gap-3 flex-shrink-0">
         {/* Primary contact button — solid sunset */}
         {primaryButtonText && (
-          <Link
+          <AppLink
             href={primaryButtonHref}
             className="
               group
@@ -118,12 +118,12 @@ export function ContactCTAContent({
                 d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
               />
             </svg>
-          </Link>
+          </AppLink>
         )}
 
         {/* Secondary contact button — ghost white */}
         {secondaryButtonText && (
-          <Link
+          <AppLink
             href={secondaryButtonHref}
             className="
               inline-flex items-center justify-center gap-2
@@ -138,7 +138,7 @@ export function ContactCTAContent({
             "
           >
             {secondaryButtonText}
-          </Link>
+          </AppLink>
         )}
       </div>
     </div>

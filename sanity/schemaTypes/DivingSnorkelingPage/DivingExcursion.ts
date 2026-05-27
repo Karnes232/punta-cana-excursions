@@ -33,9 +33,9 @@ export const divingExcursion = defineType({
 
     defineField({
       name: "slug",
-      title: "Slug",
+      title: "Slug (English)",
       type: "slug",
-      description: "URL-friendly identifier. Auto-generated from the English title.",
+      description: "English URL segment. Auto-generated from the English title. Used at /scuba-diving/<slug>.",
       group: "content",
       options: {
         source: "title.en",
@@ -48,6 +48,24 @@ export const divingExcursion = defineType({
             .slice(0, 96),
       },
       validation: (rule) => rule.required(),
+    }),
+
+    defineField({
+      name: "slugEs",
+      title: "Slug (Spanish)",
+      type: "slug",
+      description: "Spanish URL segment. Auto-generated from the Spanish title. Used at /es/buceo/<slug>. Falls back to the English slug if empty.",
+      group: "content",
+      options: {
+        source: "title.es",
+        maxLength: 96,
+        slugify: (input: string) =>
+          input
+            .toLowerCase()
+            .replace(/\s+/g, "-")
+            .replace(/[^\w-]+/g, "")
+            .slice(0, 96),
+      },
     }),
 
     defineField({

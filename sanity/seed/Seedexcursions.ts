@@ -11,6 +11,16 @@ const client = createClient({
   useCdn: false,
 });
 
+// Derive a Spanish URL slug from the Spanish title. Matches the schema's
+// slugify (in Excursion.ts) so seeded slugs equal Studio-generated ones.
+function slugify(input: string): string {
+  return input
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^\w-]+/g, "")
+    .slice(0, 96);
+}
+
 // =============================================================================
 // We need ExcursionCategory references — fetch existing ones by slug
 // =============================================================================
@@ -514,6 +524,10 @@ async function seedExcursions() {
       _id: `excursion-${exc.slug}`,
       title: exc.title,
       slug: { _type: "slug", current: exc.slug },
+      slugEs: {
+        _type: "slug",
+        current: exc.title.es ? slugify(exc.title.es) : exc.slug,
+      },
       shortSummary: exc.shortSummary,
       category: { _type: "reference", _ref: categoryId },
       price: exc.price,

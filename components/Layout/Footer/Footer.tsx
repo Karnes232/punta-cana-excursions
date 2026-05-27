@@ -1,4 +1,5 @@
 import { Link } from "@/i18n/navigation";
+import { AppLink } from "@/components/ui/AppLink";
 import ContactItem from "./ContactItem";
 import Image from "next/image";
 import SocialIcon from "./SocialIcon";
@@ -139,12 +140,12 @@ export default function Footer({
                 { label: "Family Tours", href: "/excursions?category=family-tours" },
               ].map((link) => (
                 <li key={link.href}>
-                  <Link
+                  <AppLink
                     href={link.href}
                     className="text-[13px] text-[#9CA3AF] hover:text-white transition-colors duration-150 font-[Inter,sans-serif]"
                   >
                     {link.label}
-                  </Link>
+                  </AppLink>
                 </li>
               ))}
             </ul>
@@ -159,12 +160,12 @@ export default function Footer({
               <ul className="space-y-2">
                 {footerQuickLinks.map((link: FooterQuickLink) => (
                   <li key={link.href}>
-                    <Link
+                    <AppLink
                       href={link.href}
                       className="text-[13px] text-[#9CA3AF] hover:text-white transition-colors duration-150 font-[Inter,sans-serif]"
                     >
                       {link.label[locale as keyof LocalizedField]}
-                    </Link>
+                    </AppLink>
                   </li>
                 ))}
               </ul>
@@ -232,12 +233,12 @@ export default function Footer({
           <ul className="flex flex-wrap justify-center gap-x-4 gap-y-1">
             {legalLinks.map((link) => (
               <li key={link.href}>
-                <Link
+                <AppLink
                   href={link.href}
                   className="text-[12px] text-[#6B7280] hover:text-[#9CA3AF] transition-colors duration-150 font-[Inter,sans-serif]"
                 >
                   {link.label}
-                </Link>
+                </AppLink>
               </li>
             ))}
           </ul>

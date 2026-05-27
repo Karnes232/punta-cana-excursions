@@ -26,7 +26,7 @@ export async function generateMetadata({
     seo: pageSeo?.seo,
     defaults: defaultSeo?.defaultSeo,
     locale: locale as "en" | "es",
-    path: "/privacy-policy",
+    href: "/privacy-policy",
     fallbackTitle: page?.title?.[lk],
   });
 }

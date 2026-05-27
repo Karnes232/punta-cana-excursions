@@ -17,6 +17,7 @@ import {
 import type { Metadata } from "next";
 import { getDefaultSeo } from "@/sanity/queries/SEO/seoProjection";
 import { buildMetadata } from "@/lib/seo/buildMetadata";
+import { localizedSlug } from "@/i18n/navigation";
 import { JsonLd } from "@/components/seo/JsonLd";
 
 export async function generateMetadata({
@@ -35,7 +36,7 @@ export async function generateMetadata({
     seo: pageSeo?.seo,
     defaults: defaultSeo?.defaultSeo,
     locale: locale as "en" | "es",
-    path: "/excursions",
+    href: "/excursions",
     fallbackTitle: excursionsPage?.heroHeadline?.[lk],
     fallbackDescription: excursionsPage?.heroSubheadline?.[lk],
   });
@@ -82,7 +83,7 @@ export default async function Excursions({
       : "all";
 
   const excursions = excursionList.map((exc) => ({
-    slug: exc.slug.current,
+    slug: localizedSlug(locale, exc.slug.current, exc.slugEs?.current),
     title: getLocalized(exc.title, locale),
     summary: getLocalized(exc.shortSummary, locale),
     image: {

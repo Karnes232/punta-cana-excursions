@@ -29,7 +29,7 @@ export function BlogCard({ article, locale, readMoreLabel, minReadLabel }: BlogC
   return (
     <article className="group flex flex-col bg-white rounded-2xl border border-slate-100 overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
       {/* Image */}
-      <Link href={`/blog/${article.slug}`} className="block relative aspect-[16/9] overflow-hidden bg-sand flex-shrink-0">
+      <Link href={{ pathname: "/blog/[slug]", params: { slug: article.slug } }} className="block relative aspect-[16/9] overflow-hidden bg-sand flex-shrink-0">
         {article.featuredImage?.asset?.url ? (
           <Image
             src={article.featuredImage.asset.url}
@@ -71,7 +71,7 @@ export function BlogCard({ article, locale, readMoreLabel, minReadLabel }: BlogC
         </div>
 
         {/* Title */}
-        <Link href={`/blog/${article.slug}`}>
+        <Link href={{ pathname: "/blog/[slug]", params: { slug: article.slug } }}>
           <h2 className="font-heading font-bold text-navy text-base leading-snug mb-2.5 group-hover:text-ocean transition-colors duration-200 line-clamp-2">
             {article.title}
           </h2>
@@ -88,7 +88,7 @@ export function BlogCard({ article, locale, readMoreLabel, minReadLabel }: BlogC
             <span className="font-body text-xs text-slate/50">{formattedDate}</span>
           )}
           <Link
-            href={`/blog/${article.slug}`}
+            href={{ pathname: "/blog/[slug]", params: { slug: article.slug } }}
             className="inline-flex items-center gap-1 font-heading font-semibold text-ocean text-sm hover:text-teal transition-colors duration-150 ml-auto group/link"
           >
             {readMoreLabel}

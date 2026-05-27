@@ -30,6 +30,7 @@ export interface DivingExcursionCard {
   _id: string;
   title: LocalizedString;
   slug: { current: string };
+  slugEs?: { current: string } | null;
   shortSummary: LocalizedText;
   heroImage: {
     url: string;
@@ -95,6 +96,7 @@ const excursionCardProjection = /* groq */ `{
   _id,
   title,
   slug,
+  slugEs,
   shortSummary,
   heroImage {
     "url": asset->url,

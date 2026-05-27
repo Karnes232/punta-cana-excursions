@@ -12,6 +12,16 @@ const client = createClient({
   useCdn: false,
 });
 
+// Derive a Spanish URL slug from the Spanish title. Matches the schema's
+// slugify (in DivingExcursion.ts) so seeded slugs equal Studio-generated ones.
+function slugify(input: string): string {
+  return input
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^\w-]+/g, "")
+    .slice(0, 96);
+}
+
 // =============================================================================
 // Scuba diving excursion seed data
 // =============================================================================
@@ -405,6 +415,10 @@ async function seedDivingExcursions() {
       _id: `diving-excursion-${exc.slug}`,
       title: exc.title,
       slug: { _type: "slug", current: exc.slug },
+      slugEs: {
+        _type: "slug",
+        current: exc.title.es ? slugify(exc.title.es) : exc.slug,
+      },
       shortSummary: exc.shortSummary,
       externalBookingUrl: exc.externalBookingUrl,
       experienceLevel: exc.experienceLevel,

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Link } from "@/i18n/navigation";
+import { AppLink } from "@/components/ui/AppLink";
 import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
 
 /* ---------------------------------------------------------------------------
@@ -88,7 +88,7 @@ export function DivingCTAContent({
       >
         {/* Primary contact link — solid sunset */}
         {primaryButtonText && (
-          <Link
+          <AppLink
             href={primaryButtonHref}
             className="group inline-flex items-center gap-2 px-7 py-3.5 bg-sunset text-white font-heading font-semibold text-[0.9375rem] rounded-full shadow-lg transition-all duration-200 hover:bg-sunset-dark hover:shadow-xl hover:-translate-y-0.5 active:scale-[0.98] min-w-[200px] justify-center"
           >
@@ -106,17 +106,17 @@ export function DivingCTAContent({
             >
               <path d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
             </svg>
-          </Link>
+          </AppLink>
         )}
 
         {/* Secondary link — ghost outline */}
         {secondaryButtonText && (
-          <Link
+          <AppLink
             href={secondaryButtonHref}
             className="inline-flex items-center gap-2 px-7 py-3.5 text-white font-heading font-semibold text-[0.9375rem] rounded-full border border-white/30 transition-all duration-200 hover:bg-white/10 hover:border-white/50 hover:-translate-y-0.5 min-w-[200px] justify-center"
           >
             {secondaryButtonText}
-          </Link>
+          </AppLink>
         )}
       </div>
     </div>

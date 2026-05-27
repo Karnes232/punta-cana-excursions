@@ -23,6 +23,8 @@ import {
 import type { Metadata } from "next";
 import { getDefaultSeo } from "@/sanity/queries/SEO/seoProjection";
 import { buildMetadata } from "@/lib/seo/buildMetadata";
+import { localizedSlug } from "@/i18n/navigation";
+import { AlternateSlugProvider } from "@/components/ui/AlternateSlugProvider";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { setRequestLocale } from "next-intl/server";
 
@@ -44,7 +46,19 @@ export async function generateMetadata({
     seo: pageSeo?.seo,
     defaults: defaultSeo?.defaultSeo,
     locale: locale as "en" | "es",
-    path: `/scuba-diving/${slug}`,
+    href: { pathname: "/scuba-diving/[slug]", params: { slug } },
+    hrefByLocale: {
+      en: {
+        pathname: "/scuba-diving/[slug]",
+        params: { slug: excursion?.slug.current ?? slug },
+      },
+      es: {
+        pathname: "/scuba-diving/[slug]",
+        params: {
+          slug: excursion?.slugEs?.current ?? excursion?.slug.current ?? slug,
+        },
+      },
+    },
     fallbackTitle: getLocalized(excursion?.title, locale),
     fallbackDescription: getLocalized(excursion?.shortSummary, locale),
     fallbackImage: heroImage?.asset?.url
@@ -65,7 +79,10 @@ export async function generateMetadata({
 export async function generateStaticParams() {
   const slugs = await getDivingExcursionSlugs();
   return ["en", "es"].flatMap((locale) =>
-    slugs.map(({ slug }) => ({ locale, slug })),
+    slugs.map(({ slug, slugEs }) => ({
+      locale,
+      slug: locale === "es" ? slugEs || slug : slug,
+    })),
   );
 }
 
@@ -128,7 +145,15 @@ export default async function DivingExcursionDetailPage({
   const equipmentItems = getLocalizedStringArray(excursion.equipmentProvided, locale);
 
   return (
-    <>
+    <AlternateSlugProvider
+      value={{
+        pathname: "/scuba-diving/[slug]",
+        slugByLocale: {
+          en: excursion.slug.current,
+          es: excursion.slugEs?.current ?? excursion.slug.current,
+        },
+      }}
+    >
       <JsonLd data={jsonLd} />
       <ImageGalleryHero
         heroImage={{
@@ -311,8 +336,8 @@ export default async function DivingExcursionDetailPage({
       {excursion.relatedExcursions && excursion.relatedExcursions.length > 0 && (
         <RelatedExcursions
           excursions={excursion.relatedExcursions.map((rel) => ({
-            slug: rel.slug.current,
-            href: `/scuba-diving/${rel.slug.current}`,
+            slug: localizedSlug(locale, rel.slug.current, rel.slugEs?.current),
+            pathname: "/scuba-diving/[slug]" as const,
             title: getLocalized(rel.title, locale),
             summary: getLocalized(rel.shortSummary, locale),
             image: {
@@ -337,6 +362,6 @@ export default async function DivingExcursionDetailPage({
           }}
         />
       )}
-    </>
+    </AlternateSlugProvider>
   );
 }

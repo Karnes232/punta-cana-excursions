@@ -1,4 +1,4 @@
-import { Link } from "@/i18n/navigation";
+import { AppLink } from "@/components/ui/AppLink";
 import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
 
 interface AboutCTAProps {
@@ -71,7 +71,7 @@ export function AboutCTA({
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           {/* Primary contact link — solid sunset */}
           {primaryButtonText && (
-            <Link
+            <AppLink
               href={primaryButtonHref}
               className="group inline-flex items-center gap-2 px-7 py-4 rounded-full bg-sunset text-white font-heading font-bold text-base shadow-lg hover:bg-sunset-dark hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200"
             >
@@ -85,17 +85,17 @@ export function AboutCTA({
               >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
               </svg>
-            </Link>
+            </AppLink>
           )}
 
           {/* Secondary link — ghost white outline */}
           {secondaryButtonText && (
-            <Link
+            <AppLink
               href={secondaryButtonHref}
               className="inline-flex items-center gap-2 px-7 py-4 rounded-full border-2 border-white/40 text-white font-heading font-bold text-base hover:bg-white/10 hover:border-white/60 transition-all duration-200"
             >
               {secondaryButtonText}
-            </Link>
+            </AppLink>
           )}
         </div>
       </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Link } from "@/i18n/navigation";
+import { AppLink } from "@/components/ui/AppLink";
 import Logo from "./Logo";
 import {
   LocalizedField,
@@ -67,9 +67,10 @@ export default function Navbar({
           {/* Center: Nav links (desktop) */}
           <nav className="hidden lg:flex items-center gap-0.5 mx-4">
             {navLinks.map((item) => (
-              <Link
+              <AppLink
                 key={item.href}
                 href={item.href}
+                external={item.isExternal}
                 onClick={() => setActiveHref(item.href)}
                 className={`text-[13px] font-semibold px-3 py-2 rounded-md transition-colors duration-150 whitespace-nowrap ${
                   activeHref === item.href
@@ -79,7 +80,7 @@ export default function Navbar({
               >
                 {/* Replace with t(item.label) when next-intl is wired */}
                 {item.label[locale]?.toUpperCase()}
-              </Link>
+              </AppLink>
             ))}
           </nav>
 

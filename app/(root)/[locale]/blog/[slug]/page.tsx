@@ -33,7 +33,7 @@ export async function generateMetadata({
     seo: pageSeo?.seo,
     defaults: defaultSeo?.defaultSeo,
     locale: locale as "en" | "es",
-    path: `/blog/${slug}`,
+    href: { pathname: "/blog/[slug]", params: { slug } },
     fallbackTitle: article?.title ?? undefined,
     fallbackDescription: article?.excerpt ?? undefined,
     fallbackImage: featuredImage?.asset?.url
