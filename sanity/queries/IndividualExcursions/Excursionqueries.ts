@@ -221,6 +221,21 @@ export interface ExcursionListItem {
 export interface ExcursionSlug {
   slug: string;
   slugEs?: string | null;
+  _updatedAt?: string;
+  noIndex?: boolean | null;
+}
+
+export interface ExcursionLlmsItem {
+  title: LocalizedField;
+  slug: { current: string };
+  slugEs?: { current: string } | null;
+  shortSummary: LocalizedField;
+  fullDescription?: LocalizedBlockContent | null;
+  highlights?: LocalizedStringArray | null;
+  whatsIncluded?: LocalizedStringArray | null;
+  price: number;
+  duration: LocalizedField;
+  noIndex?: boolean | null;
 }
 
 // =============================================================================
@@ -360,7 +375,22 @@ export const excursionListQuery = `*[_type == "excursion"] | order(sortOrder asc
 
 export const excursionSlugsQuery = `*[_type == "excursion" && defined(slug.current)] {
     "slug": slug.current,
-    "slugEs": slugEs.current
+    "slugEs": slugEs.current,
+    _updatedAt,
+    "noIndex": seo.noIndex
+}`;
+
+export const excursionsForLlmsQuery = `*[_type == "excursion" && defined(slug.current)] | order(sortOrder asc) {
+    title,
+    slug,
+    slugEs,
+    shortSummary,
+    fullDescription,
+    highlights,
+    whatsIncluded,
+    price,
+    duration,
+    "noIndex": seo.noIndex
 }`;
 
 export const featuredExcursionsQuery = `*[_type == "excursion" && isFeatured == true] | order(sortOrder asc) [0...3] {
@@ -413,6 +443,10 @@ export async function getFeaturedExcursions(): Promise<ExcursionListItem[]> {
 
 export async function getExcursionSlugs(): Promise<ExcursionSlug[]> {
   return await client.fetch(excursionSlugsQuery);
+}
+
+export async function getExcursionsForLlms(): Promise<ExcursionLlmsItem[]> {
+  return await client.fetch(excursionsForLlmsQuery);
 }
 
 // =============================================================================

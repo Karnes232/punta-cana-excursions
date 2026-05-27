@@ -112,6 +112,20 @@ export interface IndividualDivingExcursion {
 export interface DivingExcursionSlug {
   slug: string;
   slugEs?: string | null;
+  _updatedAt?: string;
+  noIndex?: boolean | null;
+}
+
+export interface DivingLlmsItem {
+  title: LocalizedField;
+  slug: { current: string };
+  slugEs?: { current: string } | null;
+  shortSummary: LocalizedField;
+  fullDescription?: LocalizedBlockContent | null;
+  highlights?: LocalizedStringArray | null;
+  price: number;
+  duration: LocalizedField;
+  noIndex?: boolean | null;
 }
 
 // =============================================================================
@@ -183,7 +197,21 @@ export const individualDivingExcursionQuery = `*[_type == "divingExcursion" && (
 
 export const divingExcursionSlugsQuery = `*[_type == "divingExcursion" && defined(slug.current)] {
   "slug": slug.current,
-  "slugEs": slugEs.current
+  "slugEs": slugEs.current,
+  _updatedAt,
+  "noIndex": seo.noIndex
+}`;
+
+export const divingForLlmsQuery = `*[_type == "divingExcursion" && defined(slug.current)] | order(sortOrder asc) {
+  title,
+  slug,
+  slugEs,
+  shortSummary,
+  fullDescription,
+  highlights,
+  price,
+  duration,
+  "noIndex": seo.noIndex
 }`;
 
 // =============================================================================
@@ -198,6 +226,10 @@ export async function getIndividualDivingExcursion(
 
 export async function getDivingExcursionSlugs(): Promise<DivingExcursionSlug[]> {
   return await client.fetch(divingExcursionSlugsQuery);
+}
+
+export async function getDivingForLlms(): Promise<DivingLlmsItem[]> {
+  return await client.fetch(divingForLlmsQuery);
 }
 
 // =============================================================================

@@ -56,6 +56,22 @@ export interface BlogSlug {
   slug: string;
 }
 
+export interface BlogSitemapEntry {
+  slug: string;
+  language: string;
+  translationGroup: string;
+  _updatedAt: string;
+}
+
+export interface BlogArticleLlms {
+  title: string;
+  slug: string;
+  language: string;
+  excerpt: string;
+  publishedAt: string;
+  body: PortableTextBlock[];
+}
+
 export interface BlogCategoryItem {
   _id: string;
   slug: string;
@@ -118,6 +134,14 @@ const translationsQuery = /* groq */ `*[
 
 const slugsQuery = /* groq */ `*[_type == "blogArticle"] { "slug": slug.current }`;
 
+const sitemapEntriesQuery = /* groq */ `*[_type == "blogArticle" && defined(slug.current)] {
+  "slug": slug.current, language, translationGroup, _updatedAt
+}`;
+
+const articlesForLlmsQuery = /* groq */ `*[_type == "blogArticle" && defined(slug.current)] | order(publishedAt desc) {
+  title, "slug": slug.current, language, excerpt, publishedAt, body
+}`;
+
 const categoriesQuery = /* groq */ `*[_type == "blogCategory"] | order(sortOrder asc) {
   _id, "slug": slug.current, title, sortOrder
 }`;
@@ -158,6 +182,14 @@ export async function getBlogArticleTranslations(
 
 export async function getBlogArticleSlugs(): Promise<BlogSlug[]> {
   return client.fetch<BlogSlug[]>(slugsQuery);
+}
+
+export async function getBlogSitemapEntries(): Promise<BlogSitemapEntry[]> {
+  return client.fetch<BlogSitemapEntry[]>(sitemapEntriesQuery);
+}
+
+export async function getBlogArticlesForLlms(): Promise<BlogArticleLlms[]> {
+  return client.fetch<BlogArticleLlms[]>(articlesForLlmsQuery);
 }
 
 // =============================================================================
