@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
-import { generateHreflangUrls, getLocalizedUrl } from "@/i18n/hreflang";
+import { getLocalizedUrl } from "@/i18n/hreflang";
 import type { AppHref } from "@/i18n/navigation";
+import { localizedSlug } from "@/i18n/navigation";
 import { getExcursionSlugs } from "@/sanity/queries/IndividualExcursions/Excursionqueries";
 import { getDivingExcursionSlugs } from "@/sanity/queries/DivingSnorkelingPage/IndividualDivingExcursion";
 import {
@@ -11,28 +12,8 @@ import {
 export const revalidate = 3600;
 
 type ChangeFreq = MetadataRoute.Sitemap[number]["changeFrequency"];
-
-/** Build a bilingual sitemap entry from per-locale hrefs. */
-function entry(
-  hrefEn: AppHref,
-  hrefEs: AppHref,
-  opts: {
-    priority: number;
-    changeFrequency: ChangeFreq;
-    lastModified?: string | Date;
-  },
-): MetadataRoute.Sitemap[number] {
-  const urls = generateHreflangUrls({ en: hrefEn, es: hrefEs });
-  return {
-    url: urls.en,
-    lastModified: opts.lastModified ? new Date(opts.lastModified) : new Date(),
-    changeFrequency: opts.changeFrequency,
-    priority: opts.priority,
-    alternates: {
-      languages: { en: urls.en, es: urls.es, "x-default": urls.en },
-    },
-  };
-}
+type Locale = "en" | "es";
+const LOCALES: Locale[] = ["en", "es"];
 
 // Static (non-dynamic) pages — keys match routing.pathnames.
 const STATIC_PAGES: {
@@ -53,9 +34,9 @@ const STATIC_PAGES: {
   { href: "/cancellation-policy", priority: 0.3, changeFrequency: "yearly" },
 ];
 
-/** Public URL for a blog article, keyed off the document's language. */
+/** Public URL for a blog article, keyed off the document's language (en/es prefix). */
 function blogUrl(b: BlogSitemapEntry): string {
-  const locale = b.language === "es" ? "es" : "en";
+  const locale: Locale = b.language === "es" ? "es" : "en";
   return getLocalizedUrl(locale, {
     pathname: "/blog/[slug]",
     params: { slug: b.slug },
@@ -69,58 +50,53 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     getBlogSitemapEntries(),
   ]);
 
-  const staticEntries = STATIC_PAGES.map((p) =>
-    entry(p.href, p.href, {
-      priority: p.priority,
+  const now = new Date();
+
+  // One clean <url> per locale for every static page (en unprefixed, es localized).
+  const staticEntries: MetadataRoute.Sitemap = STATIC_PAGES.flatMap((p) =>
+    LOCALES.map((locale) => ({
+      url: getLocalizedUrl(locale, p.href),
+      lastModified: now,
       changeFrequency: p.changeFrequency,
-    }),
+      priority: p.priority,
+    })),
   );
 
-  const excursionEntries = excursions
+  const excursionEntries: MetadataRoute.Sitemap = excursions
     .filter((e) => !e.noIndex)
-    .map((e) =>
-      entry(
-        { pathname: "/excursions/[slug]", params: { slug: e.slug } },
-        { pathname: "/excursions/[slug]", params: { slug: e.slugEs || e.slug } },
-        { priority: 0.7, changeFrequency: "monthly", lastModified: e._updatedAt },
-      ),
+    .flatMap((e) =>
+      LOCALES.map((locale) => ({
+        url: getLocalizedUrl(locale, {
+          pathname: "/excursions/[slug]",
+          params: { slug: localizedSlug(locale, e.slug, e.slugEs) },
+        }),
+        lastModified: e._updatedAt ? new Date(e._updatedAt) : now,
+        changeFrequency: "monthly" as ChangeFreq,
+        priority: 0.7,
+      })),
     );
 
-  const divingEntries = diving
+  const divingEntries: MetadataRoute.Sitemap = diving
     .filter((d) => !d.noIndex)
-    .map((d) =>
-      entry(
-        { pathname: "/scuba-diving/[slug]", params: { slug: d.slug } },
-        { pathname: "/scuba-diving/[slug]", params: { slug: d.slugEs || d.slug } },
-        { priority: 0.7, changeFrequency: "monthly", lastModified: d._updatedAt },
-      ),
+    .flatMap((d) =>
+      LOCALES.map((locale) => ({
+        url: getLocalizedUrl(locale, {
+          pathname: "/scuba-diving/[slug]",
+          params: { slug: localizedSlug(locale, d.slug, d.slugEs) },
+        }),
+        lastModified: d._updatedAt ? new Date(d._updatedAt) : now,
+        changeFrequency: "monthly" as ChangeFreq,
+        priority: 0.7,
+      })),
     );
 
-  // Group blog articles by translationGroup to wire en↔es reciprocal hreflang.
-  const groups = new Map<string, { en?: BlogSitemapEntry; es?: BlogSitemapEntry }>();
-  for (const b of blog) {
-    const key = b.translationGroup || b.slug;
-    const g = groups.get(key) ?? {};
-    if (b.language === "en") g.en = b;
-    else if (b.language === "es") g.es = b;
-    groups.set(key, g);
-  }
-
-  const blogEntries = blog.map((b) => {
-    const g = groups.get(b.translationGroup || b.slug) ?? {};
-    const languages: Record<string, string> = {};
-    if (g.en) languages.en = blogUrl(g.en);
-    if (g.es) languages.es = blogUrl(g.es);
-    if (g.en) languages["x-default"] = blogUrl(g.en);
-
-    return {
-      url: blogUrl(b),
-      lastModified: b._updatedAt ? new Date(b._updatedAt) : new Date(),
-      changeFrequency: "monthly" as ChangeFreq,
-      priority: 0.6,
-      ...(Object.keys(languages).length > 1 ? { alternates: { languages } } : {}),
-    };
-  });
+  // Blog articles are per-language documents — one entry each at its own URL.
+  const blogEntries: MetadataRoute.Sitemap = blog.map((b) => ({
+    url: blogUrl(b),
+    lastModified: b._updatedAt ? new Date(b._updatedAt) : now,
+    changeFrequency: "monthly" as ChangeFreq,
+    priority: 0.6,
+  }));
 
   return [
     ...staticEntries,
