@@ -55,7 +55,7 @@ export function ContactForm({
     excursion: "",
     message: "",
   });
-  const [submitted, setSubmitted] = useState(true);
+  const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [errors, setErrors] = useState<Partial<FormState>>({});
   const [submitError, setSubmitError] = useState<string | null>(null);

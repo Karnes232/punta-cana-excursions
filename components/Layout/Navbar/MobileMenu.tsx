@@ -61,6 +61,7 @@ export default function MobileMenu({
             className="flex-1 text-center"
             label={navCtaButton?.label[locale] as string}
             href={navCtaButton.href}
+            onClick={onClose}
           />
         </div>
       </nav>

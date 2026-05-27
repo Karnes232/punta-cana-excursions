@@ -100,6 +100,7 @@ export default function Navbar({
               className="text-[12px] px-4 py-2"
               label={navCtaButton?.label[locale] as string}
               href={navCtaButton.href}
+              onClick={() => setMenuOpen(false)}
             />
             <button
               onClick={() => setMenuOpen((v) => !v)}
