@@ -19,6 +19,7 @@ import { getDefaultSeo } from "@/sanity/queries/SEO/seoProjection";
 import { urlFor } from "@/sanity/lib/image";
 import { SITE_URL } from "@/lib/seo/constants";
 import Footer from "@/components/Layout/Footer/Footer";
+import DeferredAnalytics from "@/components/Analytics/DeferredAnalytics";
 
 export async function generateMetadata({
   params,
@@ -138,6 +139,7 @@ export default async function RootLayout({
             }
           />
         </NextIntlClientProvider>
+        <DeferredAnalytics />
       </body>
     </html>
   );
