@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import { StarRating } from "./StarRating";
 
 interface ReviewData {
@@ -8,12 +11,38 @@ interface ReviewData {
   excursionTitle?: string;
 }
 
+export interface ReviewCardLabels {
+  readMore: string;
+  readLess: string;
+}
+
 interface ReviewCardProps {
   review: ReviewData;
   index: number;
+  labels: ReviewCardLabels;
 }
 
-export function ReviewCard({ review }: ReviewCardProps) {
+export function ReviewCard({ review, labels }: ReviewCardProps) {
+  const [expanded, setExpanded] = useState(false);
+  const [isClamped, setIsClamped] = useState(false);
+  const textRef = useRef<HTMLParagraphElement>(null);
+
+  // Detect if the review text actually overflows the 4-line clamp; only then
+  // do we render the Read more / Read less button.
+  useEffect(() => {
+    const el = textRef.current;
+    if (!el) return;
+    const check = () => {
+      const wasExpanded = expanded;
+      // Temporarily strip the clamp so we can measure full content height.
+      if (wasExpanded) return; // when expanded we can't tell — leave button on
+      setIsClamped(el.scrollHeight > el.clientHeight + 1);
+    };
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, [review.text, expanded]);
+
   // Generate initials for avatar
   const initials = review.name
     .split(" ")
@@ -24,7 +53,7 @@ export function ReviewCard({ review }: ReviewCardProps) {
 
   return (
     <div className="flex-shrink-0 w-[85vw] sm:w-[380px] lg:w-auto">
-      <div className="bg-white rounded-xl p-6 md:p-7 shadow-sm h-full flex flex-col">
+      <div className="bg-white rounded-xl p-6 md:p-7 shadow-sm flex flex-col">
         {/* Star rating */}
         <div className="mb-4">
           <StarRating rating={review.rating} />
@@ -41,10 +70,42 @@ export function ReviewCard({ review }: ReviewCardProps) {
           </svg>
         </div>
 
-        {/* Review text */}
-        <p className="font-body text-slate text-[0.9375rem] leading-relaxed mb-6 flex-1">
+        {/* Review text — clamped to 4 lines unless expanded */}
+        <p
+          ref={textRef}
+          className={`font-body text-slate text-[0.9375rem] leading-relaxed ${
+            expanded ? "" : "line-clamp-6"
+          } ${isClamped ? "mb-2" : "mb-6"}`}
+        >
           {review.text}
         </p>
+
+        {isClamped && (
+          <button
+            type="button"
+            onClick={() => setExpanded((v) => !v)}
+            aria-expanded={expanded}
+            className="self-start mb-6 inline-flex items-center gap-1 text-sm font-heading font-semibold text-ocean hover:text-teal transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ocean"
+          >
+            {expanded ? labels.readLess : labels.readMore}
+            <svg
+              className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                expanded ? "rotate-180" : ""
+              }`}
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2.5}
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+              />
+            </svg>
+          </button>
+        )}
 
         {/* Reviewer info */}
         <div className="flex items-center gap-3 pt-4 border-t border-sand-dark">

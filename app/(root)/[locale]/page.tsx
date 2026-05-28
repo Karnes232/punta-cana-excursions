@@ -256,6 +256,11 @@ export default async function Home({
             excursionTitle: review.excursionTitle,
           })) ?? []
         }
+        labels={
+          locale === "es"
+            ? { readMore: "Leer más", readLess: "Leer menos" }
+            : { readMore: "Read more", readLess: "Read less" }
+        }
       />
        <FaqPreview
         eyebrow={

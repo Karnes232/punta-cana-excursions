@@ -1,5 +1,5 @@
 import { ReviewsSectionHeader } from "./ReviewsSectionHeader";
-import { ReviewCard } from "./ReviewCard";
+import { ReviewCard, type ReviewCardLabels } from "./ReviewCard";
 import { ReviewsScrollWrapper } from "./ReviewsScrollWrapper";
 
 export interface ReviewData {
@@ -15,6 +15,7 @@ interface ReviewsProps {
   heading: string;
   subheading?: string;
   reviews: ReviewData[];
+  labels: ReviewCardLabels;
 }
 
 export function Reviews({
@@ -22,6 +23,7 @@ export function Reviews({
   heading,
   subheading,
   reviews,
+  labels,
 }: ReviewsProps) {
   return (
     <section className="relative py-20 md:py-28 section-sand overflow-hidden">
@@ -36,7 +38,12 @@ export function Reviews({
       {/* Horizontal scroll on mobile/tablet, grid on large desktop */}
       <ReviewsScrollWrapper>
         {reviews.map((review, index) => (
-          <ReviewCard key={index} review={review} index={index} />
+          <ReviewCard
+            key={index}
+            review={review}
+            index={index}
+            labels={labels}
+          />
         ))}
       </ReviewsScrollWrapper>
     </section>

@@ -128,6 +128,7 @@ export function ReviewsScrollWrapper({ children }: ReviewsScrollWrapperProps) {
         ref={scrollRef}
         className="
           flex lg:grid lg:grid-cols-3
+          items-start
           gap-5 lg:gap-6
           overflow-x-auto lg:overflow-visible
           px-5 sm:px-8 lg:px-12
