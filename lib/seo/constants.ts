@@ -1,1 +1,1 @@
-export const SITE_URL = "https://www.puntacana-excursions.com";
+export const SITE_URL = "https://puntacana-excursions.com";
