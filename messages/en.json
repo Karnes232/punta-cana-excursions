@@ -15,7 +15,9 @@
     "contact": "Contact",
     "privacyPolicy": "Privacy Policy",
     "termsOfService": "Terms of Service",
-    "cancellationPolicy": "Cancellation Policy"
+    "cancellationPolicy": "Cancellation Policy",
+    "builtBy": "Built by",
+    "developedBy": "Web Development in the Dominican Republic"
   },
   "scubaDiving": {
     "sectionHeading": "Scuba Diving Excursions",

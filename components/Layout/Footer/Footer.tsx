@@ -10,6 +10,7 @@ import {
   SocialLink,
 } from "@/sanity/queries/GeneralLayout/generalLayoutQuery";
 import { useTranslations } from "next-intl";
+import BuiltBy from "./BuiltBy";
 export default function Footer({
   locale,
   companyName,
@@ -224,7 +225,7 @@ export default function Footer({
         {/* WhatsApp CTA band */}
         {/* <WhatsAppCtaBand phone={data.phone} /> */}
         {/* Bottom strip */}
-        <div className="border-t border-white/10 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="border-t border-white/10 pt-5 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-[12px] text-[#6B7280] font-[Inter,sans-serif] text-center sm:text-left">
             © {currentYear}{" "}
             {companyName ?? "Punta Cana Excursions by Grand Bay"}. All rights
@@ -235,13 +236,16 @@ export default function Footer({
               <li key={link.href}>
                 <AppLink
                   href={link.href}
-                  className="text-[12px] text-[#6B7280] hover:text-[#9CA3AF] transition-colors duration-150 font-[Inter,sans-serif]"
+                  className="text-[12px] text-[#6B7280] hover:text- transition-colors duration-150 font-[Inter,sans-serif]"
                 >
                   {link.label}
                 </AppLink>
               </li>
             ))}
           </ul>
+        </div>
+        <div className="flex justify-center mb-5">
+        <BuiltBy /> 
         </div>
       </div>
     </footer>
