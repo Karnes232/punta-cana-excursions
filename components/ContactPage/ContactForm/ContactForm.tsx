@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { WordRevealHeading } from "@/components/ui/WordRevealHeading";
 
 interface ContactFormProps {
@@ -59,6 +59,9 @@ export function ContactForm({
   const [submitting, setSubmitting] = useState(false);
   const [errors, setErrors] = useState<Partial<FormState>>({});
   const [submitError, setSubmitError] = useState<string | null>(null);
+  // Anti-spam: hidden honeypot field + form render timestamp.
+  const [honeypot, setHoneypot] = useState("");
+  const mountedAt = useRef(Date.now());
 
   function validate(): boolean {
     const newErrors: Partial<FormState> = {};
@@ -99,6 +102,8 @@ export function ContactForm({
           hotel: form.hotel.trim() || undefined,
           excursion: form.excursion.trim() || undefined,
           message: form.message.trim(),
+          honeypot,
+          elapsedMs: Date.now() - mountedAt.current,
         }),
       });
 
@@ -164,6 +169,24 @@ export function ContactForm({
       />
 
       <form onSubmit={handleSubmit} noValidate className="space-y-5">
+        {/* Honeypot — hidden from real users; bots that auto-fill it are dropped */}
+        <input
+          type="text"
+          name="company"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          value={honeypot}
+          onChange={(e) => setHoneypot(e.target.value)}
+          style={{
+            position: "absolute",
+            left: "-9999px",
+            width: 1,
+            height: 1,
+            opacity: 0,
+          }}
+        />
+
         {/* Name */}
         <div>
           <label className="block font-body text-sm font-medium text-navy mb-1.5">

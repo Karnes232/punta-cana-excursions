@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { checkBotId } from "botid/server";
 import { OperatorInquiryEmail } from "@/lib/email/inquiryEmail";
+import { looksLikeSpam } from "@/lib/antispam";
 
 interface InquiryPayload {
   excursionTitle: string;
@@ -10,6 +12,8 @@ interface InquiryPayload {
   phone?: string;
   hotel?: string;
   message?: string;
+  honeypot?: string;
+  elapsedMs?: number;
 }
 
 function isValid(payload: unknown): payload is InquiryPayload {
@@ -36,6 +40,17 @@ export async function POST(request: Request) {
 
   if (!isValid(payload)) {
     return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
+  }
+
+  // Invisible bot check (Vercel BotID) — runs only on Vercel; locally returns isBot:false.
+  const verification = await checkBotId();
+  if (verification.isBot) {
+    return NextResponse.json({ error: "Access denied" }, { status: 403 });
+  }
+
+  // Honeypot + submit-timing trap. Silently drop (no email, no signal to the bot).
+  if (looksLikeSpam({ honeypot: payload.honeypot, elapsedMs: payload.elapsedMs })) {
+    return NextResponse.json({ ok: true });
   }
 
   const resendKey = process.env.RESEND_API_KEY;

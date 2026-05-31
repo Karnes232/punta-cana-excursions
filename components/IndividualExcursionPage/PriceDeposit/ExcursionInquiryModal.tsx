@@ -36,6 +36,9 @@ export function ExcursionInquiryModal({
   const [errors, setErrors] = useState<Partial<FormState>>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  // Anti-spam: hidden honeypot field + render timestamp (reset each time the modal opens).
+  const [honeypot, setHoneypot] = useState("");
+  const mountedAt = useRef(Date.now());
 
   // Close on Escape
   useEffect(() => {
@@ -51,6 +54,7 @@ export function ExcursionInquiryModal({
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
+      mountedAt.current = Date.now();
     } else {
       document.body.style.overflow = "";
     }
@@ -66,6 +70,7 @@ export function ExcursionInquiryModal({
         setSubmitted(false);
         setSubmitting(false);
         setSubmitError(null);
+        setHoneypot("");
       }, 300);
     }
   }, [isOpen]);
@@ -108,6 +113,8 @@ export function ExcursionInquiryModal({
           phone: form.phone.trim() || undefined,
           hotel: form.hotel.trim() || undefined,
           message: form.message.trim() || undefined,
+          honeypot,
+          elapsedMs: Date.now() - mountedAt.current,
         }),
       });
 
@@ -194,6 +201,24 @@ export function ExcursionInquiryModal({
             </div>
           ) : (
             <form onSubmit={handleSubmit} noValidate className="space-y-4">
+              {/* Honeypot — hidden from real users; bots that auto-fill it are dropped */}
+              <input
+                type="text"
+                name="company"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
+                style={{
+                  position: "absolute",
+                  left: "-9999px",
+                  width: 1,
+                  height: 1,
+                  opacity: 0,
+                }}
+              />
+
               {/* Name */}
               <div>
                 <label className="block font-body text-sm font-medium text-navy mb-1.5">
