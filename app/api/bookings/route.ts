@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { client } from "@/sanity/lib/client";
 import { capturePayPalOrder, getPayPalOrder } from "@/lib/paypal";
+import { recordBooking } from "@/lib/supabase/server";
 import {
   CustomerBookingEmail,
   OperatorBookingEmail,
@@ -158,6 +159,27 @@ export async function POST(request: Request) {
 
   const totalPrice = excursion.price * totalGuests;
   const remainingBalance = (totalPrice - Number(captureAmount)).toFixed(2);
+
+  // Persist the booking ledger BEFORE emails so a paid booking is never lost.
+  // Best-effort + idempotent on paypal_order_id; never blocks the response.
+  await recordBooking({
+    paypal_order_id: orderID,
+    excursion_id: excursionId,
+    excursion_title: excursionTitle,
+    locale,
+    customer_name: formData.name,
+    email: formData.email,
+    phone: formData.phone,
+    hotel: formData.hotel,
+    tour_date: formData.date,
+    time_slot: formData.timeSlot ?? null,
+    adults: formData.adults,
+    children: formData.children,
+    deposit_paid: Number(captureAmount),
+    currency: captureCurrency ?? "USD",
+    total_price: totalPrice,
+    remaining_balance: Number(remainingBalance),
+  });
 
   // Sanity CDN supports query params for sizing; cap at ~200px wide for retina
   const logoUrl = branding?.logoUrl

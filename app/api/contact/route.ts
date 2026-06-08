@@ -3,6 +3,7 @@ import { Resend } from "resend";
 import { checkBotId } from "botid/server";
 import { OperatorContactEmail } from "@/lib/email/contactEmail";
 import { looksLikeSpam } from "@/lib/antispam";
+import { recordFormSubmission } from "@/lib/supabase/server";
 
 interface ContactPayload {
   locale: "en" | "es";
@@ -64,6 +65,18 @@ export async function POST(request: Request) {
       { status: 500 },
     );
   }
+
+  // Persist an audit-trail row (best-effort, non-blocking — never affects the response).
+  await recordFormSubmission({
+    type: "contact",
+    locale: payload.locale,
+    name: payload.name,
+    email: payload.email,
+    phone: payload.phone ?? null,
+    hotel: payload.hotel ?? null,
+    excursion: payload.excursion ?? null,
+    message: payload.message,
+  });
 
   const resend = new Resend(resendKey);
 
