@@ -19,6 +19,11 @@ export const routing = defineRouting({
   defaultLocale: "en",
   localePrefix: "as-needed",
   localeDetection: false,
+  // We emit correct hreflang in each page's <head> via generateMetadata. The
+  // automatic alternate `Link` header would otherwise advertise every routing
+  // locale using the SAME slug — wrong for our en/es-only site pages and our
+  // per-document blog slugs (it generated ~330 internal 404s for Ahrefs).
+  alternateLinks: false,
   // Localized URL segments. Keys are the canonical (English) pathnames that
   // match the file-system routes under app/(root)/[locale]/. The es value is the
   // public Spanish URL segment — next-intl rewrites it back to the canonical

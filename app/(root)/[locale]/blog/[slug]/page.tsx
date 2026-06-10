@@ -1,5 +1,4 @@
 import { redirect } from "@/i18n/navigation";
-import { notFound } from "next/navigation";
 import { BlogPostHero } from "@/components/IndividualBlogPost/BlogPostHero/BlogPostHero";
 import { BlogPostBody } from "@/components/IndividualBlogPost/BlogPostBody/BlogPostBody";
 import { BlogPostTranslations } from "@/components/IndividualBlogPost/BlogPostTranslations/BlogPostTranslations";
@@ -100,9 +99,15 @@ export default async function BlogArticlePage({
   }
 
   // Each article is one language with its own slug — only serve it under its own
-  // locale prefix (e.g. a French article only at /fr/blog/<slug>), so the URL
-  // locale and <html lang> always match the content and we avoid duplicates.
-  if (article!.language !== locale) notFound();
+  // locale prefix (e.g. a French article only at /fr/blog/<slug>). If reached
+  // under the wrong prefix, redirect to the correct-locale URL so the URL locale
+  // and <html lang> always match the content (no duplicates, no 404).
+  if (article!.language !== locale) {
+    redirect({
+      href: { pathname: "/blog/[slug]", params: { slug } },
+      locale: article!.language as BlogLocale,
+    });
+  }
 
   const jsonLd = pageSeo?.seo?.structuredData;
 

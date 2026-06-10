@@ -29,9 +29,15 @@ export function BlogPostTranslations({
 
   function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
     const slug = e.target.value;
-    if (slug !== currentSlug) {
-      router.push({ pathname: "/blog/[slug]", params: { slug } });
-    }
+    if (slug === currentSlug) return;
+    // Each sibling lives under its own locale prefix (its own language version),
+    // so switch the locale too — otherwise we'd push the sibling slug under the
+    // current locale and land on a wrong-locale URL.
+    const target = options.find((o) => o.slug === slug);
+    router.push(
+      { pathname: "/blog/[slug]", params: { slug } },
+      { locale: target?.language as BlogLocale },
+    );
   }
 
   return (
