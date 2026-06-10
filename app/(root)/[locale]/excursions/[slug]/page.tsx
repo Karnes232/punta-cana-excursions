@@ -26,6 +26,7 @@ import { buildMetadata } from "@/lib/seo/buildMetadata";
 import { localizedSlug } from "@/i18n/navigation";
 import { AlternateSlugProvider } from "@/components/ui/AlternateSlugProvider";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { assertSiteLocale } from "@/i18n/siteLocale";
 
 export async function generateMetadata({
   params,
@@ -85,6 +86,7 @@ export default async function ExcursionPage({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
+  assertSiteLocale(locale);
   const [excursion, pageSeo] = await Promise.all([
     getIndividualExcursion(slug),
     getIndividualExcursionSeo(slug),

@@ -9,6 +9,7 @@ import type { Metadata } from "next";
 import { getDefaultSeo } from "@/sanity/queries/SEO/seoProjection";
 import { buildMetadata } from "@/lib/seo/buildMetadata";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { assertSiteLocale } from "@/i18n/siteLocale";
 
 export async function generateMetadata({
   params,
@@ -41,6 +42,8 @@ export default async function PrivacyPolicyPage({
     getPrivacyPolicy(),
     getLegalDocumentSeo("privacy-policy"),
   ]);
+
+  assertSiteLocale(locale);
 
   const lk = locale as keyof LocalizedField;
   const jsonLd =

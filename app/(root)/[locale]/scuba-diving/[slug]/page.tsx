@@ -26,6 +26,7 @@ import { buildMetadata } from "@/lib/seo/buildMetadata";
 import { localizedSlug } from "@/i18n/navigation";
 import { AlternateSlugProvider } from "@/components/ui/AlternateSlugProvider";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { assertSiteLocale } from "@/i18n/siteLocale";
 import { setRequestLocale } from "next-intl/server";
 
 export const revalidate = 60;
@@ -108,6 +109,7 @@ export default async function DivingExcursionDetailPage({
 }) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
+  assertSiteLocale(locale);
   const [excursion, pageSeo] = await Promise.all([
     getIndividualDivingExcursion(slug),
     getDivingExcursionSeo(slug),

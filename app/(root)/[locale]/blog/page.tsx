@@ -13,6 +13,7 @@ import type { Metadata } from "next";
 import { getDefaultSeo } from "@/sanity/queries/SEO/seoProjection";
 import { buildMetadata } from "@/lib/seo/buildMetadata";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { assertSiteLocale } from "@/i18n/siteLocale";
 
 export async function generateMetadata({
   params,
@@ -44,6 +45,8 @@ export default async function BlogIndexPage({
   searchParams: Promise<{ lang?: string; category?: string }>;
 }) {
   const [{ locale }, { lang, category }] = await Promise.all([params, searchParams]);
+
+  assertSiteLocale(locale);
 
   const defaultLang = locale === "es" ? "es" : "en";
   const activeLang = lang ?? defaultLang;

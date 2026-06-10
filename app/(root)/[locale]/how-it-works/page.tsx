@@ -10,6 +10,7 @@ import {
 } from "@/sanity/queries/GeneralLayout/generalLayoutQuery";
 import { buildMetadata } from "@/lib/seo/buildMetadata";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { assertSiteLocale } from "@/i18n/siteLocale";
 import { HowItWorksHero } from "@/components/HowItWorksPage/HowItWorksHero";
 import { HowItWorksIntro } from "@/components/HowItWorksPage/HowItWorksIntro";
 import { HowBookingWorks } from "@/components/HomePage/HowBookingWorks/HowBookingWorks";
@@ -47,6 +48,8 @@ export default async function HowItWorksPage({
     getHowItWorksPage(),
     getHowItWorksPageSeo(),
   ]);
+
+  assertSiteLocale(locale);
 
   const jsonLd =
     locale === "es"

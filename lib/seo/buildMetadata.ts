@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { generateHreflangAlternates, getLocalizedUrl } from "@/i18n/hreflang";
 import type { AppHref } from "@/i18n/navigation";
+import { OG_LOCALE, type BlogLocale } from "@/i18n/blogLocales";
 import { getLocalized } from "@/sanity/queries/GeneralLayout/generalLayoutQuery";
 import type {
   SeoData,
@@ -33,9 +34,14 @@ interface BuildMetadataArgs {
 interface BuildSingleLanguageMetadataArgs {
   seo: SeoSingleLanguageData | null | undefined;
   defaults: SeoData | null | undefined;
-  locale: Locale;
+  /** The article's own language — any routing locale (en/es/fr/de/pt/it). */
+  locale: BlogLocale;
   href: AppHref;
-  hrefByLocale?: Partial<Record<Locale, AppHref>>;
+  /**
+   * Pre-built hreflang map derived from the article's translation group. When
+   * omitted, falls back to a reciprocal en/es pair for the same href.
+   */
+  alternates?: { languages: Record<string, string> };
   fallbackTitle?: string;
   fallbackDescription?: string;
   fallbackImage?: FallbackImage | null;
@@ -86,7 +92,13 @@ const robotsFromSeo = (
  * with fallbacks to defaultSeo (generalLayout) and per-page hardcoded fallbacks.
  */
 export function buildMetadata(args: BuildMetadataArgs): Metadata {
-  const { seo, defaults, locale, href, hrefByLocale, fallbackTitle, fallbackDescription, fallbackImage } = args;
+  const { seo, defaults, locale: rawLocale, href, hrefByLocale, fallbackTitle, fallbackDescription, fallbackImage } = args;
+
+  // Bilingual site pages only exist in en/es. A non-site routing locale (the
+  // blog locales fr/de/pt/it) can still reach this during metadata generation
+  // before the page's assertSiteLocale guard 404s the body — normalize so the
+  // hreflang/canonical computation below never indexes an undefined href.
+  const locale: Locale = rawLocale === "es" ? "es" : "en";
 
   const title = firstNonEmpty(
     getLocalized(seo?.metaTitle, locale),
@@ -168,7 +180,7 @@ export function buildMetadata(args: BuildMetadataArgs): Metadata {
 export function buildSingleLanguageMetadata(
   args: BuildSingleLanguageMetadataArgs,
 ): Metadata {
-  const { seo, defaults, locale, href, hrefByLocale, fallbackTitle, fallbackDescription, fallbackImage } = args;
+  const { seo, defaults, locale, href, alternates: alternatesArg, fallbackTitle, fallbackDescription, fallbackImage } = args;
 
   const title = firstNonEmpty(
     seo?.metaTitle,
@@ -195,9 +207,12 @@ export function buildSingleLanguageMetadata(
     (fallbackImage ?? undefined) ??
     seoImageToFallback(defaults?.ogImage);
 
-  const hrefs = resolveHrefs(href, hrefByLocale);
-  const alternates = generateHreflangAlternates(hrefs);
-  const canonical = getLocalizedUrl(locale, hrefs[locale]);
+  // Canonical is the article's own per-language URL (e.g. /fr/blog/<slug>).
+  const canonical = getLocalizedUrl(locale, href);
+  // Prefer the translation-group-derived hreflang; otherwise fall back to a
+  // reciprocal en/es pair for the same href (legacy single-language pages).
+  const alternates =
+    alternatesArg ?? generateHreflangAlternates({ en: href, es: href });
 
   const twitterCard = seo?.twitterCard ?? defaults?.twitterCard ?? "summary_large_image";
 
@@ -213,7 +228,7 @@ export function buildSingleLanguageMetadata(
       title: ogTitle,
       description: ogDescription,
       url: canonical,
-      locale: locale === "es" ? "es_ES" : "en_US",
+      locale: OG_LOCALE[locale],
       type: "article",
       images: image
         ? [

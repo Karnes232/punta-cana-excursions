@@ -8,8 +8,14 @@ export default getRequestConfig(async ({ requestLocale }) => {
     ? requested
     : routing.defaultLocale;
 
+  // Only en/es message catalogs exist. The extra blog locales (fr/de/pt/it) are
+  // valid routing locales used solely by individual blog articles, whose shared
+  // chrome (Navbar/Footer) falls back to English. Keep `locale` as the real
+  // requested value so <html lang> and useLocale() stay correct.
+  const messagesLocale = locale === "es" ? "es" : "en";
+
   return {
     locale,
-    messages: (await import(`../messages/${locale}.json`)).default,
+    messages: (await import(`../messages/${messagesLocale}.json`)).default,
   };
 });

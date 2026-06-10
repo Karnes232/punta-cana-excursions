@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { getLocalizedUrl } from "@/i18n/hreflang";
 import type { AppHref } from "@/i18n/navigation";
 import { localizedSlug } from "@/i18n/navigation";
+import type { BlogLocale } from "@/i18n/blogLocales";
 import { getExcursionSlugs } from "@/sanity/queries/IndividualExcursions/Excursionqueries";
 import { getDivingExcursionSlugs } from "@/sanity/queries/DivingSnorkelingPage/IndividualDivingExcursion";
 import {
@@ -34,10 +35,9 @@ const STATIC_PAGES: {
   { href: "/cancellation-policy", priority: 0.3, changeFrequency: "yearly" },
 ];
 
-/** Public URL for a blog article, keyed off the document's language (en/es prefix). */
-function blogUrl(b: BlogSitemapEntry): string {
-  const locale: Locale = b.language === "es" ? "es" : "en";
-  return getLocalizedUrl(locale, {
+/** Public URL for a blog article at its own language prefix (e.g. /fr/blog/<slug>). */
+function blogUrl(b: { language: string; slug: string }): string {
+  return getLocalizedUrl(b.language as BlogLocale, {
     pathname: "/blog/[slug]",
     params: { slug: b.slug },
   });
@@ -90,13 +90,29 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       })),
     );
 
-  // Blog articles are per-language documents — one entry each at its own URL.
-  const blogEntries: MetadataRoute.Sitemap = blog.map((b) => ({
-    url: blogUrl(b),
-    lastModified: b._updatedAt ? new Date(b._updatedAt) : now,
-    changeFrequency: "monthly" as ChangeFreq,
-    priority: 0.6,
-  }));
+  // Blog articles are per-language documents — one entry each at its own URL,
+  // with hreflang alternates linking every language version in its translation
+  // group.
+  const blogByGroup = new Map<string, BlogSitemapEntry[]>();
+  for (const b of blog) {
+    const arr = blogByGroup.get(b.translationGroup) ?? [];
+    arr.push(b);
+    blogByGroup.set(b.translationGroup, arr);
+  }
+  const blogEntries: MetadataRoute.Sitemap = blog.map((b) => {
+    const group = blogByGroup.get(b.translationGroup) ?? [b];
+    const languages: Record<string, string> = {};
+    for (const s of group) languages[s.language] = blogUrl(s);
+    return {
+      url: blogUrl(b),
+      lastModified: b._updatedAt ? new Date(b._updatedAt) : now,
+      changeFrequency: "monthly" as ChangeFreq,
+      priority: 0.6,
+      ...(Object.keys(languages).length > 1
+        ? { alternates: { languages } }
+        : {}),
+    };
+  });
 
   return [
     ...staticEntries,

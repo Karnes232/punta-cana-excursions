@@ -1,4 +1,5 @@
 import { redirect } from "@/i18n/navigation";
+import { notFound } from "next/navigation";
 import { BlogPostHero } from "@/components/IndividualBlogPost/BlogPostHero/BlogPostHero";
 import { BlogPostBody } from "@/components/IndividualBlogPost/BlogPostBody/BlogPostBody";
 import { BlogPostTranslations } from "@/components/IndividualBlogPost/BlogPostTranslations/BlogPostTranslations";
@@ -6,12 +7,15 @@ import {
   getBlogArticle,
   getBlogArticleSeo,
   getBlogArticleTranslations,
-  getBlogArticleSlugs,
+  getBlogSitemapEntries,
 } from "@/sanity/queries/Blog/Blog";
 import type { LocalizedField } from "@/sanity/queries/GeneralLayout/generalLayoutQuery";
 import type { Metadata } from "next";
 import { getDefaultSeo } from "@/sanity/queries/SEO/seoProjection";
 import { buildSingleLanguageMetadata } from "@/lib/seo/buildMetadata";
+import { buildHreflangFromSiblings } from "@/i18n/hreflang";
+import type { BlogLocale } from "@/i18n/blogLocales";
+import { AlternateSlugProvider } from "@/components/ui/AlternateSlugProvider";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { setRequestLocale } from "next-intl/server";
 
@@ -28,12 +32,35 @@ export async function generateMetadata({
     getDefaultSeo(),
     getBlogArticle(slug),
   ]);
+
+  // hreflang: enumerate every language version in this article's translation
+  // group (self + siblings), each at its own per-language URL.
+  let alternates;
+  if (article) {
+    const siblings = await getBlogArticleTranslations(
+      article.translationGroup,
+      slug,
+    );
+    const versions = [
+      { locale: article.language as BlogLocale, slug: article.slug },
+      ...siblings.map((s) => ({ locale: s.language as BlogLocale, slug: s.slug })),
+    ];
+    alternates = buildHreflangFromSiblings(
+      versions.map((v) => ({
+        locale: v.locale,
+        href: { pathname: "/blog/[slug]" as const, params: { slug: v.slug } },
+      })),
+      "en",
+    );
+  }
+
   const featuredImage = article?.featuredImage;
   return buildSingleLanguageMetadata({
     seo: pageSeo?.seo,
     defaults: defaultSeo?.defaultSeo,
-    locale: locale as "en" | "es",
+    locale: (article?.language ?? locale) as BlogLocale,
     href: { pathname: "/blog/[slug]", params: { slug } },
+    alternates,
     fallbackTitle: article?.title ?? undefined,
     fallbackDescription: article?.excerpt ?? undefined,
     fallbackImage: featuredImage?.asset?.url
@@ -48,10 +75,11 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  const slugs = await getBlogArticleSlugs();
-  return ["en", "es"].flatMap((locale) =>
-    slugs.map((s) => ({ locale, slug: s.slug })),
-  );
+  // Each article is one document in one language with its own slug. Build it at
+  // its own locale prefix only (e.g. a French article -> /fr/blog/<slug>), so
+  // the URL locale, <html lang>, and hreflang all match the article's language.
+  const entries = await getBlogSitemapEntries();
+  return entries.map((e) => ({ locale: e.language, slug: e.slug }));
 }
 
 export default async function BlogArticlePage({
@@ -71,12 +99,29 @@ export default async function BlogArticlePage({
     redirect({ href: "/blog", locale });
   }
 
+  // Each article is one language with its own slug — only serve it under its own
+  // locale prefix (e.g. a French article only at /fr/blog/<slug>), so the URL
+  // locale and <html lang> always match the content and we avoid duplicates.
+  if (article!.language !== locale) notFound();
+
   const jsonLd = pageSeo?.seo?.structuredData;
 
   const translations = await getBlogArticleTranslations(
     article!.translationGroup,
     slug,
   );
+
+  // Feed the global EN/ES language switcher the correct per-locale slug for this
+  // translation group, so toggling lands on the sibling article (not a 404).
+  const slugByLocale: Partial<Record<"en" | "es", string>> = {};
+  for (const v of [
+    { language: article!.language, slug },
+    ...translations,
+  ]) {
+    if (v.language === "en" || v.language === "es") {
+      slugByLocale[v.language] = v.slug;
+    }
+  }
 
   const lk = locale as keyof LocalizedField;
   const isEs = locale === "es";
@@ -97,6 +142,9 @@ export default async function BlogArticlePage({
       };
 
   return (
+    <AlternateSlugProvider
+      value={{ pathname: "/blog/[slug]", slugByLocale }}
+    >
     <main className="min-h-screen bg-white">
       <JsonLd data={jsonLd} />
       <BlogPostHero
@@ -124,5 +172,6 @@ export default async function BlogArticlePage({
 
       <BlogPostBody body={article!.body} />
     </main>
+    </AlternateSlugProvider>
   );
 }

@@ -1,7 +1,21 @@
 import { defineRouting } from "next-intl/routing";
+import { ALL_LOCALES } from "./blogLocales";
+
+// All routing locales must appear in every object-form pathname below. The 4
+// non-site locales (fr/de/pt/it) only ever serve individual blog articles, so
+// for site routes they simply mirror the English segment (those URLs 404 via
+// assertSiteLocale anyway). Blog routes are shared strings — valid everywhere.
+const sitePath = (en: string, es: string) => ({
+  en,
+  es,
+  fr: en,
+  de: en,
+  pt: en,
+  it: en,
+});
 
 export const routing = defineRouting({
-  locales: ["en", "es"],
+  locales: ALL_LOCALES,
   defaultLocale: "en",
   localePrefix: "as-needed",
   localeDetection: false,
@@ -12,21 +26,21 @@ export const routing = defineRouting({
   // substituted verbatim (per-locale slugs are handled at the data layer).
   pathnames: {
     "/": "/",
-    "/excursions": { en: "/excursions", es: "/excursiones" },
-    "/excursions/[slug]": { en: "/excursions/[slug]", es: "/excursiones/[slug]" },
-    "/scuba-diving": { en: "/scuba-diving", es: "/buceo" },
-    "/scuba-diving/[slug]": { en: "/scuba-diving/[slug]", es: "/buceo/[slug]" },
-    "/about": { en: "/about", es: "/sobre-nosotros" },
+    "/excursions": sitePath("/excursions", "/excursiones"),
+    "/excursions/[slug]": sitePath("/excursions/[slug]", "/excursiones/[slug]"),
+    "/scuba-diving": sitePath("/scuba-diving", "/buceo"),
+    "/scuba-diving/[slug]": sitePath("/scuba-diving/[slug]", "/buceo/[slug]"),
+    "/about": sitePath("/about", "/sobre-nosotros"),
     "/blog": "/blog",
     "/blog/[slug]": "/blog/[slug]",
-    "/contact": { en: "/contact", es: "/contacto" },
-    "/faq": { en: "/faq", es: "/preguntas-frecuentes" },
-    "/how-it-works": { en: "/how-it-works", es: "/como-funciona" },
-    "/privacy-policy": { en: "/privacy-policy", es: "/politica-de-privacidad" },
-    "/terms-of-service": { en: "/terms-of-service", es: "/terminos-de-servicio" },
-    "/cancellation-policy": {
-      en: "/cancellation-policy",
-      es: "/politica-de-cancelacion",
-    },
+    "/contact": sitePath("/contact", "/contacto"),
+    "/faq": sitePath("/faq", "/preguntas-frecuentes"),
+    "/how-it-works": sitePath("/how-it-works", "/como-funciona"),
+    "/privacy-policy": sitePath("/privacy-policy", "/politica-de-privacidad"),
+    "/terms-of-service": sitePath("/terms-of-service", "/terminos-de-servicio"),
+    "/cancellation-policy": sitePath(
+      "/cancellation-policy",
+      "/politica-de-cancelacion",
+    ),
   },
 });

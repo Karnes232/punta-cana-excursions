@@ -19,6 +19,7 @@ import { getDefaultSeo } from "@/sanity/queries/SEO/seoProjection";
 import { buildMetadata } from "@/lib/seo/buildMetadata";
 import { localizedSlug } from "@/i18n/navigation";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { assertSiteLocale } from "@/i18n/siteLocale";
 
 export async function generateMetadata({
   params,
@@ -64,6 +65,9 @@ export default async function Excursions({
     getExcursionList(),
     getExcursionsPageSeo(),
   ]);
+
+  assertSiteLocale(locale);
+
   const jsonLd =
     locale === "es"
       ? pageSeo?.seo?.structuredDataEs

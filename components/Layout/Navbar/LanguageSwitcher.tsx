@@ -14,12 +14,20 @@ export default function LanguageSwitcher() {
   const locale = useLocale();
   const alternate = useAlternateSlug();
 
+  // The extra blog locales (fr/de/pt/it) only ever serve individual blog
+  // articles, whose in-body translations widget handles language switching.
+  // The en/es chrome toggle would have nowhere valid to go, so hide it.
+  if (locale !== "en" && locale !== "es") return null;
+
   function onClick(next: "en" | "es") {
     if (next === locale) return;
     startTransition(() => {
-      // Detail pages with per-locale slugs: swap to the target locale's slug.
-      const altSlug = alternate?.slugByLocale[next];
-      if (alternate && altSlug) {
+      // Detail pages with per-locale slugs (excursions/diving/blog): swap to the
+      // target locale's slug. If that locale has no version (e.g. a blog article
+      // without that translation), do nothing rather than navigate to a 404.
+      if (alternate) {
+        const altSlug = alternate.slugByLocale[next];
+        if (!altSlug) return;
         router.replace(
           { pathname: alternate.pathname, params: { slug: altSlug } },
           { locale: next },

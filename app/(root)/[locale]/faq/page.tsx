@@ -8,6 +8,7 @@ import type { Metadata } from "next";
 import { getDefaultSeo } from "@/sanity/queries/SEO/seoProjection";
 import { buildMetadata } from "@/lib/seo/buildMetadata";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { assertSiteLocale } from "@/i18n/siteLocale";
 
 export async function generateMetadata({
   params,
@@ -37,6 +38,9 @@ export default async function FaqPage({
     getFaqPage(),
     getFaqPageSeo(),
   ]);
+
+  assertSiteLocale(locale);
+
   const jsonLd =
     locale === "es"
       ? pageSeo?.seo?.structuredDataEs

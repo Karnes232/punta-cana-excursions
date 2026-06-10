@@ -1,13 +1,15 @@
 import { getPathname, type AppHref } from "@/i18n/navigation";
 import { SITE_URL } from "@/lib/seo/constants";
+import type { BlogLocale } from "@/i18n/blogLocales";
 
 /**
  * Build an absolute URL for a typed href in a given locale. Uses next-intl's
  * `getPathname` so localized segments (e.g. /about -> /es/sobre-nosotros) and
- * the locale prefix are resolved correctly.
+ * the locale prefix are resolved correctly. Accepts any routing locale — the
+ * extra blog locales (fr/de/pt/it) resolve to e.g. /fr/blog/<slug>.
  */
 export function getLocalizedUrl(
-  locale: "en" | "es",
+  locale: BlogLocale,
   href: AppHref,
   baseUrl: string = SITE_URL,
 ): string {
@@ -47,4 +49,25 @@ export function generateHreflangAlternates(
       "x-default": urls.en,
     },
   };
+}
+
+/**
+ * Build a Next.js `alternates.languages` map from an explicit list of
+ * translation siblings. Used for individual blog articles, which are one
+ * document per language (en/es/fr/de/pt/it) linked by a translationGroup — each
+ * sibling has its own slug, so every existing language version is enumerated
+ * with `x-default` pointing at the English version when present.
+ */
+export function buildHreflangFromSiblings(
+  siblings: { locale: BlogLocale; href: AppHref }[],
+  xDefaultLocale: BlogLocale,
+  baseUrl: string = SITE_URL,
+): { languages: Record<string, string> } {
+  const languages: Record<string, string> = {};
+  for (const { locale, href } of siblings) {
+    languages[locale] = getLocalizedUrl(locale, href, baseUrl);
+  }
+  const xDefault = languages[xDefaultLocale] ?? Object.values(languages)[0];
+  if (xDefault) languages["x-default"] = xDefault;
+  return { languages };
 }

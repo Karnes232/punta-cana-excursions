@@ -10,7 +10,6 @@ import {
   FooterQuickLink,
   getGeneralLayout,
   getLocalized,
-  LocalizedField,
   NavLink,
   SocialLink,
 } from "@/sanity/queries/GeneralLayout/generalLayoutQuery";
@@ -98,6 +97,10 @@ export default async function RootLayout({
     notFound();
   }
   setRequestLocale(locale);
+  // The extra blog locales (fr/de/pt/it) reuse the en/es UI chrome — only
+  // individual blog articles render in them, and the Navbar/Footer/generalLayout
+  // content is bilingual only. <html lang> below stays the real locale for SEO.
+  const uiLocale: "en" | "es" = locale === "es" ? "es" : "en";
   const [generalLayout] = await Promise.all([getGeneralLayout()]);
 
   return (
@@ -105,24 +108,24 @@ export default async function RootLayout({
       <body className={`antialiased`}>
         <NextIntlClientProvider locale={locale}>
           <Navbar
-            locale={locale as "en" | "es"}
+            locale={uiLocale}
             logo={generalLayout?.logo as LogoType}
             navLinks={generalLayout?.navLinks as NavLink[]}
             navCtaButton={generalLayout?.navCtaButton as NavCtaButtonType}
           />
           {children}
           <Footer
-            locale={locale as "en" | "es"}
+            locale={uiLocale}
             companyName={
-              generalLayout?.companyName[locale as keyof LocalizedField] || ""
+              generalLayout?.companyName[uiLocale] || ""
             }
             logo={generalLayout?.logoAlt as LogoType}
             tagline={
-              generalLayout?.tagline[locale as keyof LocalizedField] || ""
+              generalLayout?.tagline[uiLocale] || ""
             }
             footerDescription={
               generalLayout?.footerDescription[
-                locale as keyof LocalizedField
+                uiLocale
               ] || ""
             }
             socialLinks={(generalLayout?.socialLinks as SocialLink[]) || []}
@@ -132,10 +135,10 @@ export default async function RootLayout({
             email={generalLayout?.email || ""}
             phone={generalLayout?.phone || ""}
             serviceArea={
-              generalLayout?.serviceArea[locale as keyof LocalizedField] || ""
+              generalLayout?.serviceArea[uiLocale] || ""
             }
             responseTime={
-              generalLayout?.responseTime[locale as keyof LocalizedField] || ""
+              generalLayout?.responseTime[uiLocale] || ""
             }
           />
         </NextIntlClientProvider>
