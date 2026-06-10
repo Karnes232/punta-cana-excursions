@@ -21,11 +21,18 @@ interface FallbackImage {
 interface BuildMetadataArgs {
   seo: SeoData | null | undefined;
   defaults: SeoData | null | undefined;
-  locale: Locale;
+  /**
+   * Page locale. Usually en/es (bilingual site pages), but the blog index also
+   * renders in the extra blog locales (fr/de/pt/it) — those resolve real
+   * `/fr/blog` URLs. Bilingual `seo`/`defaults` content falls back to English.
+   */
+  locale: BlogLocale;
   /** Typed canonical href, e.g. "/about" or { pathname: "/excursions/[slug]", params: { slug } } */
   href: AppHref;
   /** Per-locale hrefs when the dynamic [slug] differs per locale; falls back to `href`. */
   hrefByLocale?: Partial<Record<Locale, AppHref>>;
+  /** Pre-built hreflang map; when omitted, a reciprocal en/es pair is generated. */
+  alternates?: { languages: Record<string, string> };
   fallbackTitle?: string;
   fallbackDescription?: string;
   fallbackImage?: FallbackImage | null;
@@ -92,13 +99,7 @@ const robotsFromSeo = (
  * with fallbacks to defaultSeo (generalLayout) and per-page hardcoded fallbacks.
  */
 export function buildMetadata(args: BuildMetadataArgs): Metadata {
-  const { seo, defaults, locale: rawLocale, href, hrefByLocale, fallbackTitle, fallbackDescription, fallbackImage } = args;
-
-  // Bilingual site pages only exist in en/es. A non-site routing locale (the
-  // blog locales fr/de/pt/it) can still reach this during metadata generation
-  // before the page's assertSiteLocale guard 404s the body — normalize so the
-  // hreflang/canonical computation below never indexes an undefined href.
-  const locale: Locale = rawLocale === "es" ? "es" : "en";
+  const { seo, defaults, locale, href, hrefByLocale, alternates: alternatesArg, fallbackTitle, fallbackDescription, fallbackImage } = args;
 
   const title = firstNonEmpty(
     getLocalized(seo?.metaTitle, locale),
@@ -132,9 +133,13 @@ export function buildMetadata(args: BuildMetadataArgs): Metadata {
     (fallbackImage ?? undefined) ??
     seoImageToFallback(defaults?.ogImage);
 
-  const hrefs = resolveHrefs(href, hrefByLocale);
-  const alternates = generateHreflangAlternates(hrefs);
-  const canonical = getLocalizedUrl(locale, hrefs[locale]);
+  const alternates =
+    alternatesArg ?? generateHreflangAlternates(resolveHrefs(href, hrefByLocale));
+  // Canonical from the real locale. Per-locale slug overrides only exist for
+  // en/es; other locales (the blog index in fr/de/pt/it) use the shared href.
+  const canonicalHref =
+    locale === "en" || locale === "es" ? hrefByLocale?.[locale] ?? href : href;
+  const canonical = getLocalizedUrl(locale, canonicalHref);
 
   const twitterCard = seo?.twitterCard ?? defaults?.twitterCard ?? "summary_large_image";
 
@@ -150,7 +155,7 @@ export function buildMetadata(args: BuildMetadataArgs): Metadata {
       title: ogTitle,
       description: ogDescription,
       url: canonical,
-      locale: locale === "es" ? "es_ES" : "en_US",
+      locale: OG_LOCALE[locale],
       type: "website",
       images: image
         ? [

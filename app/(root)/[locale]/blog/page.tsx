@@ -12,8 +12,9 @@ import type { LocalizedField } from "@/sanity/queries/GeneralLayout/generalLayou
 import type { Metadata } from "next";
 import { getDefaultSeo } from "@/sanity/queries/SEO/seoProjection";
 import { buildMetadata } from "@/lib/seo/buildMetadata";
+import { buildHreflangFromSiblings } from "@/i18n/hreflang";
+import { ALL_LOCALES, type BlogLocale } from "@/i18n/blogLocales";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { assertSiteLocale } from "@/i18n/siteLocale";
 
 export async function generateMetadata({
   params,
@@ -27,13 +28,20 @@ export async function generateMetadata({
     getBlogPage(),
   ]);
   const lk = locale as keyof LocalizedField;
+  // The blog index exists in every blog locale (shared /blog pathname).
+  const alternates = buildHreflangFromSiblings(
+    ALL_LOCALES.map((l) => ({ locale: l, href: "/blog" as const })),
+    "en",
+  );
   return buildMetadata({
     seo: pageSeo?.seo,
     defaults: defaultSeo?.defaultSeo,
-    locale: locale as "en" | "es",
+    locale: locale as BlogLocale,
     href: "/blog",
-    fallbackTitle: blogData?.heroHeadline?.[lk],
-    fallbackDescription: blogData?.heroSubheadline?.[lk],
+    alternates,
+    fallbackTitle: blogData?.heroHeadline?.[lk] ?? blogData?.heroHeadline?.en,
+    fallbackDescription:
+      blogData?.heroSubheadline?.[lk] ?? blogData?.heroSubheadline?.en,
   });
 }
 
@@ -46,9 +54,9 @@ export default async function BlogIndexPage({
 }) {
   const [{ locale }, { lang, category }] = await Promise.all([params, searchParams]);
 
-  assertSiteLocale(locale);
-
-  const defaultLang = locale === "es" ? "es" : "en";
+  // The index renders in every blog locale; default to the URL locale's
+  // articles (e.g. /fr/blog shows French articles first).
+  const defaultLang = locale;
   const activeLang = lang ?? defaultLang;
   const activeCategory = category ?? undefined;
   const isEs = locale === "es";
@@ -92,8 +100,8 @@ export default async function BlogIndexPage({
     <main className="min-h-screen bg-white">
       <JsonLd data={jsonLd} />
       <BlogHero
-        headline={blogData?.heroHeadline?.[lk] ?? "Blog"}
-        subheadline={blogData?.heroSubheadline?.[lk] ?? ""}
+        headline={blogData?.heroHeadline?.[lk] ?? blogData?.heroHeadline?.en ?? "Blog"}
+        subheadline={blogData?.heroSubheadline?.[lk] ?? blogData?.heroSubheadline?.en ?? ""}
         backgroundImage={
           blogData?.heroImage?.asset?.url
             ? {
